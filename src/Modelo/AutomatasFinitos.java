@@ -25,6 +25,15 @@ public class AutomatasFinitos {
         Automata afd = new AFD();
         Vector<Estado> estados = new Vector<>();
         estados.set(0, new Estado("UP",0));
+        estados.set(1, new Estado("UI",0));
+        afd.setEstados(estados);
+        
+        Vector<Simbolo> simbolos = new Vector<>();
+        simbolos.set(0, new Simbolo("0", 0));
+        simbolos.set(1, new Simbolo("1", 1));
+        afd.setAlfabeto(simbolos);
+        
+        
         
 
        
