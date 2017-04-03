@@ -5,9 +5,8 @@
  */
 package Modelo;
 
-import Modelo.AFD;
-import Modelo.Automata;
 import Modelo.Estado;
+import java.util.HashMap;
 import java.util.Vector;
 
 /**
@@ -22,21 +21,70 @@ public class AutomatasFinitos {
     public static void main(String[] args) {
         // TODO code application logic here
         
-        Automata afd = new AFD();
-        Vector<Estado> estados = new Vector<>();
-        estados.set(0, new Estado("UP",0));
-        estados.set(1, new Estado("UI",0));
-        afd.setEstados(estados);
+        AFDeterministico afd = new AFDeterministico();
+        HashMap<String, Integer> aux = new HashMap<String, Integer>();
+        aux.put("CPUP", 0);
+        aux.put("CPUI", 1);        
+        aux.put("CIUP", 2);        
+        aux.put("CIUI", 3);        
+        afd.setEstados(aux);  
         
-        Vector<Simbolo> simbolos = new Vector<>();
-        simbolos.set(0, new Simbolo("0", 0));
-        simbolos.set(1, new Simbolo("1", 1));
-        afd.setAlfabeto(simbolos);
+        aux.put("0", 0);
+        aux.put("1", 1);        
+        afd.setSimbolos(aux);
+        
+        afd.setEstadoInicial("CPUP");
+        afd.setEstadoAceptacion("CPUI");
+        
+        String [][] transiciones = new String[afd.sizeEstados()][afd.sizeSimbolos()];
+        
+        int posEstado = afd.posEstado("CPUP");
+        int posSimbolo = afd.posSimbolo("0");        
+        transiciones[posEstado][posSimbolo] = "CIUP";
+        
+        posSimbolo = afd.posSimbolo("1");        
+        transiciones[posEstado][posSimbolo] = "CPUI";
+        
+        posEstado = afd.posEstado("CPUI");
+        posSimbolo = afd.posSimbolo("0");
+        transiciones[posEstado][posSimbolo] = "CIUI";
+        
+        posSimbolo = afd.posSimbolo("1");
+        transiciones[posEstado][posSimbolo] = "CPUP";
+        
+        posEstado = afd.posEstado("CIUP");
+        posSimbolo = afd.posSimbolo("0");
+        transiciones[posEstado][posSimbolo] = "CPUP";
+        
+        posSimbolo = afd.posSimbolo("1");
+        transiciones[posEstado][posSimbolo] = "CIUI";
+        
+        posEstado = afd.posEstado("CIUI");
+        posSimbolo = afd.posSimbolo("0");
+        transiciones[posEstado][posSimbolo] = "CPUI";
+        
+        posSimbolo = afd.posSimbolo("1");
+        transiciones[posEstado][posSimbolo] = "CIUP";
+        
+        afd.setTransiciones(transiciones);
+        Vector<String> hilera = new Vector<>();
+        hilera.add("0");
+        hilera.add("0");
+        hilera.add("0");
+        hilera.add("1");
+        hilera.add("1");
+        hilera.add("1");
+        hilera.add("0");
+        hilera.add("0");
+        hilera.add("0");
+       
+        System.out.println("Valido? "+afd.reconocer(hilera));
+        
+        
         
         
         
 
-       
     }
-    
+
 }
