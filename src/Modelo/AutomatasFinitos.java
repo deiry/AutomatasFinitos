@@ -6,6 +6,7 @@
 package Modelo;
 
 import Modelo.Estado;
+import controlador.Controlador;
 import java.util.HashMap;
 import java.util.Vector;
 
@@ -21,7 +22,7 @@ public class AutomatasFinitos {
     public static void main(String[] args) {
         // TODO code application logic here
         
-        AFDeterministico afd = new AFDeterministico();
+       /* AFDeterministico afd = new AFDeterministico();
         HashMap<String, Integer> aux = new HashMap<String, Integer>();
         aux.put("CPUP", 0);
         aux.put("CPUI", 1);        
@@ -78,10 +79,12 @@ public class AutomatasFinitos {
         hilera.add("0");
         hilera.add("0");
        
-        System.out.println("Valido? "+afd.reconocer(hilera));
+        System.out.println("Valido? "+afd.reconocer(hilera));*/
         
         
-        
+          Controlador ctrl = new Controlador();
+        String hilera = "{[Q0, Q1,Q2,Q3 ][a1,a2] [(Q0,a1,Q1) (Q1, a2,Q3)][Q0][Q3]}";
+        ctrl.construirAtomata(hilera);
         
         
 
