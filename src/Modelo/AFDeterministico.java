@@ -11,18 +11,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.*;
 
-
 /**
  *
  * @author DEIRY
  */
-public class AFDeterministico extends AutomataFinito{
+public class AFDeterministico extends AutomataFinito {
 
-    private HashMap<String, Integer> estados;
-    private HashMap<String, Integer> simbolos;
     private String estadoInicial;
     private String estadoAceptacion;
     private String[][] transiciones;
+    private List<String> estadosAlcanzables;
     private String estadoActual, estadoNuevo;
 
     public AFDeterministico(HashMap<String, Integer> estados, HashMap<String, Integer> simbolos, String estadoInicial, String estadoAceptacion, String[][] transiciones) {
@@ -36,22 +34,6 @@ public class AFDeterministico extends AutomataFinito{
     public AFDeterministico() {
     }
 
-    public HashMap<String, Integer> getEstados() {
-        return estados;
-    }
-
-    public void setEstados(HashMap<String, Integer> estados) {
-        this.estados = estados;
-    }
-
-    public HashMap<String, Integer> getSimbolos() {
-        return simbolos;
-    }
-
-    public void setSimbolos(HashMap<String, Integer> simbolos) {
-        this.simbolos = simbolos;
-    }
-
     public String getEstadoInicial() {
         return estadoInicial;
     }
@@ -60,26 +42,21 @@ public class AFDeterministico extends AutomataFinito{
         this.estadoInicial = estadoInicial;
     }
 
-
-
     public void setEstadoAceptacion(String estadoAceptacion) {
         this.estadoAceptacion = estadoAceptacion;
     }
 
-
     public void setTransiciones(String[][] transiciones) {
         this.transiciones = transiciones;
     }
-    
-
 
     public boolean reconocer(List<String> hilera) {
         String estadoActual = estadoInicial;
-        String entrada="";
-        for(String temp: hilera){
+        String entrada = "";
+        for (String temp : hilera) {
             entrada = temp;
             estadoActual = nuevoEstado(estadoActual, entrada);
-            
+
         }
 
         if (estadoActual.equals(estadoAceptacion)) {
@@ -90,28 +67,56 @@ public class AFDeterministico extends AutomataFinito{
 
     public String nuevoEstado(String actual, String entrada) {
         int posEstado = estados.get(actual);
-        int posEntrada = estados.get(entrada);
+        int posEntrada = simbolos.get(entrada);
         return transiciones[posEstado][posEntrada];
     }
-    
- 
-    
+
     @Override
-    public void estadosInalcanzables(){
-        HashMap<String,Integer> visitado = estados;
+    public void estadosInalcanzables() {
+        HashMap<String, Integer> visitado = (HashMap<String, Integer>) estados.clone();
+        String estadoActual, nuevoEstado;
+        Stack<String> visit = new Stack<>();
+        estadosAlcanzables = new Vector<>();
+        int posEstado;
+        int pos = 0;
+
         visitado.replace(estadoInicial, -1);
-        ArrayList <String> visit = new ArrayList<>();
-        visit.add(0, estadoInicial);
-        int pos=0;
-        
-       
-        for (Map.Entry<String, Integer> simboloEntry : simbolos.entrySet()) {
-            String key = simboloEntry.getKey();
-            Integer value = simboloEntry.getValue();
-            String nuevo = nuevoEstado(visit.get(pos), key);
-           
-            
-            
+        estadosAlcanzables.add(estadoInicial);
+        visit.add(estadoInicial);
+        while (!visit.isEmpty()) {
+            estadoActual = visit.pop();
+
+            for (Map.Entry<String, Integer> entry : simbolos.entrySet()) {
+                String key = entry.getKey();
+                Integer posSimbolo = entry.getValue();
+
+                nuevoEstado = nuevoEstado(estadoActual, key);
+                if (visitado.get(nuevoEstado) != -1) {
+                    visitado.replace(nuevoEstado, -1);
+                    visit.add(nuevoEstado);
+                    estadosAlcanzables.add(nuevoEstado);
+                }
+            }
+        }
+        System.out.println("Estados inalcanzables" + visitado.toString());
+        System.out.println("Estados alcanzables" + estadosAlcanzables.toString());
+    }
+
+    public void actualizarAutomata() {
+
+        HashMap<String, Integer> nEstados = new HashMap<>();
+        String[][] nTransiciones = new String[estadosAlcanzables.size()][simbolos.size()];
+        int posEstado;
+        String estadoActual, nuevoEstado;
+
+        for (int i = 0; i < nTransiciones.length; i++) {
+            estadoActual = estadosAlcanzables.get(i);
+            nEstados.put(estadoActual, i);
+            for (Map.Entry<String, Integer> entry : simbolos.entrySet()) {
+                String simbolo = entry.getKey();
+                Integer posSimbolo = entry.getValue();
+                nTransiciones[i][posSimbolo] = nuevoEstado(estadoActual, simbolo);
+            }
         }
     }
 
@@ -121,8 +126,33 @@ public class AFDeterministico extends AutomataFinito{
 
     @Override
     public void simplificar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
+    @Override
+    public void agregarEstado(String nombre, int posicion) {
+        this.estados.put(nombre, posicion);
+    }
+
+    @Override
+    public void agregarSimbolos(String nombre, int posicion) {
+        this.simbolos.put(nombre, posicion);
+    }
+
+    @Override
+    public void agregarTransicion(String estadoActual, String simbolo, String nuevoEstado) {
+        int posEstado = posEstado(estadoActual);
+        int posSimbolo = posSimbolo(simbolo);
+        transiciones[posEstado][posSimbolo] = nuevoEstado;
+    }
+
+    @Override
+    public void agregarEstadoAceptacion(String acep) {
+        
+    }
+
+    @Override
+    public void agregarEstadoInicial(String inicial) {
+        
+    }
 
 }
