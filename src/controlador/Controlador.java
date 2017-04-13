@@ -204,4 +204,9 @@ public class Controlador {
         }
         return retorno;
     }
+    
+    public void agregarEstado(String estado)
+    {
+        HashMap<String,Integer> estados;
+    }
 }
