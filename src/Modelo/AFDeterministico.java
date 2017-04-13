@@ -8,12 +8,15 @@ package Modelo;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.*;
+
 
 /**
  *
  * @author DEIRY
  */
-public class AFDeterministico {
+public class AFDeterministico extends AutomataFinito{
 
     private HashMap<String, Integer> estados;
     private HashMap<String, Integer> simbolos;
@@ -57,37 +60,18 @@ public class AFDeterministico {
         this.estadoInicial = estadoInicial;
     }
 
-    public String getEstadoAceptacion() {
-        return estadoAceptacion;
-    }
+
 
     public void setEstadoAceptacion(String estadoAceptacion) {
         this.estadoAceptacion = estadoAceptacion;
     }
 
-    public String[][] getTransiciones() {
-        return transiciones;
-    }
 
     public void setTransiciones(String[][] transiciones) {
         this.transiciones = transiciones;
     }
     
-    public int sizeEstados(){
-        return estados.size();
-    }
-    
-    public int sizeSimbolos(){
-        return simbolos.size();
-    }
-    
-    public int posEstado(String estado){
-        return estados.get(estado);
-    }
-    
-    public int posSimbolo(String simbolo){
-        return simbolos.get(simbolo);
-    }
+
 
     public boolean reconocer(List<String> hilera) {
         String estadoActual = estadoInicial;
@@ -108,6 +92,36 @@ public class AFDeterministico {
         int posEstado = estados.get(actual);
         int posEntrada = estados.get(entrada);
         return transiciones[posEstado][posEntrada];
+    }
+    
+ 
+    
+    @Override
+    public void estadosInalcanzables(){
+        HashMap<String,Integer> visitado = estados;
+        visitado.replace(estadoInicial, -1);
+        ArrayList <String> visit = new ArrayList<>();
+        visit.add(0, estadoInicial);
+        int pos=0;
+        
+       
+        for (Map.Entry<String, Integer> simboloEntry : simbolos.entrySet()) {
+            String key = simboloEntry.getKey();
+            Integer value = simboloEntry.getValue();
+            String nuevo = nuevoEstado(visit.get(pos), key);
+           
+            
+            
+        }
+    }
+
+    @Override
+    public void inicializar() {
+    }
+
+    @Override
+    public void simplificar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 
