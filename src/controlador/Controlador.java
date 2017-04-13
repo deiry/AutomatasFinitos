@@ -9,6 +9,7 @@ import Modelo.AFDeterministico;
 import Modelo.AFNoDeterministico;
 import java.util.ArrayList;
 import java.util.HashMap;
+import vista.VistaPrincipal;
 
 /**
  *
@@ -20,7 +21,8 @@ public class Controlador {
     private AFNoDeterministico afnd;
 
     public Controlador() {
-        
+        VistaPrincipal vp = new VistaPrincipal();
+        vp.setVisible(true);
     }
     
     public void construirAtomata(String stringAutomata)
