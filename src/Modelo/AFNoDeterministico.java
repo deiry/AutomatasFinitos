@@ -66,4 +66,41 @@ public class AFNoDeterministico extends AutomataFinito {
         this.transiciones = transiciones;
     }
 
+    @Override
+    public void agregarEstado(String estado, int posicion) {
+        estados.put(estado, posicion);
+    }
+
+    @Override
+    public void agregarSimbolos(String simbolo, int posicion) {
+        simbolos.put(simbolo, posicion);
+    }
+
+    @Override
+    public void agregarTransicion(String estadoActual, String simbolo, String nuevoEstado) {
+        int posEstado = posEstado(estadoActual);
+        int posSimbolo = posSimbolo(simbolo);
+        List<String> transicion = transiciones[posEstado][posSimbolo];
+        if (transicion != null) {
+            transicion.add(nuevoEstado);
+        }
+        else
+        {
+            //no se como contruirlo
+            
+        }
+        
+        transiciones[posEstado][posSimbolo] = transicion;
+    }
+
+    @Override
+    public void agregarEstadoAceptacion(String acep) {
+        estadosAceptacion.add(acep);
+    }
+
+    @Override
+    public void agregarEstadoInicial(String inicial) {
+        estadosIniciales.add(inicial);
+    }
+
 }
