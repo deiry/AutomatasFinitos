@@ -14,8 +14,8 @@ import java.util.List;
  */
 public abstract class AutomataFinito {
 
-    private HashMap<String, Integer> estados;
-    private HashMap<String, Integer> simbolos;
+    protected HashMap<String, Integer> estados;
+    protected HashMap<String, Integer> simbolos;
     
     
     
@@ -63,5 +63,16 @@ public abstract class AutomataFinito {
     public abstract String nuevoEstado(String estado, String simbolo);
 
     public abstract boolean reconocer(List<String> hilera);
+    
+    public abstract void agregarEstado(String estado, int posicion);
+    
+    public abstract void agregarSimbolos(String simbolo, int posicion);
+    
+    public abstract void agregarTransicion(String estadoActual, String simbolo, String nuevoEstado);
+    
+    public abstract void agregarEstadoAceptacion(String acep);
+    
+    public abstract void agregarEstadoInicial(String inicial);
+    
 
 }
