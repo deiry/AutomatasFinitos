@@ -69,12 +69,12 @@ public class AutomatasFinitos {
         
         afd.setTransiciones(transiciones);
         Vector<String> hilera = new Vector<>();
-        hilera.add("0");
-        hilera.add("0");
-        hilera.add("0");
         hilera.add("1");
         hilera.add("1");
         hilera.add("1");
+        hilera.add("1");
+        hilera.add("0");
+        hilera.add("0");
         hilera.add("0");
         hilera.add("0");
         hilera.add("0");
