@@ -5,17 +5,29 @@
  */
 package vista;
 
+import controlador.Controlador;
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JButton;
+
 /**
  *
  * @author Alejandro
  */
 public class PanelEstadoAceptacion extends javax.swing.JPanel {
 
+    private Controlador controlador;
     /**
      * Creates new form PanelEstados
      */
     public PanelEstadoAceptacion() {
         initComponents();
+        controlador = Controlador.getInstance();
+        actualizarEstados();
     }
 
     /**
@@ -29,11 +41,7 @@ public class PanelEstadoAceptacion extends javax.swing.JPanel {
 
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jp_estados = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
 
         setLayout(new java.awt.GridLayout(1, 2));
@@ -45,21 +53,8 @@ public class PanelEstadoAceptacion extends javax.swing.JPanel {
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel2.add(jLabel1);
 
-        jPanel4.setLayout(new java.awt.GridLayout(3, 8));
-
-        jButton1.setText("UPCI");
-        jPanel4.add(jButton1);
-
-        jButton2.setText("jButton2");
-        jPanel4.add(jButton2);
-
-        jButton3.setText("jButton3");
-        jPanel4.add(jButton3);
-
-        jButton4.setText("jButton4");
-        jPanel4.add(jButton4);
-
-        jPanel2.add(jPanel4);
+        jp_estados.setLayout(new java.awt.GridLayout(3, 8));
+        jPanel2.add(jp_estados);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -77,15 +72,39 @@ public class PanelEstadoAceptacion extends javax.swing.JPanel {
         add(jPanel2);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void actualizarEstados() {
+        HashMap<String,Integer> estados = controlador.obtenerEstados();
+        jp_estados.removeAll();
+        jp_estados.revalidate();
+        
+        if(estados != null)
+        {
+            
+            jp_estados.setLayout(new GridLayout(1, estados.size()));
+            for (Map.Entry<String, Integer> entry : estados.entrySet()) {
+                String key = entry.getKey();
+                Integer value = entry.getValue();
+                JButton btn = new JButton(key);
+                ActionListener l = new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String estado = btn.getText();
+                        controlador.agregarEstadoAceptacion(estado);
+                        btn.setEnabled(false);
+                        btn.setBackground(Color.gray);
+                    }
+                };
+                btn.addActionListener(l);
+                jp_estados.add(btn);
+            } 
+        }
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jp_estados;
     // End of variables declaration//GEN-END:variables
 }

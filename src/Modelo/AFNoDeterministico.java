@@ -5,6 +5,7 @@
  */
 package Modelo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -68,11 +69,19 @@ public class AFNoDeterministico extends AutomataFinito {
 
     @Override
     public void agregarEstado(String estado, int posicion) {
+        if (estados == null) {
+            estados = new HashMap<String,Integer>();
+        }
+        
         estados.put(estado, posicion);
     }
 
     @Override
     public void agregarSimbolos(String simbolo, int posicion) {
+        if (simbolos == null) {
+            simbolos = new HashMap<String,Integer>();
+        }
+
         simbolos.put(simbolo, posicion);
     }
 
@@ -95,12 +104,30 @@ public class AFNoDeterministico extends AutomataFinito {
 
     @Override
     public void agregarEstadoAceptacion(String acep) {
+        if (estadosAceptacion == null)
+        {
+            estadosAceptacion = new ArrayList<String>();
+        }
         estadosAceptacion.add(acep);
     }
 
     @Override
     public void agregarEstadoInicial(String inicial) {
+        if (estadosIniciales == null) 
+        {
+            estadosIniciales = new ArrayList<String>();
+        }
         estadosIniciales.add(inicial);
+    }
+
+    @Override
+    public HashMap<String, Integer> obtenerEstados() {
+        return estados;
+    }
+
+    @Override
+    public HashMap<String, Integer> obtenerSimbolos() {
+        return simbolos;
     }
 
 }

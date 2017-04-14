@@ -5,17 +5,26 @@
  */
 package vista;
 
+import controlador.Controlador;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Alejandro
  */
 public class PanelEstados extends javax.swing.JPanel {
 
+    private Controlador controlador;
     /**
      * Creates new form PanelEstados
      */
     public PanelEstados() {
         initComponents();
+        controlador = Controlador.getInstance();
+        actualizarListaEstados();
     }
 
     /**
@@ -36,7 +45,7 @@ public class PanelEstados extends javax.swing.JPanel {
         jPanel5 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbl_estados = new javax.swing.JTable();
 
         setLayout(new java.awt.GridLayout(1, 2));
 
@@ -107,7 +116,7 @@ public class PanelEstados extends javax.swing.JPanel {
 
         jPanel1.setLayout(new java.awt.GridLayout(1, 1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_estados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -123,7 +132,7 @@ public class PanelEstados extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbl_estados);
 
         jPanel1.add(jScrollPane1);
 
@@ -131,9 +140,37 @@ public class PanelEstados extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_agregar_estadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregar_estadoActionPerformed
-        // TODO add your handling code here:
+        String estado = tf_agregar_estado.getText().toString();
+        if (!estado.isEmpty()) {
+            controlador.agregarEstado(estado);
+            this.actualizarListaEstados();
+        }
+        tf_agregar_estado.setText("");
+        
     }//GEN-LAST:event_btn_agregar_estadoActionPerformed
 
+    private void actualizarListaEstados()
+    {
+        HashMap<String,Integer> estados = controlador.obtenerEstados();
+        if(estados != null)
+        {
+            DefaultTableModel model = (DefaultTableModel) tbl_estados.getModel();
+            int count = model.getRowCount();
+            for (int i = count-1; i >= 0; i--) {
+                model.removeRow(i);
+            }
+
+            int i = 0;
+            for (Map.Entry<String, Integer> entry : estados.entrySet()) {
+                Vector row = new Vector();
+                String key = entry.getKey();
+                Integer value = entry.getValue();
+                row.add(key);
+                model.addRow(row);
+            }
+        }
+    
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_agregar_estado;
@@ -144,7 +181,7 @@ public class PanelEstados extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tbl_estados;
     private javax.swing.JTextField tf_agregar_estado;
     // End of variables declaration//GEN-END:variables
 }

@@ -7,6 +7,7 @@ package controlador;
 
 import Modelo.AFDeterministico;
 import Modelo.AFNoDeterministico;
+import Modelo.AutomataFinito;
 import java.util.ArrayList;
 import java.util.HashMap;
 import vista.VistaPrincipal;
@@ -19,10 +20,25 @@ public class Controlador {
     
     private AFDeterministico afd;
     private AFNoDeterministico afnd;
+    private int contadorEstados;
+    private int contadorSimbolos;
+    private AutomataFinito af;
+    private static Controlador instance = null;
 
-    public Controlador() {
+    protected Controlador() {
         VistaPrincipal vp = new VistaPrincipal();
         vp.setVisible(true);
+        this.contadorEstados = 0;
+        this.contadorSimbolos = 0;
+        af = new AFNoDeterministico();
+    }
+    
+    public static Controlador getInstance()
+    {
+        if (instance == null) {
+            instance = new Controlador();
+        }
+        return instance;
     }
     
     public void construirAtomata(String stringAutomata)
@@ -207,6 +223,33 @@ public class Controlador {
     
     public void agregarEstado(String estado)
     {
-        HashMap<String,Integer> estados;
+        af.agregarEstado(estado, contadorEstados);
+        contadorEstados++;
     }
+    public HashMap<String,Integer> obtenerEstados()
+    {
+        return af.obtenerEstados();
+    }
+    
+    public void agregarSimbolo(String simbolo)
+    {
+        af.agregarSimbolos(simbolo, contadorSimbolos);
+        contadorSimbolos++;
+    }
+    
+    public HashMap<String,Integer> obtenerSimbolos()
+    {
+        return af.obtenerSimbolos();
+    }
+    
+    public void agregarEstadoInicial(String estadoInicial)
+    {
+        af.agregarEstadoInicial(estadoInicial);
+    }
+    
+    public void agregarEstadoAceptacion(String estadoAceptacion)
+    {
+        af.agregarEstadoAceptacion(estadoAceptacion);
+    }
+    
 }

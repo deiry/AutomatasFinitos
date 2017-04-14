@@ -155,4 +155,14 @@ public class AFDeterministico extends AutomataFinito {
         
     }
 
+    @Override
+    public HashMap<String, Integer> obtenerEstados() {
+        return estados;
+    }
+
+    @Override
+    public HashMap<String, Integer> obtenerSimbolos() {
+        return simbolos;
+    }
+
 }
