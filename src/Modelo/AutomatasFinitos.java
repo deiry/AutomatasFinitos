@@ -7,6 +7,7 @@ package Modelo;
 
 import Modelo.Estado;
 import controlador.Controlador;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Vector;
 
@@ -23,51 +24,37 @@ public class AutomatasFinitos {
         // TODO code application logic here
         
         AFDeterministico afd = new AFDeterministico();
-        HashMap<String, Integer> aux = new HashMap<String, Integer>();
-        aux.put("CPUP", 0);
-        aux.put("CPUI", 1);        
-        aux.put("CIUP", 2);        
-        aux.put("CIUI", 3);        
-        afd.setEstados(aux);  
-        aux = new HashMap<>();
-        aux.put("0", 0);
-        aux.put("1", 1);        
-        afd.setSimbolos(aux);
+        String estados[]={"CPUP","CPUI","CIUP","CIUI"};
         
-        afd.setEstadoInicial("CPUP");
-        afd.setEstadoAceptacion("CPUI");
+        for (int i = 0; i < estados.length; i++) {
+            afd.agregarEstado(estados[i], i);
+        }
+                
+        afd.agregarEstadoInicial("CPUP");
+        afd.agregarEstadoAceptacion("CPUI");
+       
+        String simbolos[]={"0","1"};
+        for (int i = 0; i < simbolos.length; i++) {
+            afd.agregarSimbolos(simbolos[i], i);
+        }
         
-        String [][] transiciones = new String[afd.sizeEstados()][afd.sizeSimbolos()];
+        afd.inicializar();
         
-        int posEstado = afd.posEstado("CPUP");
-        int posSimbolo = afd.posSimbolo("0");        
-        transiciones[posEstado][posSimbolo] = "CPUI";
+        String tran[][]={
+            {"CPUI","CPUP"},
+            {"CIUI","CPUI"},
+            {"CPUI","CPUP"},
+            {"CPUI","CIUI"}
+        };
         
-        posSimbolo = afd.posSimbolo("1");        
-        transiciones[posEstado][posSimbolo] = "CPUP";
+        for (int i = 0; i < afd.sizeEstados(); i++) {
+            for (int j = 0; j < afd.sizeSimbolos(); j++) {
+                System.out.println("e: "+estados[i]+" s: "+simbolos[j]+" t: "+ tran[i][j]);
+                afd.agregarTransicion(estados[i], simbolos[j],tran[i][j] );
+            }
+        }
         
-        posEstado = afd.posEstado("CPUI");
-        posSimbolo = afd.posSimbolo("0");
-        transiciones[posEstado][posSimbolo] = "CIUI";
-        
-        posSimbolo = afd.posSimbolo("1");
-        transiciones[posEstado][posSimbolo] = "CPUI";
-        
-        posEstado = afd.posEstado("CIUP");
-        posSimbolo = afd.posSimbolo("0");
-        transiciones[posEstado][posSimbolo] = "CPUI";
-        
-        posSimbolo = afd.posSimbolo("1");
-        transiciones[posEstado][posSimbolo] = "CPUP";
-        
-        posEstado = afd.posEstado("CIUI");
-        posSimbolo = afd.posSimbolo("0");
-        transiciones[posEstado][posSimbolo] = "CPUI";
-        
-        posSimbolo = afd.posSimbolo("1");
-        transiciones[posEstado][posSimbolo] = "CIUI";
-        
-        afd.setTransiciones(transiciones);
+       
         Vector<String> hilera = new Vector<>();
         hilera.add("1");
         hilera.add("1");

@@ -16,6 +16,11 @@ public abstract class AutomataFinito {
 
     protected HashMap<String, Integer> estados;
     protected HashMap<String, Integer> simbolos;
+
+    public AutomataFinito() {
+        this.estados = new HashMap<>();
+        this.simbolos = new HashMap<>();
+    }
     
     
     

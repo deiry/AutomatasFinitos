@@ -18,20 +18,24 @@ import java.util.*;
 public class AFDeterministico extends AutomataFinito {
 
     private String estadoInicial;
-    private String estadoAceptacion;
+    private List<String> estadoAceptacion;
     private String[][] transiciones;
     private String estadoActual, estadoNuevo;
 
-    public AFDeterministico(HashMap<String, Integer> estados, HashMap<String, Integer> simbolos, String estadoInicial, String estadoAceptacion, String[][] transiciones) {
+    public AFDeterministico(HashMap<String, Integer> estados, HashMap<String, Integer> simbolos, String estadoInicial, List<String> estadoAceptacion, String[][] transiciones) {
         this.estados = estados;
         this.simbolos = simbolos;
         this.estadoInicial = estadoInicial;
         this.estadoAceptacion = estadoAceptacion;
         this.transiciones = transiciones;
-      
+
     }
 
     public AFDeterministico() {
+        super();
+        this.estadoAceptacion = new Vector<String>();
+        this.estadoInicial = "";        
+
     }
 
     public String getEstadoInicial() {
@@ -42,7 +46,7 @@ public class AFDeterministico extends AutomataFinito {
         this.estadoInicial = estadoInicial;
     }
 
-    public void setEstadoAceptacion(String estadoAceptacion) {
+    public void setEstadoAceptacion(List<String> estadoAceptacion) {
         this.estadoAceptacion = estadoAceptacion;
     }
 
@@ -59,7 +63,7 @@ public class AFDeterministico extends AutomataFinito {
 
         }
 
-        if (estadoActual.equals(estadoAceptacion)) {
+        if (estadoAceptacion.contains(estadoActual)) {
             return true;
         }
         return false;
@@ -126,10 +130,14 @@ public class AFDeterministico extends AutomataFinito {
 
     @Override
     public void inicializar() {
+        this.transiciones = new String[this.sizeEstados()][this.sizeSimbolos()];
+        System.out.println("etados "+estados.toString());
     }
 
     @Override
     public void simplificar() {
+        this.estadosInalcanzables();
+
     }
 
     @Override
@@ -151,12 +159,12 @@ public class AFDeterministico extends AutomataFinito {
 
     @Override
     public void agregarEstadoAceptacion(String acep) {
-
+        this.estadoAceptacion.add(acep);
     }
 
     @Override
     public void agregarEstadoInicial(String inicial) {
-
+        this.estadoInicial = inicial;
     }
 
     @Override
