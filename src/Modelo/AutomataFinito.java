@@ -74,5 +74,9 @@ public abstract class AutomataFinito {
     
     public abstract void agregarEstadoInicial(String inicial);
     
+    public abstract HashMap<String,Integer> obtenerEstados();
+    
+    public abstract HashMap<String,Integer> obtenerSimbolos();
+    
 
 }

@@ -3,10 +3,20 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/S:/Udea/Programacion/AutomatasFinitos/src/Modelo/AutomataFinito.java</file>
             <file>file:/S:/Udea/Programacion/AutomatasFinitos/src/Modelo/AutomatasFinitos.java</file>
             <file>file:/S:/Udea/Programacion/AutomatasFinitos/src/Modelo/AFDeterministico.java</file>
             <file>file:/S:/Udea/Programacion/AutomatasFinitos/src/Modelo/Estado.java</file>
+=======
+            <file>file:/D:/Github/AutomatasFinitos/src/vista/PanelEstados.java</file>
+            <file>file:/D:/Github/AutomatasFinitos/src/Modelo/AFDeterministico.java</file>
+            <file>file:/D:/Github/AutomatasFinitos/src/Modelo/AutomatasFinitos.java</file>
+            <file>file:/D:/Github/AutomatasFinitos/src/Modelo/AFNoDeterministico.java</file>
+            <file>file:/D:/Github/AutomatasFinitos/src/vista/VistaPrincipal.java</file>
+            <file>file:/D:/Github/AutomatasFinitos/src/Modelo/AutomataFinito.java</file>
+            <file>file:/D:/Github/AutomatasFinitos/src/controlador/Controlador.java</file>
+>>>>>>> 80b3cfced6c87c6ab0371f7992905480b78b8caf
         </group>
     </open-files>
 </project-private>

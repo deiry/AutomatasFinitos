@@ -5,17 +5,26 @@
  */
 package vista;
 
+import controlador.Controlador;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Alejandro
  */
 public class PanelSimbolos extends javax.swing.JPanel {
 
+    private Controlador controlador;
     /**
      * Creates new form PanelEstados
      */
     public PanelSimbolos() {
         initComponents();
+         controlador = Controlador.getInstance();
+        actualizarListaSimbolos();
     }
 
     /**
@@ -31,12 +40,12 @@ public class PanelSimbolos extends javax.swing.JPanel {
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        tf_agregar_estado = new javax.swing.JTextField();
+        tf_agregar_simbolo = new javax.swing.JTextField();
         btn_agregar_estado = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbl_simbolos = new javax.swing.JTable();
 
         setLayout(new java.awt.GridLayout(1, 2));
 
@@ -73,7 +82,7 @@ public class PanelSimbolos extends javax.swing.JPanel {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(tf_agregar_estado, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                .addComponent(tf_agregar_simbolo, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btn_agregar_estado)
                 .addGap(45, 45, 45))
@@ -83,7 +92,7 @@ public class PanelSimbolos extends javax.swing.JPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tf_agregar_estado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tf_agregar_simbolo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_agregar_estado, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
@@ -105,9 +114,9 @@ public class PanelSimbolos extends javax.swing.JPanel {
 
         add(jPanel2);
 
-        jPanel1.setLayout(new java.awt.GridLayout());
+        jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_simbolos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -123,7 +132,7 @@ public class PanelSimbolos extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbl_simbolos);
 
         jPanel1.add(jScrollPane1);
 
@@ -131,9 +140,37 @@ public class PanelSimbolos extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_agregar_estadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregar_estadoActionPerformed
-        // TODO add your handling code here:
+        String simbolo = tf_agregar_simbolo.getText().toString();
+        if (!simbolo.isEmpty()) {
+            controlador.agregarSimbolo(simbolo);
+            this.actualizarListaSimbolos();
+        }
+        tf_agregar_simbolo.setText("");
     }//GEN-LAST:event_btn_agregar_estadoActionPerformed
 
+    
+    private void actualizarListaSimbolos()
+    {
+        HashMap<String,Integer> simbolos = controlador.obtenerSimbolos();
+        if(simbolos != null)
+        {
+            DefaultTableModel model = (DefaultTableModel) tbl_simbolos.getModel();
+            int count = model.getRowCount();
+            for (int i = count-1; i >= 0; i--) {
+                model.removeRow(i);
+            }
+
+            int i = 0;
+            for (Map.Entry<String, Integer> entry : simbolos.entrySet()) {
+                Vector row = new Vector();
+                String key = entry.getKey();
+                Integer value = entry.getValue();
+                row.add(key);
+                model.addRow(row);
+            }
+        }
+    
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_agregar_estado;
@@ -144,7 +181,7 @@ public class PanelSimbolos extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField tf_agregar_estado;
+    private javax.swing.JTable tbl_simbolos;
+    private javax.swing.JTextField tf_agregar_simbolo;
     // End of variables declaration//GEN-END:variables
 }

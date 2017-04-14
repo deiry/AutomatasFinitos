@@ -82,7 +82,7 @@ public class AutomatasFinitos {
         System.out.println("Valido? "+afd.reconocer(hilera));
         afd.estadosInalcanzables();
         
-          Controlador ctrl = new Controlador();
+          Controlador ctrl = Controlador.getInstance();
         String hola = "{[Q0, Q1,Q2,Q3 ][a1,a2] [(Q0,a1,Q1) (Q1, a2,Q3)][Q0][Q3]}";
         ctrl.construirAtomata(hola);
         

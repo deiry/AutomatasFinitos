@@ -5,17 +5,29 @@
  */
 package vista;
 
+import controlador.Controlador;
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JButton;
+
 /**
  *
  * @author Alejandro
  */
 public class PanelEstadoInicial extends javax.swing.JPanel {
 
+    private controlador.Controlador controlador;
     /**
      * Creates new form PanelEstados
      */
     public PanelEstadoInicial() {
         initComponents();
+        controlador = Controlador.getInstance();
+        actualizarEstados();
     }
 
     /**
@@ -29,7 +41,7 @@ public class PanelEstadoInicial extends javax.swing.JPanel {
 
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
+        jp_estados = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -45,21 +57,21 @@ public class PanelEstadoInicial extends javax.swing.JPanel {
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel2.add(jLabel1);
 
-        jPanel4.setLayout(new java.awt.GridLayout(3, 8));
+        jp_estados.setLayout(new java.awt.GridLayout(3, 8));
 
         jButton1.setText("UPCI");
-        jPanel4.add(jButton1);
+        jp_estados.add(jButton1);
 
         jButton2.setText("jButton2");
-        jPanel4.add(jButton2);
+        jp_estados.add(jButton2);
 
         jButton3.setText("jButton3");
-        jPanel4.add(jButton3);
+        jp_estados.add(jButton3);
 
         jButton4.setText("jButton4");
-        jPanel4.add(jButton4);
+        jp_estados.add(jButton4);
 
-        jPanel2.add(jPanel4);
+        jPanel2.add(jp_estados);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -85,7 +97,36 @@ public class PanelEstadoInicial extends javax.swing.JPanel {
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jp_estados;
     // End of variables declaration//GEN-END:variables
+
+    private void actualizarEstados() {
+        HashMap<String,Integer> estados = controlador.obtenerEstados();
+        jp_estados.removeAll();
+        jp_estados.revalidate();
+        
+        if(estados != null)
+        {
+            
+            jp_estados.setLayout(new GridLayout(1, estados.size()));
+            for (Map.Entry<String, Integer> entry : estados.entrySet()) {
+                String key = entry.getKey();
+                Integer value = entry.getValue();
+                JButton btn = new JButton(key);
+                ActionListener l = new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String estado = btn.getText();
+                        controlador.agregarEstadoInicial(estado);
+                        btn.setEnabled(false);
+                        btn.setBackground(Color.gray);
+                    }
+                };
+                btn.addActionListener(l);
+                jp_estados.add(btn);
+            } 
+        }
+        
+    }
 }
