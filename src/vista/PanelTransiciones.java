@@ -5,17 +5,29 @@
  */
 package vista;
 
+import controlador.Controlador;
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JButton;
+
 /**
  *
  * @author Alejandro
  */
 public class PanelTransiciones extends javax.swing.JPanel {
 
+    private Controlador controlador;
     /**
      * Creates new form PanelEstados
      */
     public PanelTransiciones() {
         initComponents();
+        controlador = Controlador.getInstance();
+        actualizarEstados();
     }
 
     /**
@@ -30,7 +42,7 @@ public class PanelTransiciones extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        pn_contenedor_estados_transiciones = new javax.swing.JPanel();
+        jp_estados = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
@@ -62,18 +74,18 @@ public class PanelTransiciones extends javax.swing.JPanel {
 
         jPanel2.add(jPanel3, java.awt.BorderLayout.WEST);
 
-        pn_contenedor_estados_transiciones.setAlignmentX(5.0F);
-        pn_contenedor_estados_transiciones.setAlignmentY(5.0F);
-        pn_contenedor_estados_transiciones.setAutoscrolls(true);
-        pn_contenedor_estados_transiciones.setLayout(new java.awt.GridLayout(8, 3));
+        jp_estados.setAlignmentX(5.0F);
+        jp_estados.setAlignmentY(5.0F);
+        jp_estados.setAutoscrolls(true);
+        jp_estados.setLayout(new java.awt.GridLayout(8, 3));
 
         jButton1.setText("jButton1");
-        pn_contenedor_estados_transiciones.add(jButton1);
+        jp_estados.add(jButton1);
 
         jButton2.setText("jButton2");
-        pn_contenedor_estados_transiciones.add(jButton2);
+        jp_estados.add(jButton2);
 
-        jPanel2.add(pn_contenedor_estados_transiciones, java.awt.BorderLayout.CENTER);
+        jPanel2.add(jp_estados, java.awt.BorderLayout.CENTER);
 
         jPanel4.setMinimumSize(new java.awt.Dimension(100, 100));
 
@@ -109,6 +121,34 @@ public class PanelTransiciones extends javax.swing.JPanel {
         add(pn_contenedor_tabla_transiciones);
     }// </editor-fold>//GEN-END:initComponents
 
+     private void actualizarEstados() {
+        HashMap<String,Integer> estados = controlador.obtenerEstados();
+        jp_estados.removeAll();
+        jp_estados.revalidate();
+        
+        if(estados != null)
+        {
+            
+            jp_estados.setLayout(new GridLayout(estados.size(),1));
+            for (Map.Entry<String, Integer> entry : estados.entrySet()) {
+                String key = entry.getKey();
+                Integer value = entry.getValue();
+                JButton btn = new JButton(key);
+                ActionListener l = new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String estado = btn.getText();
+                        controlador.agregarEstadoAceptacion(estado);
+                        btn.setEnabled(false);
+                        btn.setBackground(Color.gray);
+                    }
+                };
+                btn.addActionListener(l);
+                jp_estados.add(btn);
+            } 
+        }
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -118,7 +158,7 @@ public class PanelTransiciones extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JPanel pn_contenedor_estados_transiciones;
+    private javax.swing.JPanel jp_estados;
     private javax.swing.JPanel pn_contenedor_tabla_transiciones;
     private javax.swing.JTable tbl_transiciones;
     // End of variables declaration//GEN-END:variables

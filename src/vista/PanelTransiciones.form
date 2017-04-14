@@ -60,7 +60,7 @@
             </DimensionLayout>
           </Layout>
         </Container>
-        <Container class="javax.swing.JPanel" name="pn_contenedor_estados_transiciones">
+        <Container class="javax.swing.JPanel" name="jp_estados">
           <Properties>
             <Property name="alignmentX" type="float" value="5.0"/>
             <Property name="alignmentY" type="float" value="5.0"/>
