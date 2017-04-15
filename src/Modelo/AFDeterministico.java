@@ -232,7 +232,6 @@ public class AFDeterministico extends AutomataFinito {
 
         particiones.add(0, particionN);
         particiones.add(1, estadoAceptacion);
-        imprimirTransiciones();
         return particiones;
     }
 
@@ -273,6 +272,7 @@ public class AFDeterministico extends AutomataFinito {
         }
 
         this.setTransiciones(tran);
+        imprimirTransiciones();
         unirEstados();
     }
 

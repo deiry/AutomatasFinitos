@@ -24,48 +24,54 @@ public class AutomatasFinitos {
         // TODO code application logic here
 
         Controlador controlador = Controlador.getInstance();
+        AFDeterministico afd = new AFDeterministico();
+        String estados[] = {"CPUP", "CPUI", "CIUP", "CIUI"};
 
-        AFDeterministico afd2 = new AFDeterministico();
-        String estados2[] = {"A", "B", "C", "D", "E", "F", "G"};
-
-        for (int i = 0; i < estados2.length; i++) {
-            afd2.agregarEstado(estados2[i], i);
+        for (int i = 0; i < estados.length; i++) {
+            afd.agregarEstado(estados[i], i);
         }
 
-        afd2.agregarEstadoInicial("A");
-        afd2.agregarEstadoAceptacion("E");
-        //afd.agregarEstadoAceptacion("CIUP");
+        afd.agregarEstadoInicial("CPUP");
+        afd.agregarEstadoAceptacion("CPUI");
+        afd.agregarEstadoAceptacion("CIUP");
 
-        String simbolos2[] = {"1", "0"};
-        for (int i = 0; i < simbolos2.length; i++) {
-            afd2.agregarSimbolos(simbolos2[i], i);
+        String simbolos[] = {"0", "1"};
+        for (int i = 0; i < simbolos.length; i++) {
+            afd.agregarSimbolos(simbolos[i], i);
         }
 
-        afd2.inicializar();
+        afd.inicializar();
 
-        String tran2[][] = {
-            {"B", "G"},
-            {"B", "C"},
-            {"A", "E"},
-            {"D", "G"},
-            {"E", "E"},
-            {"G", "F"},
-            {"G", "G"}
+        String tran[][] = {
+            {"CPUI", "CPUP"},
+            {"CIUI", "CPUI"},
+            {"CPUI", "CPUP"},
+            {"CPUI", "CIUI"}
         };
+
+        for (int i = 0; i < afd.sizeEstados(); i++) {
+            for (int j = 0; j < afd.sizeSimbolos(); j++) {
+                afd.agregarTransicion(estados[i], simbolos[j], tran[i][j]);
+            }
+        }
+
         Vector<String> hilera = new Vector<>();
+        hilera.add("1");
+        hilera.add("1");
+        hilera.add("1");
         hilera.add("1");
         hilera.add("0");
         hilera.add("0");
+        hilera.add("0");
+        hilera.add("0");
+        hilera.add("0");
 
-        for (int i = 0; i < afd2.sizeEstados(); i++) {
-            for (int j = 0; j < afd2.sizeSimbolos(); j++) {
-                afd2.agregarTransicion(estados2[i], simbolos2[j], tran2[i][j]);
-            }
-        }
-        System.out.println("Reconcer " + afd2.reconocer(hilera));
-        
-        afd2.simplificar();
-        System.out.println("Reconcer " + afd2.reconocer(hilera));
+        System.out.println("Valido? " + afd.reconocer(hilera));
+        // afd.analizarEstadosInalcanzables();
+        System.out.println("Valido? " + afd.reconocer(hilera));
+        // afd.creacionParticiones();
+        afd.simplificar();
+
 
     }
 
