@@ -20,6 +20,7 @@ public class AFDeterministico extends AutomataFinito {
     private String estadoInicial;
     private List<String> estadoAceptacion;
     private String[][] transiciones;
+    private ArrayList<List> particiones;
     private String estadoActual, estadoNuevo;
 
     public AFDeterministico(HashMap<String, Integer> estados, HashMap<String, Integer> simbolos, String estadoInicial, List<String> estadoAceptacion, String[][] transiciones) {
@@ -34,7 +35,7 @@ public class AFDeterministico extends AutomataFinito {
     public AFDeterministico() {
         super();
         this.estadoAceptacion = new Vector<String>();
-        this.estadoInicial = "";        
+        this.estadoInicial = "";
 
     }
 
@@ -76,34 +77,49 @@ public class AFDeterministico extends AutomataFinito {
     }
 
     @Override
-    public void estadosInalcanzables() {
+    public void analizarEstadosInalcanzables() {
         HashMap<String, Integer> visitado = (HashMap<String, Integer>) estados.clone();
         String estadoActual, nuevoEstado;
-        Stack<String> visit = new Stack<>();
+        Stack<String> alcanzable = new Stack<>();
         List<String> estadosAlcanzables = new Vector<>();
-        int posEstado;
-        int pos = 0;
 
         visitado.replace(estadoInicial, -1);
         estadosAlcanzables.add(estadoInicial);
-        visit.add(estadoInicial);
-        while (!visit.isEmpty()) {
-            estadoActual = visit.pop();
+        alcanzable.add(estadoInicial);
+        while (!alcanzable.isEmpty()) {
+            estadoActual = alcanzable.pop();
 
             for (Map.Entry<String, Integer> entry : simbolos.entrySet()) {
                 String key = entry.getKey();
-                Integer posSimbolo = entry.getValue();
-
                 nuevoEstado = nuevoEstado(estadoActual, key);
                 if (visitado.get(nuevoEstado) != -1) {
                     visitado.replace(nuevoEstado, -1);
-                    visit.add(nuevoEstado);
+                    alcanzable.add(nuevoEstado);
                     estadosAlcanzables.add(nuevoEstado);
                 }
             }
         }
-        System.out.println("Estados alcanzables" + estadosAlcanzables.toString());
+        this.eliminarEstados(visitado);
         actualizarAutomata(estadosAlcanzables);
+    }
+
+    public void eliminarEstados(HashMap<String, Integer> vist) {
+        List<String> estInalcanzable = new Vector();
+        for (Map.Entry<String, Integer> entry : vist.entrySet()) {
+            String key = entry.getKey();
+            Integer value = entry.getValue();
+            if (value != -1) {
+                estInalcanzable.add(key);
+            }
+        }
+
+        for (int i = 0; i < estInalcanzable.size(); i++) {
+            String aux = estInalcanzable.get(i);
+            if (this.estadoAceptacion.contains(aux)) {
+                this.estadoAceptacion.remove(aux);
+            }
+        }
+
     }
 
     public void actualizarAutomata(List<String> estadosAlcanzables) {
@@ -120,24 +136,111 @@ public class AFDeterministico extends AutomataFinito {
                 String simbolo = entry.getKey();
                 Integer posSimbolo = entry.getValue();
                 nTransiciones[i][posSimbolo] = nuevoEstado(estadoActual, simbolo);
-
             }
-
         }
         this.setEstados(nEstados);
-        this.setTransiciones(transiciones);
+        this.setTransiciones(nTransiciones);
     }
 
     @Override
     public void inicializar() {
         this.transiciones = new String[this.sizeEstados()][this.sizeSimbolos()];
-        System.out.println("etados "+estados.toString());
     }
 
     @Override
     public void simplificar() {
-        this.estadosInalcanzables();
+        this.analizarEstadosInalcanzables();
+        this.particiones = creacionParticiones();
+        String nuevoE = "";
+        int partIni;
+        List<String> particion = new Vector();
+        boolean cambio = false;
+        int i = 0;
+        while (i < particiones.size()) {
 
+            particion = particiones.get(i);
+            if (particion.size() > 1) {
+                for (Map.Entry<String, Integer> entry : simbolos.entrySet()) {
+                    String simbolo = entry.getKey();
+                    nuevoE = nuevoEstado(particion.get(0), simbolo);
+                    partIni = obtenerParticion(nuevoE);
+                    for (int k = 1; k < particion.size(); k++) {
+                        String estadoActual = particion.get(k);
+
+                        nuevoE = nuevoEstado(estadoActual, simbolo);
+                        int partNuevo = obtenerParticion(nuevoE);
+
+                        if (partNuevo != partIni) {
+                            List<String> nuevaParticion = new Vector();
+                            nuevaParticion.add(estadoActual);
+                            particiones.add(nuevaParticion);
+                            particion.remove(estadoActual);
+                            cambio = true;
+                            break;
+                        }
+
+                    }
+                    if (cambio) {
+                        break;
+                    }
+                }
+                if (cambio) {
+                    i = 0;
+                    cambio = false;
+                } else {
+                    i++;
+
+                }
+            }
+            i++;
+        }
+        System.out.println("Particiones " + particiones.toString().toString());
+    }
+
+    public void imprimirTransiciones() {
+        for (int i = 0; i < transiciones.length; i++) {
+            for (int j = 0; j < transiciones[i].length; j++) {
+                System.out.print(transiciones[i][j] + " ");
+            }
+            System.out.println("");
+        }
+    }
+
+    public int obtenerParticion(String estado) {
+        for (int p = 0; p < particiones.size(); p++) {
+            if (particiones.get(p).contains(estado)) {
+                return p;
+            }
+        }
+        return 0;
+    }
+
+    public ArrayList creacionParticiones() {
+
+        ArrayList<List> particiones = new ArrayList<>();
+        int cont = 0;
+        Vector<String> particionN = new Vector<>();
+        for (Map.Entry<String, Integer> entry : estados.entrySet()) {
+            String key = entry.getKey();
+            Integer value = entry.getValue();
+            if (!estadoAceptacion.contains(key)) {
+                particionN.add(cont, key);
+                cont++;
+            }
+        }
+
+        particiones.add(0, particionN);
+        particiones.add(1, estadoAceptacion);
+        imprimirArray(particiones);
+        return particiones;
+    }
+
+    public void imprimirArray(ArrayList list) {
+        Iterator<List> it = list.iterator();
+        while (it.hasNext()) {
+            String next = it.next().toString();
+            System.out.print(next + " -");
+        }
     }
 
     @Override

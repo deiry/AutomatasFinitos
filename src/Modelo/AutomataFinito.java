@@ -61,7 +61,7 @@ public abstract class AutomataFinito {
     
     public abstract void simplificar();
 
-    public abstract void estadosInalcanzables();
+    public abstract void analizarEstadosInalcanzables();
 
     public abstract void inicializar();
 
