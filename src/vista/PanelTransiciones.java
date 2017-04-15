@@ -7,12 +7,29 @@ package vista;
 
 import controlador.Controlador;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JViewport;
+import javax.swing.SwingConstants;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.RowSorterEvent;
+import javax.swing.event.RowSorterListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -21,13 +38,20 @@ import javax.swing.JButton;
 public class PanelTransiciones extends javax.swing.JPanel {
 
     private Controlador controlador;
+    private JButton estadoActual;
+    private JButton estadoSiguiente;
+    private JButton simbolo;
+    private Color colorFondoBotones;
     /**
      * Creates new form PanelEstados
      */
     public PanelTransiciones() {
         initComponents();
         controlador = Controlador.getInstance();
-        actualizarEstados();
+        actualizarEstadosActuales();
+        actualizarEstadosSiguiente();
+        actualizarSimbolos();
+        
     }
 
     /**
@@ -41,95 +65,118 @@ public class PanelTransiciones extends javax.swing.JPanel {
 
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jp_estados = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jp_estadoss = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jp_estado_actual = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jp_estado_siguiente = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jp_simbolos = new javax.swing.JPanel();
         pn_contenedor_tabla_transiciones = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tbl_transiciones = new javax.swing.JTable();
 
         setLayout(new java.awt.GridLayout(1, 2));
 
         jPanel2.setLayout(new java.awt.BorderLayout());
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Agregar Estados");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel2.add(jLabel1, java.awt.BorderLayout.NORTH);
 
-        jPanel3.setMinimumSize(new java.awt.Dimension(100, 100));
+        jPanel6.setMinimumSize(new java.awt.Dimension(100, 100));
+        jPanel6.setLayout(new java.awt.GridLayout());
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        jButton1.setText("Agregar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jButton1);
 
-        jPanel2.add(jPanel3, java.awt.BorderLayout.WEST);
+        jPanel2.add(jPanel6, java.awt.BorderLayout.PAGE_END);
 
-        jp_estados.setAlignmentX(5.0F);
-        jp_estados.setAlignmentY(5.0F);
-        jp_estados.setAutoscrolls(true);
-        jp_estados.setLayout(new java.awt.GridLayout(8, 3));
-
-        jButton1.setText("jButton1");
-        jp_estados.add(jButton1);
-
-        jButton2.setText("jButton2");
-        jp_estados.add(jButton2);
-
-        jPanel2.add(jp_estados, java.awt.BorderLayout.CENTER);
+        jp_estadoss.setAlignmentX(5.0F);
+        jp_estadoss.setAlignmentY(5.0F);
+        jp_estadoss.setAutoscrolls(true);
+        jp_estadoss.setLayout(new java.awt.GridLayout());
 
         jPanel4.setMinimumSize(new java.awt.Dimension(100, 100));
+        jPanel4.setLayout(new java.awt.BorderLayout());
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Estado Actual");
+        jPanel4.add(jLabel2, java.awt.BorderLayout.PAGE_START);
 
-        jPanel2.add(jPanel4, java.awt.BorderLayout.EAST);
+        jp_estado_actual.setMinimumSize(new java.awt.Dimension(100, 100));
+        jp_estado_actual.setLayout(new java.awt.GridLayout());
+        jPanel4.add(jp_estado_actual, java.awt.BorderLayout.CENTER);
+
+        jp_estadoss.add(jPanel4);
+
+        jPanel5.setMinimumSize(new java.awt.Dimension(100, 100));
+        jPanel5.setLayout(new java.awt.BorderLayout());
+
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Estado Siguiente");
+        jPanel5.add(jLabel3, java.awt.BorderLayout.PAGE_START);
+
+        jp_estado_siguiente.setMinimumSize(new java.awt.Dimension(100, 100));
+        jp_estado_siguiente.setLayout(new java.awt.GridLayout());
+        jPanel5.add(jp_estado_siguiente, java.awt.BorderLayout.CENTER);
+
+        jp_estadoss.add(jPanel5);
+
+        jPanel3.setMinimumSize(new java.awt.Dimension(100, 100));
+        jPanel3.setLayout(new java.awt.BorderLayout());
+
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Simbolo de Entrada");
+        jPanel3.add(jLabel4, java.awt.BorderLayout.PAGE_START);
+
+        jp_simbolos.setMinimumSize(new java.awt.Dimension(100, 100));
+        jp_simbolos.setLayout(new java.awt.GridLayout());
+        jPanel3.add(jp_simbolos, java.awt.BorderLayout.CENTER);
+
+        jp_estadoss.add(jPanel3);
+
+        jPanel2.add(jp_estadoss, java.awt.BorderLayout.CENTER);
 
         add(jPanel2);
 
         pn_contenedor_tabla_transiciones.setLayout(new java.awt.GridLayout(1, 1));
-
-        tbl_transiciones.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane1.setViewportView(tbl_transiciones);
-
-        pn_contenedor_tabla_transiciones.add(jScrollPane1);
-
         add(pn_contenedor_tabla_transiciones);
     }// </editor-fold>//GEN-END:initComponents
 
-     private void actualizarEstados() {
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String strEstadoActual = estadoActual.getText().toString();
+        String strEstadoSiguiente = estadoSiguiente.getText().toString();
+        String strSimbolo = simbolo.getText().toString();
+        
+        controlador.agregarTransicion(strEstadoActual, strSimbolo, strEstadoSiguiente);
+        
+        estadoActual.setEnabled(true);
+        estadoActual.setBackground(colorFondoBotones);
+        estadoSiguiente.setEnabled(true);
+        estadoSiguiente.setBackground(colorFondoBotones);
+        simbolo.setEnabled(true);
+        simbolo.setBackground(colorFondoBotones);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+     private void actualizarEstadosActuales() {
         HashMap<String,Integer> estados = controlador.obtenerEstados();
-        jp_estados.removeAll();
-        jp_estados.revalidate();
+        jp_estado_actual.removeAll();
+        jp_estado_actual.revalidate();
         
         if(estados != null)
         {
-            
-            jp_estados.setLayout(new GridLayout(estados.size(),1));
+            jp_estado_actual.setLayout(new GridLayout(estados.size(),1));
             for (Map.Entry<String, Integer> entry : estados.entrySet()) {
                 String key = entry.getKey();
                 Integer value = entry.getValue();
@@ -137,29 +184,119 @@ public class PanelTransiciones extends javax.swing.JPanel {
                 ActionListener l = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        String estado = btn.getText();
-                        controlador.agregarEstadoAceptacion(estado);
+                        if (estadoActual != null) {
+                           estadoActual.setEnabled(true); 
+                        }
+                        if (colorFondoBotones != null && estadoActual != null) {
+                            estadoActual.setBackground(colorFondoBotones);
+                        }
+                        colorFondoBotones = btn.getBackground();
                         btn.setEnabled(false);
                         btn.setBackground(Color.gray);
+                        estadoActual = btn;
                     }
                 };
                 btn.addActionListener(l);
-                jp_estados.add(btn);
+                jp_estado_actual.add(btn);
             } 
+        }   
+    }
+     private void actualizarEstadosSiguiente() {
+        HashMap<String,Integer> estados = controlador.obtenerEstados();
+        jp_estado_siguiente.removeAll();
+        jp_estado_siguiente.revalidate();
+        
+        if(estados != null)
+        {
+            jp_estado_siguiente.setLayout(new GridLayout(estados.size(),1));
+            for (Map.Entry<String, Integer> entry : estados.entrySet()) {
+                String key = entry.getKey();
+                Integer value = entry.getValue();
+                JButton btn = new JButton(key);
+                ActionListener l = new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (estadoSiguiente != null) {
+                           estadoSiguiente.setEnabled(true);
+                        }
+                        if (colorFondoBotones != null && estadoSiguiente != null) {
+                            estadoSiguiente.setBackground(colorFondoBotones);
+                        }
+                        colorFondoBotones = btn.getBackground();
+                        btn.setEnabled(false);
+                        btn.setBackground(Color.gray);
+                        estadoSiguiente = btn;
+                    }
+                };
+                btn.addActionListener(l);
+                jp_estado_siguiente.add(btn);
+            } 
+        }   
+    }
+     private void actualizarSimbolos() {
+        HashMap<String,Integer> simbolos = controlador.obtenerSimbolos();
+        jp_simbolos.removeAll();
+        jp_simbolos.revalidate();
+        
+        if(simbolos != null)
+        {
+            jp_simbolos.setLayout(new GridLayout(simbolos.size(),1));
+            for (Map.Entry<String, Integer> entry : simbolos.entrySet()) {
+                String key = entry.getKey();
+                Integer value = entry.getValue();
+                JButton btn = new JButton(key);
+                ActionListener l = new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (simbolo != null) {
+                           simbolo.setEnabled(true);
+                        }
+                        if (colorFondoBotones != null && simbolo != null) {
+                            simbolo.setBackground(colorFondoBotones);
+                        }
+                        colorFondoBotones = btn.getBackground();
+                        btn.setEnabled(false);
+                        btn.setBackground(Color.gray);
+                        simbolo = btn;
+                    }
+                };
+                btn.addActionListener(l);
+                jp_simbolos.add(btn);
+            } 
+        }   
+    }
+     
+    private void crearTabla()
+    {
+        HashMap<String,Integer> estados = controlador.obtenerEstados();
+        HashMap<String,Integer> simbolos = controlador.obtenerSimbolos();
+        String[] StrEstados = new String[estados.size()];
+        String[] StrSimbolos = new String[simbolos.size()];
+        
+        for (Map.Entry<String, Integer> entry : simbolos.entrySet()) {
+            String key = entry.getKey();
+            Integer value = entry.getValue();
+            StrSimbolos[value] = key;
         }
+        
         
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JPanel jp_estados;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jp_estado_actual;
+    private javax.swing.JPanel jp_estado_siguiente;
+    private javax.swing.JPanel jp_estadoss;
+    private javax.swing.JPanel jp_simbolos;
     private javax.swing.JPanel pn_contenedor_tabla_transiciones;
-    private javax.swing.JTable tbl_transiciones;
     // End of variables declaration//GEN-END:variables
 }
