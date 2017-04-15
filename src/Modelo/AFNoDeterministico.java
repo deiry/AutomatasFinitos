@@ -30,7 +30,7 @@ public class AFNoDeterministico extends AutomataFinito {
     }
 
     @Override
-    public void estadosInalcanzables() {
+    public void analizarEstadosInalcanzables() {
     }
 
     @Override
