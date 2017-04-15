@@ -16,14 +16,14 @@ import java.util.Vector;
  * @author alejandro
  */
 public class AutomatasFinitos {
-
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
 
-      
+        Controlador controlador = Controlador.getInstance();
         
         AFDeterministico afd2 = new AFDeterministico();
         String estados2[] = {"A", "B", "C", "D","E","F","G"};
@@ -60,6 +60,8 @@ public class AutomatasFinitos {
         }
        // afd2.creacionParticiones();
         afd2.simplificar();
+        
+        
         
 
     }
