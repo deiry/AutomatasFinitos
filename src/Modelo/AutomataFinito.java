@@ -16,6 +16,11 @@ public abstract class AutomataFinito {
 
     protected HashMap<String, Integer> estados;
     protected HashMap<String, Integer> simbolos;
+
+    public AutomataFinito() {
+        this.estados = new HashMap<>();
+        this.simbolos = new HashMap<>();
+    }
     
     
     
@@ -56,7 +61,7 @@ public abstract class AutomataFinito {
     
     public abstract void simplificar();
 
-    public abstract void estadosInalcanzables();
+    public abstract void analizarEstadosInalcanzables();
 
     public abstract void inicializar();
 
@@ -73,6 +78,12 @@ public abstract class AutomataFinito {
     public abstract void agregarEstadoAceptacion(String acep);
     
     public abstract void agregarEstadoInicial(String inicial);
+    
+    public abstract HashMap<String,Integer> obtenerEstados();
+    
+    public abstract HashMap<String,Integer> obtenerSimbolos();
+    
+    public abstract Object[][] obtenerTransiciones();
     
 
 }

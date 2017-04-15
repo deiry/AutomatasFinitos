@@ -7,8 +7,10 @@ package controlador;
 
 import Modelo.AFDeterministico;
 import Modelo.AFNoDeterministico;
+import Modelo.AutomataFinito;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import vista.VistaPrincipal;
 
 /**
@@ -19,10 +21,31 @@ public class Controlador {
     
     private AFDeterministico afd;
     private AFNoDeterministico afnd;
+    private int contadorEstados;
+    private int contadorSimbolos;
+    private AutomataFinito af;
+    private static Controlador instance = null;
 
-    public Controlador() {
+    protected Controlador() {
         VistaPrincipal vp = new VistaPrincipal();
         vp.setVisible(true);
+        this.contadorEstados = 0;
+        this.contadorSimbolos = 0;
+        af = new AFNoDeterministico();
+        
+        af.agregarEstado("q1", 0);
+        af.agregarEstado("q2", 1);
+        af.agregarEstado("q3", 2);
+        af.agregarSimbolos("0", 0);
+        af.agregarSimbolos("1", 1);
+    }
+    
+    public static Controlador getInstance()
+    {
+        if (instance == null) {
+            instance = new Controlador();
+        }
+        return instance;
     }
     
     public void construirAtomata(String stringAutomata)
@@ -204,4 +227,87 @@ public class Controlador {
         }
         return retorno;
     }
+    
+    public void agregarEstado(String estado)
+    {
+        af.agregarEstado(estado, contadorEstados);
+        contadorEstados++;
+    }
+    public HashMap<String,Integer> obtenerEstados()
+    {
+        return af.obtenerEstados();
+    }
+    
+    public void agregarSimbolo(String simbolo)
+    {
+        af.agregarSimbolos(simbolo, contadorSimbolos);
+        contadorSimbolos++;
+    }
+    
+    public HashMap<String,Integer> obtenerSimbolos()
+    {
+        return af.obtenerSimbolos();
+    }
+    
+    public void agregarEstadoInicial(String estadoInicial)
+    {
+        af.agregarEstadoInicial(estadoInicial);
+    }
+    
+    public void agregarEstadoAceptacion(String estadoAceptacion)
+    {
+        af.agregarEstadoAceptacion(estadoAceptacion);
+    }
+    
+    public void agregarTransicion(String estadoActual,String simbolo,String nuevoEstado)
+    {
+        af.agregarTransicion(estadoActual, simbolo, nuevoEstado);
+    }
+    
+    public Object[][] obtenerTransiciones()
+    {   
+        Object[][] mat = af.obtenerTransiciones();
+        if (mat != null) {
+            Object[][] matOut = new Object[mat.length+1][mat[0].length+1];
+            matOut[0][0] = "Estados|Simbolos";
+            HashMap<String,Integer> estados = obtenerEstados();
+            HashMap<String,Integer> simbolos = obtenerSimbolos();
+            for (Map.Entry<String, Integer> entry : estados.entrySet()) {
+                String key = entry.getKey();
+                Integer value = entry.getValue();
+                matOut[value+1][0] = key;
+            }
+            for (Map.Entry<String, Integer> entry : simbolos.entrySet()) {
+                String key = entry.getKey();
+                Integer value = entry.getValue();
+                matOut[0][value+1] = key;
+            }
+            for (int i = 0; i < mat.length; i++) {
+                for (int j = 0; j < mat[i].length; j++) {
+                    ArrayList<String> array = (ArrayList<String>) mat[i][j];
+                    if(array != null)
+                    {
+                        String s = new String();
+                        for (int k = 0; k < array.size(); k++) {
+                            s = s + array.get(k);
+                            if (k < array.size()-1)
+                            {
+                                s = s +", ";
+                            }
+                        }
+                        matOut[i+1][j+1] = s;
+                    }
+                    else
+                    {
+                        matOut[i+1][j+1] = "";
+                    }
+                }
+            }
+            return matOut;
+        }
+        else{
+            return null;
+        }    
+    }
+    
 }
