@@ -10,6 +10,7 @@ import Modelo.AFNoDeterministico;
 import Modelo.AutomataFinito;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import vista.VistaPrincipal;
 
 /**
@@ -261,6 +262,52 @@ public class Controlador {
     public void agregarTransicion(String estadoActual,String simbolo,String nuevoEstado)
     {
         af.agregarTransicion(estadoActual, simbolo, nuevoEstado);
+    }
+    
+    public Object[][] obtenerTransiciones()
+    {   
+        Object[][] mat = af.obtenerTransiciones();
+        if (mat != null) {
+            Object[][] matOut = new Object[mat.length+1][mat[0].length+1];
+            matOut[0][0] = "Estados|Simbolos";
+            HashMap<String,Integer> estados = obtenerEstados();
+            HashMap<String,Integer> simbolos = obtenerSimbolos();
+            for (Map.Entry<String, Integer> entry : estados.entrySet()) {
+                String key = entry.getKey();
+                Integer value = entry.getValue();
+                matOut[value+1][0] = key;
+            }
+            for (Map.Entry<String, Integer> entry : simbolos.entrySet()) {
+                String key = entry.getKey();
+                Integer value = entry.getValue();
+                matOut[0][value+1] = key;
+            }
+            for (int i = 0; i < mat.length; i++) {
+                for (int j = 0; j < mat[i].length; j++) {
+                    ArrayList<String> array = (ArrayList<String>) mat[i][j];
+                    if(array != null)
+                    {
+                        String s = new String();
+                        for (int k = 0; k < array.size(); k++) {
+                            s = s + array.get(k);
+                            if (k < array.size()-1)
+                            {
+                                s = s +", ";
+                            }
+                        }
+                        matOut[i+1][j+1] = s;
+                    }
+                    else
+                    {
+                        matOut[i+1][j+1] = "";
+                    }
+                }
+            }
+            return matOut;
+        }
+        else{
+            return null;
+        }    
     }
     
 }

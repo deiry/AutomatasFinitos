@@ -51,6 +51,7 @@ public class PanelTransiciones extends javax.swing.JPanel {
         actualizarEstadosActuales();
         actualizarEstadosSiguiente();
         actualizarSimbolos();
+        crearTabla();
         
     }
 
@@ -167,6 +168,8 @@ public class PanelTransiciones extends javax.swing.JPanel {
         estadoSiguiente.setBackground(colorFondoBotones);
         simbolo.setEnabled(true);
         simbolo.setBackground(colorFondoBotones);
+        
+        crearTabla();
     }//GEN-LAST:event_jButton1ActionPerformed
 
      private void actualizarEstadosActuales() {
@@ -268,16 +271,27 @@ public class PanelTransiciones extends javax.swing.JPanel {
      
     private void crearTabla()
     {
+        pn_contenedor_tabla_transiciones.removeAll();
+        pn_contenedor_tabla_transiciones.revalidate();
+        
         HashMap<String,Integer> estados = controlador.obtenerEstados();
         HashMap<String,Integer> simbolos = controlador.obtenerSimbolos();
-        String[] StrEstados = new String[estados.size()];
-        String[] StrSimbolos = new String[simbolos.size()];
-        
+        Object[] StrSimbolos = new Object[simbolos.size()+1];
+        StrSimbolos[0] = "";      
         for (Map.Entry<String, Integer> entry : simbolos.entrySet()) {
             String key = entry.getKey();
             Integer value = entry.getValue();
-            StrSimbolos[value] = key;
+            StrSimbolos[value+1] = key;
         }
+        
+        Object[][] mat = controlador.obtenerTransiciones();
+        if (mat != null)
+        {
+            JTable table = new JTable(mat, StrSimbolos);
+            pn_contenedor_tabla_transiciones.add(table);
+        }
+        //DefaultTableModel model = new DefaultTableModel(StrSimbolos,estados.size());
+        
         
         
     }

@@ -17,7 +17,7 @@ public class AFNoDeterministico extends AutomataFinito {
     
     private List<String> estadosIniciales;
     private List<String> estadosAceptacion;
-    private List<String>[][] transiciones;
+    private Object[][] transiciones;
     
 
     @Override
@@ -59,11 +59,11 @@ public class AFNoDeterministico extends AutomataFinito {
         this.estadosAceptacion = estadosAceptacion;
     }
 
-    public List<String>[][] getTransiciones() {
+    public Object[][] getTransiciones() {
         return transiciones;
     }
 
-    public void setTransiciones(List<String>[][] transiciones) {
+    public void setTransiciones(Object[][] transiciones) {
         this.transiciones = transiciones;
     }
 
@@ -87,16 +87,19 @@ public class AFNoDeterministico extends AutomataFinito {
 
     @Override
     public void agregarTransicion(String estadoActual, String simbolo, String nuevoEstado) {
+        if (transiciones == null) {
+            transiciones = new Object[obtenerEstados().size()][obtenerSimbolos().size()];
+        }
         int posEstado = posEstado(estadoActual);
         int posSimbolo = posSimbolo(simbolo);
-        List<String> transicion = transiciones[posEstado][posSimbolo];
+        List<String> transicion = (ArrayList<String>) transiciones[posEstado][posSimbolo];
         if (transicion != null) {
             transicion.add(nuevoEstado);
         }
         else
         {
-            //no se como contruirlo
-            
+            transicion = new ArrayList<String>();
+            transicion.add(nuevoEstado);
         }
         
         transiciones[posEstado][posSimbolo] = transicion;
@@ -128,6 +131,11 @@ public class AFNoDeterministico extends AutomataFinito {
     @Override
     public HashMap<String, Integer> obtenerSimbolos() {
         return simbolos;
+    }
+
+    @Override
+    public Object[][] obtenerTransiciones() {
+        return transiciones;
     }
 
 }

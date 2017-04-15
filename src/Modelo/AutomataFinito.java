@@ -83,5 +83,7 @@ public abstract class AutomataFinito {
     
     public abstract HashMap<String,Integer> obtenerSimbolos();
     
+    public abstract Object[][] obtenerTransiciones();
+    
 
 }
