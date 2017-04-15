@@ -31,6 +31,12 @@ public class Controlador {
         this.contadorEstados = 0;
         this.contadorSimbolos = 0;
         af = new AFNoDeterministico();
+        
+        af.agregarEstado("q1", 0);
+        af.agregarEstado("q2", 1);
+        af.agregarEstado("q3", 2);
+        af.agregarSimbolos("0", 0);
+        af.agregarSimbolos("1", 1);
     }
     
     public static Controlador getInstance()
@@ -250,6 +256,11 @@ public class Controlador {
     public void agregarEstadoAceptacion(String estadoAceptacion)
     {
         af.agregarEstadoAceptacion(estadoAceptacion);
+    }
+    
+    public void agregarTransicion(String estadoActual,String simbolo,String nuevoEstado)
+    {
+        af.agregarTransicion(estadoActual, simbolo, nuevoEstado);
     }
     
 }
