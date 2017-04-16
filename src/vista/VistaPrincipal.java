@@ -6,6 +6,13 @@
 package vista;
 
 import controlador.Controlador;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -14,11 +21,13 @@ import javax.swing.JPanel;
  */
 public class VistaPrincipal extends javax.swing.JFrame {
 
+    private Controlador controlador;
     /**
      * Creates new form VistaPrincipal
      */
     public VistaPrincipal() {
         initComponents();
+        btn_vista_automata.setEnabled(false);
     }
 
     /**
@@ -31,6 +40,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jp_modificar_automata = new javax.swing.JPanel();
+        btn_vista_automata = new javax.swing.JButton();
         btn_vista_estados = new javax.swing.JButton();
         btn_vista_simbolos = new javax.swing.JButton();
         btn_vista_estado_incial = new javax.swing.JButton();
@@ -48,6 +58,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jp_modificar_automata.setLayout(new java.awt.GridLayout(6, 1));
+
+        btn_vista_automata.setText("Automata");
+        btn_vista_automata.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_vista_automataActionPerformed(evt);
+            }
+        });
+        jp_modificar_automata.add(btn_vista_automata);
 
         btn_vista_estados.setText("Estados");
         btn_vista_estados.addActionListener(new java.awt.event.ActionListener() {
@@ -92,9 +110,19 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jp_operaciones_automata.setLayout(new java.awt.GridLayout(1, 6));
 
         jButton1.setText("Abrir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jp_operaciones_automata.add(jButton1);
 
         jButton2.setText("Guardar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jp_operaciones_automata.add(jButton2);
 
         jButton3.setText("Identificar");
@@ -166,13 +194,33 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private void btn_vista_transicionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_vista_transicionesActionPerformed
         PanelTransiciones panelTransiciones = new PanelTransiciones();
         mostrarPanel(jp_contenedor_principal, panelTransiciones);
+        btn_vista_automata.setEnabled(true);
     }//GEN-LAST:event_btn_vista_transicionesActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String texto = abrirArchivo();
+        controlador = Controlador.getInstance();
+        controlador.construirAtomata(texto);
+        PanelAutomata panelAutomata = new PanelAutomata();
+        mostrarPanel(jp_contenedor_principal, panelAutomata);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String automata = controlador.obtenerAutomata();
+        guardarArchivo(automata);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void btn_vista_automataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_vista_automataActionPerformed
+        PanelAutomata panelAutomata = new PanelAutomata();
+        mostrarPanel(jp_contenedor_principal, panelAutomata);
+    }//GEN-LAST:event_btn_vista_automataActionPerformed
 
     private void ConvertirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConvertirActionPerformed
         
         Controlador ctrl = Controlador.getInstance();
         ctrl.convertirAF();
     }//GEN-LAST:event_ConvertirActionPerformed
+
 
     /**
      * metodo que sobrescribe el contendio de un panel para hacer las vistas
@@ -221,9 +269,74 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }
         });
     }
+    
+    private String abrirArchivo() 
+    {
+        String aux="";   
+        String texto="";
+        try
+        {
+         /**llamamos el metodo que permite cargar la ventana*/
+         JFileChooser file=new JFileChooser();
+         file.showOpenDialog(this);
+         /**abrimos el archivo seleccionado*/
+         File abre = file.getSelectedFile();
+
+         /**recorremos el archivo, lo leemos para plasmarlo
+         *en el area de texto*/
+         if(abre!=null)
+         {     
+            FileReader archivos=new FileReader(abre);
+            BufferedReader lee=new BufferedReader(archivos);
+            while((aux=lee.readLine())!=null)
+            {
+               texto+= aux+ "\n";
+            }
+               lee.close();
+          }    
+         }
+         catch(IOException ex)
+         {
+           JOptionPane.showMessageDialog(null,ex+"" +
+                 "\nNo se ha encontrado el archivo",
+                       "ADVERTENCIA!!!",JOptionPane.WARNING_MESSAGE);
+          }
+        return texto;//El texto se almacena en el JTextArea
+    }
+    
+    private void guardarArchivo(String areaDeTexto) 
+    {
+        try
+        {
+         String nombre="";
+         JFileChooser file=new JFileChooser();
+         file.showSaveDialog(this);
+         File guarda =file.getSelectedFile();
+
+         if(guarda !=null)
+         {
+          /*guardamos el archivo y le damos el formato directamente,
+           * si queremos que se guarde en formato doc lo definimos como .doc*/
+           FileWriter  save=new FileWriter(guarda+".txt");
+           save.write(areaDeTexto);
+           save.close();
+           JOptionPane.showMessageDialog(null,
+                "El archivo se a guardado Exitosamente",
+                    "Información",JOptionPane.INFORMATION_MESSAGE);
+           }
+        }
+         catch(IOException ex)
+         {
+          JOptionPane.showMessageDialog(null,
+               "Su archivo no se ha guardado",
+                  "Advertencia",JOptionPane.WARNING_MESSAGE);
+         }
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Convertir;
+    private javax.swing.JButton btn_vista_automata;
     private javax.swing.JButton btn_vista_estado_acpetacion;
     private javax.swing.JButton btn_vista_estado_incial;
     private javax.swing.JButton btn_vista_estados;
@@ -238,4 +351,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jp_modificar_automata;
     private javax.swing.JPanel jp_operaciones_automata;
     // End of variables declaration//GEN-END:variables
+
+    
 }
