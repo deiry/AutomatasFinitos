@@ -111,55 +111,60 @@ public class AFNoDeterministico extends AutomataFinito {
 
         return null;
     }
+    /**
+     * Hashmap todosEstados ahi se van agregando los nuevos estados que van saliendo
+     * HashMap nuevosEstados  se guarda la union de los estados en un string y su arrayList  los ejemplo: String q1q2, arrayList q1,q2
+     * HashMap transicionesNuevosEstados cuando busco con el string de la union de los estados obtengo la transcion que hace cuando de cada simbolo
+     */
 
     public void convertirAFNDtoAFD() {
-        HashMap<String, Integer> estadosDet = (HashMap<String, Integer>) this.estados.clone();
+        HashMap<String, Integer> todosEstados = (HashMap<String, Integer>) this.estados.clone();
         HashMap<String, List<String>> nuevosEstados = new HashMap();
-        HashMap<String, List<List<String>>> particiones = new HashMap();
+        HashMap<String, List<List<String>>> transicionesNuevosEstados = new HashMap();
         List<List<String>> vector;
 
-        for (Map.Entry<String, Integer> entry : estadosDet.entrySet()) {
+        for (Map.Entry<String, Integer> entry : todosEstados.entrySet()) {
             String estado = entry.getKey();
             Integer posEstado = entry.getValue();
             for (Map.Entry<String, Integer> entry1 : simbolos.entrySet()) {
                 String simbolo = entry1.getKey();
                 Integer posSimbolo = entry1.getValue();
 
-                if (posEstado < estadosDet.size()) {
+                if (posEstado < todosEstados.size()) {
                     ArrayList<String> estadosNDet = (ArrayList<String>) ((ArrayList<String>) this.transiciones[posEstado][posSimbolo]).clone();
 
                     if (estadosNDet.size() > 1) {
                         String estadoTran = unionEstadosTransicion(estadosNDet);
-                        estadosDet.put(estadoTran, estadosDet.size());
+                        todosEstados.put(estadoTran, todosEstados.size());
                         nuevosEstados.put(estadoTran, estadosNDet);
                         List<String> nVector = new Vector();
-                        particiones.put(estadoTran, new Vector(nVector));
+                        transicionesNuevosEstados.put(estadoTran, new Vector(nVector));
                     }
                 } else {
 
                     ArrayList<String> nuevoE = (ArrayList<String>) nuevosEstados.get(estado);
                     ArrayList<String> transicionU = unirTransicion(nuevoE, simbolo);
                     if (transicionU.size() > 1 && !nuevosEstados.containsValue(transicionU)) {
-                        vector = particiones.get(estado);
+                        vector = transicionesNuevosEstados.get(estado);
                         vector.add(posSimbolo, transicionU);
-                        particiones.put(estado, vector);
+                        transicionesNuevosEstados.put(estado, vector);
 
                         String transU = unionEstadosTransicion(transicionU);
-                        estadosDet.put(transU, estadosDet.size());
+                        todosEstados.put(transU, todosEstados.size());
                         nuevosEstados.put(transU, transicionU);
                         List<String> nVector = new Vector();
-                        particiones.put(transU, new Vector(nVector));
+                        transicionesNuevosEstados.put(transU, new Vector(nVector));
                     } else {
-                        vector = particiones.get(estado);
+                        vector = transicionesNuevosEstados.get(estado);
                         vector.add(posSimbolo, transicionU);
-                        particiones.put(estado, vector);
+                        transicionesNuevosEstados.put(estado, vector);
 
                     }
 
                 }
             }
         }
-        System.out.println("Estdos finales "+estadosDet.toString());
+        System.out.println("Estdos finales "+todosEstados.toString());
     }
 
    
