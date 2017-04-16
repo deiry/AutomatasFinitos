@@ -33,11 +33,11 @@ public class Controlador {
         this.contadorSimbolos = 0;
         af = new AFNoDeterministico();
         
-        af.agregarEstado("q1", 0);
-        af.agregarEstado("q2", 1);
-        af.agregarEstado("q3", 2);
-        af.agregarSimbolos("0", 0);
-        af.agregarSimbolos("1", 1);
+//        af.agregarEstado("q1", 0);
+//        af.agregarEstado("q2", 1);
+//        af.agregarEstado("q3", 2);
+//        af.agregarSimbolos("0", 0);
+//        af.agregarSimbolos("1", 1);
     }
     
     public static Controlador getInstance()
@@ -50,16 +50,35 @@ public class Controlador {
     
     public void construirAtomata(String stringAutomata)
     {
+        af = new AFNoDeterministico();
         ArrayList<String> componentesAF = obtenerCompontesAtomata(stringAutomata);
         
         if (!componentesAF.isEmpty()) 
         {
-            HashMap estados = obtenerEstados(componentesAF.get(0));
-            HashMap lenguaje =obtenerLenguaje(componentesAF.get(1));
-            HashMap estadosIniciales =obtenerEstadosIniciales(componentesAF.get(3));
-            HashMap estadosAceptacion = obtenerEstadosAceptacion(componentesAF.get(4));
-            ArrayList[][] transiciones = obtenerTransiciones(componentesAF.get(2),estados,lenguaje);
+            HashMap<String,Integer> estados = obtenerEstados(componentesAF.get(0));
+            HashMap<String,Integer> simbolos =obtenerLenguaje(componentesAF.get(1));
+            HashMap<String,Integer> estadosIniciales =obtenerEstadosIniciales(componentesAF.get(3));
+            HashMap<String,Integer> estadosAceptacion = obtenerEstadosAceptacion(componentesAF.get(4));
+            Object[][] transiciones = obtenerTransiciones(componentesAF.get(2),estados,simbolos);
             
+            af.setEstados(estados);
+            af.setSimbolos(simbolos);
+            af.agregarTransiciones(transiciones);
+            
+            for (Map.Entry<String, Integer> entry : estadosIniciales.entrySet()) {
+                String key = entry.getKey();
+                Integer value = entry.getValue();
+                agregarEstadoInicial(key);
+            }
+            
+            for (Map.Entry<String, Integer> entry : estadosAceptacion.entrySet()) {
+                String key = entry.getKey();
+                Integer value = entry.getValue();
+                agregarEstadoAceptacion(key);
+            }
+            System.out.println("Automata Contruido");
+            contadorEstados = estados.size();
+            contadorSimbolos = simbolos.size();
         }
         else
         {
@@ -170,9 +189,9 @@ public class Controlador {
         return retorno;
     }
 
-    private ArrayList[][] obtenerTransiciones(String hilera, HashMap<String,Integer> estados, HashMap<String,Integer> lenguaje) 
+    private Object[][] obtenerTransiciones(String hilera, HashMap<String,Integer> estados, HashMap<String,Integer> lenguaje) 
     {
-        ArrayList<String>[][] matriz = new ArrayList[estados.size()][lenguaje.size()];
+        Object[][] matriz = new Object[estados.size()][lenguaje.size()];
         ArrayList<String> transiciones = splitTransiciones(hilera);
         for (int i = 0; i < transiciones.size(); i++) {
             ArrayList<String> transicionArrayList = subStringComa(transiciones.get(i),0);
@@ -184,7 +203,7 @@ public class Controlador {
             int fila = estados.get(estadoActual);
             int columna = lenguaje.get(simbolo);
             
-            ArrayList<String> posicionArrayList = matriz[fila][columna];
+            ArrayList<String> posicionArrayList = (ArrayList<String>)matriz[fila][columna];
             if (posicionArrayList != null) 
             {
                 posicionArrayList.add(estadoSiguiente);
@@ -313,5 +332,100 @@ public class Controlador {
             return null;
         }    
     }
+
+    public String obtenerAutomata() {
+        String automata = "{";
+        
+        HashMap<String,Integer> estados = af.getEstados();
+        HashMap<String,Integer> simbolos = af.getSimbolos();
+        String[] strEstados = new String[estados.size()];
+        String[] strSimbolos = new String[simbolos.size()];
+        ArrayList<String> estadoInicial = af.obtenerEstadoInicial();
+        ArrayList<String> estadoAcpetacion = af.obtenerEstadoAceptacion();
+        Object[][] transiciones = af.obtenerTransiciones();
+        
+        for (Map.Entry<String, Integer> entry : estados.entrySet()) {
+            String key = entry.getKey();
+            Integer value = entry.getValue();
+            strEstados[value] = key;
+        }
+        
+        for (Map.Entry<String, Integer> entry : simbolos.entrySet()) {
+            String key = entry.getKey();
+            Integer value = entry.getValue();
+            strSimbolos[value] = key;
+        }
+        automata = automata + "[";
+        for (int i = 0; i < strEstados.length; i++) 
+        {
+            automata = automata + strEstados[i];
+            if(i < strEstados.length-1)
+            {
+                automata = automata + ",";
+            }
+        }
+        automata = automata + "][";
+        for (int i = 0; i < strSimbolos.length; i++) 
+        {
+            automata = automata + strSimbolos[i];
+            if(i < strSimbolos.length-1)
+            {
+                automata = automata + ",";
+            }
+        }
+        automata = automata + "][";
+        
+        for (int i = 0; i < transiciones.length; i++) {
+            for (int j = 0; j < transiciones[i].length; j++) {
+                ArrayList<String> estadosSig = (ArrayList)transiciones[i][j];
+                if (estadosSig != null)
+                {
+                    for (int k = 0; k < estadosSig.size(); k++) {
+                        String get = estadosSig.get(k);
+                        automata = automata 
+                        + "("
+                        + strEstados[i]+","
+                        + strSimbolos[j]+","
+                        + get
+                        + ")";
+                        
+                    }
+                }
+                
+            }
+        }
+        
+        
+        automata = automata + "][";
+        for (int i = 0; i < estadoInicial.size(); i++) {
+            automata = automata + estadoAcpetacion.get(i);
+            if(i < estadoInicial.size()-1)
+            {
+                automata = automata + ",";
+            }
+        }
+        automata = automata + "][";
+        for (int i = 0; i < estadoAcpetacion.size(); i++) {
+            automata = automata + estadoAcpetacion.get(i);
+            if(i < estadoAcpetacion.size()-1)
+            {
+                automata = automata + ",";
+            }
+        }
+        automata = automata + "]}";
+        return automata;
+    }
+    
+    public ArrayList<String> obtenerEstadosAceptacion()
+    {
+        return af.obtenerEstadoAceptacion();
+    }
+    
+    public ArrayList<String> obtenerEstadosInicial()
+    {
+        return af.obtenerEstadoInicial();
+    }
+    
+    
     
 }

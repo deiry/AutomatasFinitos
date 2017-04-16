@@ -5,6 +5,7 @@
  */
 package Modelo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -85,7 +86,14 @@ public abstract class AutomataFinito {
     
     public abstract Object[][] obtenerTransiciones();
     
+    public abstract void agregarTransiciones(Object[][] transiciones);
+
+    public abstract ArrayList<String> obtenerEstadoInicial();
+
+    public abstract ArrayList<String> obtenerEstadoAceptacion();
+
     public abstract void unirEstados();
+
     
 
 }
