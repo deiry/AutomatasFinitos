@@ -368,6 +368,11 @@ public class AFDeterministico extends AutomataFinito {
     public ArrayList<String> obtenerEstadoAceptacion() {
         return (ArrayList<String>) estadoAceptacion;
     }
+
+    @Override
+    public void convertirAFNDtoAFD() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
 
