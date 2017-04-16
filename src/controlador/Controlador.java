@@ -283,6 +283,10 @@ public class Controlador {
         af.agregarTransicion(estadoActual, simbolo, nuevoEstado);
     }
     
+    public void convertirAF(){
+       af.unirEstados();
+    }
+    
     public Object[][] obtenerTransiciones()
     {   
         Object[][] mat = af.obtenerTransiciones();

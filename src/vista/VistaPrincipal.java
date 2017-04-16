@@ -134,6 +134,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jp_operaciones_automata.add(jButton5);
 
         Convertir.setText("Convertir");
+        Convertir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConvertirActionPerformed(evt);
+            }
+        });
         jp_operaciones_automata.add(Convertir);
 
         jp_contenedor_principal.setLayout(new java.awt.CardLayout());
@@ -207,6 +212,13 @@ public class VistaPrincipal extends javax.swing.JFrame {
         PanelAutomata panelAutomata = new PanelAutomata();
         mostrarPanel(jp_contenedor_principal, panelAutomata);
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void ConvertirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConvertirActionPerformed
+        
+        Controlador ctrl = Controlador.getInstance();
+        ctrl.convertirAF();
+    }//GEN-LAST:event_ConvertirActionPerformed
+
 
     /**
      * metodo que sobrescribe el contendio de un panel para hacer las vistas

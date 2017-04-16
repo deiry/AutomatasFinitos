@@ -184,20 +184,21 @@ public class AFDeterministico extends AutomataFinito {
                         break;
                     }
                 }
-                if (cambio) {
-                    i = 0;
-                    cambio = false;
-                } else {
-                    i++;
 
-                }
             }
-            i++;
+            if (cambio) {
+                i = 0;
+                cambio = false;
+            } else {
+                i++;
+            }
         }
         System.out.println("Particiones " + particiones.toString().toString());
+        unirTransiciones();
     }
 
     public void imprimirTransiciones() {
+        System.out.println("Transiciones");
         for (int i = 0; i < transiciones.length; i++) {
             for (int j = 0; j < transiciones[i].length; j++) {
                 System.out.print(transiciones[i][j] + " ");
@@ -231,8 +232,73 @@ public class AFDeterministico extends AutomataFinito {
 
         particiones.add(0, particionN);
         particiones.add(1, estadoAceptacion);
-        imprimirArray(particiones);
         return particiones;
+    }
+
+    public void unirTransiciones() {
+
+        Vector<String> aux = new Vector();
+        String nuevoE = "";
+        String estadosU = "";
+        String[][] tran = new String[particiones.size()][this.sizeSimbolos()];
+        Iterator<List> it = particiones.iterator();
+        for (int j = 0; j < particiones.size(); j++) {
+            List particion = particiones.get(j);
+
+            for (Map.Entry<String, Integer> entry : simbolos.entrySet()) {
+                String simbolo = entry.getKey();
+                Integer posSimbolo = entry.getValue();
+
+                if (particion.size() > 1) {
+                    String soloMirar = (String) particion.get(0);
+                    nuevoE = nuevoEstado((String) particion.get(0), simbolo);
+                    aux.add(nuevoE);
+                    estadosU = nuevoE;
+
+                    for (int i = 1; i < particion.size(); i++) {
+                        nuevoE = nuevoEstado((String) particion.get(i), simbolo);
+                        if (!aux.contains(nuevoE)) {
+                            aux.add(nuevoE);
+                            estadosU += nuevoE;
+                        }
+                    }
+
+                } else {
+                    estadosU = nuevoEstado((String) particion.get(0), simbolo);
+                }
+                tran[j][posSimbolo] = estadosU;
+
+            }
+        }
+
+        this.setTransiciones(tran);
+        imprimirTransiciones();
+        unirEstados();
+    }
+
+    public void unirEstados() {
+        HashMap<String, Integer> union = new HashMap<>();
+        Vector<String> tranUnion = new Vector();
+        String estadoN = "";
+        int pos = 0;
+        Iterator<List> it = particiones.iterator();
+        while (it.hasNext()) {
+            List particion = it.next();
+            if (particion.size() > 1) {
+                for (int i = 0; i < particion.size(); i++) {
+                    estadoN += particion.get(i);
+                }
+            } else {
+                estadoN = (String) particion.get(0);
+            }
+
+            union.put(estadoN, pos);
+            tranUnion.add(pos, estadoN);
+            pos++;
+        }
+
+        this.setEstados(union);
+        System.out.println("Estados "+estados.toString());
     }
 
     public void imprimirArray(ArrayList list) {
@@ -300,8 +366,9 @@ public class AFDeterministico extends AutomataFinito {
 
     @Override
     public ArrayList<String> obtenerEstadoAceptacion() {
-       
         return (ArrayList<String>) estadoAceptacion;
     }
+    
+    
 
 }
