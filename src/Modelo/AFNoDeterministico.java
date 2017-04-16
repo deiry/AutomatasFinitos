@@ -167,7 +167,12 @@ public class AFNoDeterministico extends AutomataFinito {
         System.out.println("Estdos finales "+todosEstados.toString());
     }
 
-   
+   /**
+    * con la lista de estados buscar las transiones  de cada uno de los estados y guardarlos en arrayList SIN REPETIR porque se caga todo :v
+    * @param estado
+    * @param simbolo
+    * @return 
+    */
     public ArrayList<String> unirTransicion(List<String> estado, String simbolo) {
         ArrayList<String> unirTodo = new ArrayList<>();
         return unirTodo;
@@ -255,6 +260,11 @@ public class AFNoDeterministico extends AutomataFinito {
             }
         }
         transiciones = mat;
+    }
+
+    @Override
+    public void unirEstados() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
