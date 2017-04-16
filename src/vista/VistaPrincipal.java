@@ -27,6 +27,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
      */
     public VistaPrincipal() {
         initComponents();
+        btn_vista_automata.setEnabled(false);
     }
 
     /**
@@ -39,7 +40,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jp_modificar_automata = new javax.swing.JPanel();
-        jButton6 = new javax.swing.JButton();
+        btn_vista_automata = new javax.swing.JButton();
         btn_vista_estados = new javax.swing.JButton();
         btn_vista_simbolos = new javax.swing.JButton();
         btn_vista_estado_incial = new javax.swing.JButton();
@@ -58,13 +59,13 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
         jp_modificar_automata.setLayout(new java.awt.GridLayout(6, 1));
 
-        jButton6.setText("Automata");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        btn_vista_automata.setText("Automata");
+        btn_vista_automata.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                btn_vista_automataActionPerformed(evt);
             }
         });
-        jp_modificar_automata.add(jButton6);
+        jp_modificar_automata.add(btn_vista_automata);
 
         btn_vista_estados.setText("Estados");
         btn_vista_estados.addActionListener(new java.awt.event.ActionListener() {
@@ -193,6 +194,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private void btn_vista_transicionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_vista_transicionesActionPerformed
         PanelTransiciones panelTransiciones = new PanelTransiciones();
         mostrarPanel(jp_contenedor_principal, panelTransiciones);
+        btn_vista_automata.setEnabled(true);
     }//GEN-LAST:event_btn_vista_transicionesActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -208,10 +210,10 @@ public class VistaPrincipal extends javax.swing.JFrame {
         guardarArchivo(automata);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void btn_vista_automataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_vista_automataActionPerformed
         PanelAutomata panelAutomata = new PanelAutomata();
         mostrarPanel(jp_contenedor_principal, panelAutomata);
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_btn_vista_automataActionPerformed
 
     private void ConvertirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConvertirActionPerformed
         
@@ -334,6 +336,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Convertir;
+    private javax.swing.JButton btn_vista_automata;
     private javax.swing.JButton btn_vista_estado_acpetacion;
     private javax.swing.JButton btn_vista_estado_incial;
     private javax.swing.JButton btn_vista_estados;
@@ -344,7 +347,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JPanel jp_contenedor_principal;
     private javax.swing.JPanel jp_modificar_automata;
     private javax.swing.JPanel jp_operaciones_automata;
