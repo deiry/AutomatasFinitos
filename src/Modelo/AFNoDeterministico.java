@@ -138,4 +138,19 @@ public class AFNoDeterministico extends AutomataFinito {
         return transiciones;
     }
 
+    @Override
+    public void agregarTransiciones(Object[][] transiciones) {
+        this.transiciones = transiciones;
+    }
+
+    @Override
+    public ArrayList<String> obtenerEstadoInicial() {
+        return (ArrayList<String>)estadosIniciales;
+    }
+
+    @Override
+    public ArrayList<String> obtenerEstadoAceptacion() {
+        return (ArrayList<String>)estadosAceptacion;
+    }
+
 }

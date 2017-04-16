@@ -282,7 +282,26 @@ public class AFDeterministico extends AutomataFinito {
 
     @Override
     public Object[][] obtenerTransiciones() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Object[][] transiciones = this.transiciones;
+        return transiciones;
+    }
+
+    @Override
+    public void agregarTransiciones(Object[][] transiciones) {
+        this.transiciones = (String[][]) this.transiciones;
+    }
+
+    @Override
+    public ArrayList<String> obtenerEstadoInicial() {
+        ArrayList<String> estadoInicial = new ArrayList<String>();
+        estadoInicial.add(this.estadoInicial);
+        return estadoInicial;
+    }
+
+    @Override
+    public ArrayList<String> obtenerEstadoAceptacion() {
+       
+        return (ArrayList<String>) estadoAceptacion;
     }
 
 }
