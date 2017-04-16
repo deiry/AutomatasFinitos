@@ -201,8 +201,29 @@ public class AFNoDeterministico extends AutomataFinito {
             transicion = new ArrayList<String>();
             transicion.add(nuevoEstado);
         }
+        
+        
 
-        transiciones[posEstado][posSimbolo] = transicion;
+        transiciones[posEstado][posSimbolo] = ordenarTransicion((ArrayList<String>)transicion);
+    }
+    
+    private ArrayList<String> ordenarTransicion (ArrayList<String> estadosSiguiente)
+    {
+        HashMap<String,Integer> estados = getEstados();
+        String[] strEstadosSig = new String[estados.size()];
+        for (int i = 0; i < estadosSiguiente.size(); i++)
+        {
+            String get = estadosSiguiente.get(i);
+            strEstadosSig[estados.get(get)] = get;
+        }
+        estadosSiguiente = new ArrayList<>();
+        for (int i = 0; i < strEstadosSig.length; i++) {
+            if(strEstadosSig[i] != null)
+            {
+                estadosSiguiente.add(strEstadosSig[i]);
+            }        
+        }
+        return estadosSiguiente;
     }
 
     @Override
