@@ -57,12 +57,12 @@
         <Property name="rows" type="int" value="6"/>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="jButton6">
+        <Component class="javax.swing.JButton" name="btn_vista_automata">
           <Properties>
             <Property name="text" type="java.lang.String" value="Automata"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton6ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_vista_automataActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_vista_estados">
