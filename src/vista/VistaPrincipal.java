@@ -39,6 +39,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jp_modificar_automata = new javax.swing.JPanel();
+        jButton6 = new javax.swing.JButton();
         btn_vista_estados = new javax.swing.JButton();
         btn_vista_simbolos = new javax.swing.JButton();
         btn_vista_estado_incial = new javax.swing.JButton();
@@ -56,6 +57,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jp_modificar_automata.setLayout(new java.awt.GridLayout(6, 1));
+
+        jButton6.setText("Automata");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        jp_modificar_automata.add(jButton6);
 
         btn_vista_estados.setText("Estados");
         btn_vista_estados.addActionListener(new java.awt.event.ActionListener() {
@@ -185,12 +194,19 @@ public class VistaPrincipal extends javax.swing.JFrame {
         String texto = abrirArchivo();
         controlador = Controlador.getInstance();
         controlador.construirAtomata(texto);
+        PanelAutomata panelAutomata = new PanelAutomata();
+        mostrarPanel(jp_contenedor_principal, panelAutomata);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String automata = controlador.obtenerAutomata();
         guardarArchivo(automata);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        PanelAutomata panelAutomata = new PanelAutomata();
+        mostrarPanel(jp_contenedor_principal, panelAutomata);
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * metodo que sobrescribe el contendio de un panel para hacer las vistas
@@ -316,6 +332,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JPanel jp_contenedor_principal;
     private javax.swing.JPanel jp_modificar_automata;
     private javax.swing.JPanel jp_operaciones_automata;

@@ -56,13 +56,13 @@ public class Controlador {
         if (!componentesAF.isEmpty()) 
         {
             HashMap<String,Integer> estados = obtenerEstados(componentesAF.get(0));
-            HashMap<String,Integer> lenguaje =obtenerLenguaje(componentesAF.get(1));
+            HashMap<String,Integer> simbolos =obtenerLenguaje(componentesAF.get(1));
             HashMap<String,Integer> estadosIniciales =obtenerEstadosIniciales(componentesAF.get(3));
             HashMap<String,Integer> estadosAceptacion = obtenerEstadosAceptacion(componentesAF.get(4));
-            Object[][] transiciones = obtenerTransiciones(componentesAF.get(2),estados,lenguaje);
+            Object[][] transiciones = obtenerTransiciones(componentesAF.get(2),estados,simbolos);
             
             af.setEstados(estados);
-            af.setSimbolos(lenguaje);
+            af.setSimbolos(simbolos);
             af.agregarTransiciones(transiciones);
             
             for (Map.Entry<String, Integer> entry : estadosIniciales.entrySet()) {
@@ -77,7 +77,8 @@ public class Controlador {
                 agregarEstadoAceptacion(key);
             }
             System.out.println("Automata Contruido");
-            
+            contadorEstados = estados.size();
+            contadorSimbolos = simbolos.size();
         }
         else
         {
@@ -409,6 +410,16 @@ public class Controlador {
         }
         automata = automata + "]}";
         return automata;
+    }
+    
+    public ArrayList<String> obtenerEstadosAceptacion()
+    {
+        return af.obtenerEstadoAceptacion();
+    }
+    
+    public ArrayList<String> obtenerEstadosInicial()
+    {
+        return af.obtenerEstadoInicial();
     }
     
     

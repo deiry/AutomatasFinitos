@@ -71,9 +71,17 @@ public class AFNoDeterministico extends AutomataFinito {
     public void agregarEstado(String estado, int posicion) {
         if (estados == null) {
             estados = new HashMap<String,Integer>();
+            
         }
         
         estados.put(estado, posicion);
+        if(transiciones !=null)
+        {
+            if(transiciones.length<obtenerEstados().size())
+            {
+                reconstruirTransiciones();
+            }
+        }
     }
 
     @Override
@@ -81,8 +89,16 @@ public class AFNoDeterministico extends AutomataFinito {
         if (simbolos == null) {
             simbolos = new HashMap<String,Integer>();
         }
-
+        
         simbolos.put(simbolo, posicion);
+        if(transiciones != null)
+        {
+            if(transiciones.length<obtenerSimbolos().size())
+            {
+                reconstruirTransiciones();
+            }
+        }
+        
     }
 
     @Override
@@ -151,6 +167,17 @@ public class AFNoDeterministico extends AutomataFinito {
     @Override
     public ArrayList<String> obtenerEstadoAceptacion() {
         return (ArrayList<String>)estadosAceptacion;
+    }
+
+    private void reconstruirTransiciones() {
+        Object[][] mat = new Object[obtenerEstados().size()][obtenerSimbolos().size()];
+        
+        for (int i = 0; i < transiciones.length; i++) {
+            for (int j = 0; j < transiciones[i].length; j++) {
+                mat[i][j] = transiciones[i][j];
+            }
+        }
+        transiciones = mat;
     }
 
 }
