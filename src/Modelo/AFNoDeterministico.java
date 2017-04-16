@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 /**
  *
@@ -84,10 +85,8 @@ public class AFNoDeterministico extends AutomataFinito {
         }
 
         estados.put(estado, posicion);
-        if(transiciones !=null)
-        {
-            if(transiciones.length<obtenerEstados().size())
-            {
+        if (transiciones != null) {
+            if (transiciones.length < obtenerEstados().size()) {
                 reconstruirTransiciones();
             }
         }
@@ -98,21 +97,69 @@ public class AFNoDeterministico extends AutomataFinito {
         if (simbolos == null) {
             simbolos = new HashMap<String, Integer>();
         }
-        
+
         simbolos.put(simbolo, posicion);
-        if(transiciones != null)
-        {
-            if(transiciones.length<obtenerSimbolos().size())
-            {
+        if (transiciones != null) {
+            if (transiciones.length < obtenerSimbolos().size()) {
                 reconstruirTransiciones();
             }
         }
-        
+
     }
 
     public AFDeterministico convertirAFD() {
 
         return null;
+    }
+
+    public void convertirAFNDtoAFD() {
+        HashMap<String, Integer> estadosDet = (HashMap<String, Integer>) this.estados.clone();
+        HashMap<String, List<String>> nuevosEstados = new HashMap();
+        HashMap<String, List<List<String>>> particiones = new HashMap();
+        List<List<String>> vector;
+
+        for (Map.Entry<String, Integer> entry : estadosDet.entrySet()) {
+            String estado = entry.getKey();
+            Integer posEstado = entry.getValue();
+            for (Map.Entry<String, Integer> entry1 : simbolos.entrySet()) {
+                String simbolo = entry1.getKey();
+                Integer posSimbolo = entry1.getValue();
+
+                if (posEstado < estadosDet.size()) {
+                    ArrayList<String> estadosNDet = (ArrayList<String>) ((ArrayList<String>) this.transiciones[posEstado][posSimbolo]).clone();
+
+                    if (estadosNDet.size() > 1) {
+                        String estadoTran = unionEstadosTransicion(estadosNDet);
+                        estadosDet.put(estadoTran, estadosDet.size());
+                        nuevosEstados.put(estadoTran, estadosNDet);
+                        List<String> nVector = new Vector();
+                        particiones.put(estadoTran, new Vector(nVector));
+                    }
+                } else {
+
+                    ArrayList<String> nuevoE = (ArrayList<String>) nuevosEstados.get(estado);
+                    ArrayList<String> transicionU = (ArrayList<String>) unirTransicion(nuevoE, simbolo);
+                    if (transicionU.size() > 1 && !nuevosEstados.containsValue(transicionU)) {
+                        vector = particiones.get(estado);
+                        vector.add(posSimbolo, transicionU);
+                        particiones.put(estado, vector);
+
+                        String transU = unionEstadosTransicion(transicionU);
+                        estadosDet.put(transU, estadosDet.size());
+                        nuevosEstados.put(transU, transicionU);
+                        List<String> nVector = new Vector();
+                        particiones.put(transU, new Vector(nVector));
+                    } else {
+                        vector = particiones.get(estado);
+                        vector.add(posSimbolo, transicionU);
+                        particiones.put(estado, vector);
+
+                    }
+
+                }
+            }
+        }
+        System.out.println("Estdos finales "+estadosDet.toString());
     }
 
     public void unirEstados() {
@@ -160,9 +207,9 @@ public class AFNoDeterministico extends AutomataFinito {
 
                 estadoN = unionEstadosTransicion(aux);
                 transicionDet[posEstado][posSimbolo] = estadoN;
-                
+
                 int posNuevoEst = estadosCompletos.get(estadoN);
-                transicionDet[posNuevoEst][posSimbolo] = unirTransicion(aux, simbolo);
+//                transicionDet[posNuevoEst][posSimbolo] = unirTransicion(aux, simbolo);
 
             }
         }
@@ -172,7 +219,7 @@ public class AFNoDeterministico extends AutomataFinito {
         afd.imprimirTransiciones();
     }
 
-    public String unirTransicion(List<String> estado, String simbolo) {
+    public Object unirTransicion(List<String> estado, String simbolo) {
         String estadoTranciones = "";
         for (int i = 0; i < estado.size(); i++) {
             estadoTranciones += nuevoEstado(estado.get(i), simbolo);
@@ -245,17 +292,17 @@ public class AFNoDeterministico extends AutomataFinito {
 
     @Override
     public ArrayList<String> obtenerEstadoInicial() {
-        return (ArrayList<String>)estadosIniciales;
+        return (ArrayList<String>) estadosIniciales;
     }
 
     @Override
     public ArrayList<String> obtenerEstadoAceptacion() {
-        return (ArrayList<String>)estadosAceptacion;
+        return (ArrayList<String>) estadosAceptacion;
     }
 
     private void reconstruirTransiciones() {
         Object[][] mat = new Object[obtenerEstados().size()][obtenerSimbolos().size()];
-        
+
         for (int i = 0; i < transiciones.length; i++) {
             for (int j = 0; j < transiciones[i].length; j++) {
                 mat[i][j] = transiciones[i][j];

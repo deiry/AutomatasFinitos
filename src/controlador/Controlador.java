@@ -284,7 +284,7 @@ public class Controlador {
     }
     
     public void convertirAF(){
-       af.unirEstados();
+       af.convertirAFNDtoAFD();
     }
     
     public Object[][] obtenerTransiciones()
