@@ -93,6 +93,8 @@ public abstract class AutomataFinito {
     public abstract ArrayList<String> obtenerEstadoAceptacion();
 
     public abstract void unirEstados();
+    
+    public abstract void convertirAFNDtoAFD();
 
     
 
