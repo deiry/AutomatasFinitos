@@ -85,5 +85,7 @@ public abstract class AutomataFinito {
     
     public abstract Object[][] obtenerTransiciones();
     
+    public abstract void unirEstados();
+    
 
 }
