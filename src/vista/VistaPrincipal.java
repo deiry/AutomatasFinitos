@@ -54,6 +54,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         Convertir = new javax.swing.JButton();
         jp_contenedor_principal = new javax.swing.JPanel();
+        lb_tipo_automata = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,7 +76,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         });
         jp_modificar_automata.add(btn_vista_estados);
 
-        btn_vista_simbolos.setText("Simbolos");
+        btn_vista_simbolos.setText("Símbolos");
         btn_vista_simbolos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_vista_simbolosActionPerformed(evt);
@@ -126,9 +127,19 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jp_operaciones_automata.add(jButton2);
 
         jButton3.setText("Identificar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jp_operaciones_automata.add(jButton3);
 
         jButton4.setText("Reconocer");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
         jp_operaciones_automata.add(jButton4);
 
         jButton5.setText("Simplificar");
@@ -144,23 +155,33 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
         jp_contenedor_principal.setLayout(new java.awt.CardLayout());
 
+        lb_tipo_automata.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lb_tipo_automata.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb_tipo_automata.setText("AFD");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jp_modificar_automata, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jp_modificar_automata, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lb_tipo_automata, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jp_operaciones_automata, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jp_operaciones_automata, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
                     .addComponent(jp_contenedor_principal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jp_operaciones_automata, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jp_operaciones_automata, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lb_tipo_automata, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(2, 2, 2)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jp_modificar_automata, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
@@ -220,6 +241,16 @@ public class VistaPrincipal extends javax.swing.JFrame {
         Controlador ctrl = Controlador.getInstance();
         ctrl.convertirAF();
     }//GEN-LAST:event_ConvertirActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        PanelReconocer panelReconocer = new PanelReconocer();
+        mostrarPanel(jp_contenedor_principal, panelReconocer);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        PanelIdentificar panelIdentificar = new PanelIdentificar();
+        mostrarPanel(jp_contenedor_principal, panelIdentificar);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     /**
@@ -350,6 +381,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jp_contenedor_principal;
     private javax.swing.JPanel jp_modificar_automata;
     private javax.swing.JPanel jp_operaciones_automata;
+    private javax.swing.JLabel lb_tipo_automata;
     // End of variables declaration//GEN-END:variables
 
     
