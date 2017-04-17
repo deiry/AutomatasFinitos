@@ -122,7 +122,7 @@ public class AFNoDeterministico extends AutomataFinito {
     public void convertirAFNDtoAFD() {
         ArrayList<String> estadosCompletos = convertirHashMaptoArray(estados);
         ArrayList<String> simbolosList = convertirHashMaptoArray(simbolos);
-        
+
         HashMap<String, List<String>> nuevosEstados = new HashMap();
         HashMap<String, List<List<String>>> transicionesNuevosEstados = new HashMap();
         List<List<String>> vector = new ArrayList<>();
@@ -130,7 +130,7 @@ public class AFNoDeterministico extends AutomataFinito {
         for (int i = 0; i < estadosCompletos.size(); i++) {
             String estado = estadosCompletos.get(i);
             Integer posEstado = i;
-            for (int j=0;j<simbolosList.size();j++) {
+            for (int j = 0; j < simbolosList.size(); j++) {
                 Integer posSimbolo = j;
 
                 if (posEstado < estados.size()) {
@@ -168,16 +168,20 @@ public class AFNoDeterministico extends AutomataFinito {
                 }
             }
         }
-           System.out.println("Estdos finales " + estadosCompletos.toString());
+        System.out.println("Estdos finales " + estadosCompletos.toString());
+        System.out.println("transiciones finales "+ transicionesNuevosEstados.toString());
     }
 
     public ArrayList<String> convertirHashMaptoArray(HashMap<String, Integer> map) {
 
         ArrayList<String> aux = new ArrayList<String>();
         for (Map.Entry<String, Integer> entry : map.entrySet()) {
+
             String key = entry.getKey();
             Integer value = entry.getValue();
-            aux.add(value, key);
+            if (key != null && value != null) {
+                aux.add(value, key);
+            }
         }
 
         return aux;
