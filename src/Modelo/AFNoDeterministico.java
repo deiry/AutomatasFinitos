@@ -111,31 +111,34 @@ public class AFNoDeterministico extends AutomataFinito {
 
         return null;
     }
-    /**
-     * Hashmap todosEstados ahi se van agregando los nuevos estados que van saliendo
-     * HashMap nuevosEstados  se guarda la union de los estados en un string y su arrayList  los ejemplo: String q1q2, arrayList q1,q2
-     * HashMap transicionesNuevosEstados cuando busco con el string de la union de los estados obtengo la transcion que hace cuando de cada simbolo
-     */
 
+    /**
+     * Hashmap todosEstados ahi se van agregando los nuevos estados que van
+     * saliendo HashMap nuevosEstados se guarda la union de los estados en un
+     * string y su arrayList los ejemplo: String q1q2, arrayList q1,q2 HashMap
+     * transicionesNuevosEstados cuando busco con el string de la union de los
+     * estados obtengo la transcion que hace cuando de cada simbolo
+     */
     public void convertirAFNDtoAFD() {
-        HashMap<String, Integer> todosEstados = (HashMap<String, Integer>) this.estados.clone();
+        ArrayList<String> estadosCompletos = convertirHashMaptoArray(estados);
+        ArrayList<String> simbolosList = convertirHashMaptoArray(simbolos);
+
         HashMap<String, List<String>> nuevosEstados = new HashMap();
         HashMap<String, List<List<String>>> transicionesNuevosEstados = new HashMap();
-        List<List<String>> vector;
+        List<List<String>> vector = new ArrayList<>();
 
-        for (Map.Entry<String, Integer> entry : todosEstados.entrySet()) {
-            String estado = entry.getKey();
-            Integer posEstado = entry.getValue();
-            for (Map.Entry<String, Integer> entry1 : simbolos.entrySet()) {
-                String simbolo = entry1.getKey();
-                Integer posSimbolo = entry1.getValue();
+        for (int i = 0; i < estadosCompletos.size(); i++) {
+            String estado = estadosCompletos.get(i);
+            Integer posEstado = i;
+            for (int j = 0; j < simbolosList.size(); j++) {
+                Integer posSimbolo = j;
 
-                if (posEstado < todosEstados.size()) {
+                if (posEstado < estados.size()) {
                     ArrayList<String> estadosNDet = (ArrayList<String>) ((ArrayList<String>) this.transiciones[posEstado][posSimbolo]).clone();
 
-                    if (estadosNDet.size() > 1) {
+                    if ((estadosNDet.size() > 1) && !nuevosEstados.containsValue(estadosNDet)) {
                         String estadoTran = unionEstadosTransicion(estadosNDet);
-                        todosEstados.put(estadoTran, todosEstados.size());
+                        estadosCompletos.add(estadosCompletos.size(), estadoTran);
                         nuevosEstados.put(estadoTran, estadosNDet);
                         List<String> nVector = new Vector();
                         transicionesNuevosEstados.put(estadoTran, new Vector(nVector));
@@ -143,38 +146,94 @@ public class AFNoDeterministico extends AutomataFinito {
                 } else {
 
                     ArrayList<String> nuevoE = (ArrayList<String>) nuevosEstados.get(estado);
-                    ArrayList<String> transicionU = unirTransicion(nuevoE, simbolo);
-                    if (transicionU.size() > 1 && !nuevosEstados.containsValue(transicionU)) {
+                    ArrayList<String> transicionU = unirTransicion(nuevoE, posSimbolo);
+                    if (transicionU.size() > 1 && (!nuevosEstados.containsValue(transicionU))) {
                         vector = transicionesNuevosEstados.get(estado);
                         vector.add(posSimbolo, transicionU);
                         transicionesNuevosEstados.put(estado, vector);
 
                         String transU = unionEstadosTransicion(transicionU);
-                        todosEstados.put(transU, todosEstados.size());
+                        estadosCompletos.add(estadosCompletos.size(), transU);
                         nuevosEstados.put(transU, transicionU);
                         List<String> nVector = new Vector();
                         transicionesNuevosEstados.put(transU, new Vector(nVector));
                     } else {
+                        vector = new ArrayList<>();
                         vector = transicionesNuevosEstados.get(estado);
                         vector.add(posSimbolo, transicionU);
-                        transicionesNuevosEstados.put(estado, vector);
+                        transicionesNuevosEstados.replace(estado, vector);
 
                     }
 
                 }
             }
+        } 
+        System.out.println("Estdos finales " + estadosCompletos.toString());
+        System.out.println("transiciones finales "+ transicionesNuevosEstados.toString());
+    }
+    
+    public boolean validarRepetidos(HashMap<String, List<String>> nuevoEstados, ArrayList transicionU){
+        for (Map.Entry<String, List<String>> entry : nuevoEstados.entrySet()) {
+            List<String> arrayEstados = entry.getValue();
+            String estado = "";
+            for (int i = 0; i < arrayEstados.size(); i++) {
+                estado = arrayEstados.get(i);
+                for (int j = 0; j < transicionU.size(); j++) {
+                    
+                }
+            }
         }
-        System.out.println("Estdos finales "+todosEstados.toString());
+    return false;
     }
 
-   /**
-    * con la lista de estados buscar las transiones  de cada uno de los estados y guardarlos en arrayList SIN REPETIR porque se caga todo :v
-    * @param estado
-    * @param simbolo
-    * @return 
-    */
-    public ArrayList<String> unirTransicion(List<String> estado, String simbolo) {
-        ArrayList<String> unirTodo = new ArrayList<>();
+    public ArrayList<String> convertirHashMaptoArray(HashMap<String, Integer> map) {
+
+        ArrayList<String> aux = new ArrayList<String>();
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+
+            String key = entry.getKey();
+            Integer value = entry.getValue();
+            if (key != null && value != null) {
+                aux.add(value, key);
+            }
+        }
+
+        return aux;
+    }
+    
+   public HashMap<String,Integer> convertirArraytoHashMap(ArrayList<String> array){
+       HashMap<String,Integer> map = new HashMap<>();
+       
+   return null;
+   
+   }
+
+    /**
+     * con la lista de estados buscar las transiones de cada uno de los estados
+     * y guardarlos en arrayList SIN REPETIR porque se caga todo :v
+     *
+     * @param estado
+     * @param simbolo
+     * @return
+     */
+    public ArrayList<String> unirTransicion(List<String> estado, int simbolo) {
+
+        ArrayList<String> unirTodo = (ArrayList<String>) ((ArrayList<String>) this.transiciones[posEstado(estado.get(0))][simbolo]).clone();
+        for (int i = 1; i < estado.size(); i++) {
+            ArrayList<String> aux = (ArrayList<String>) ((ArrayList<String>) this.transiciones[posEstado(estado.get(i))][simbolo]).clone();
+            if (aux.size() > 1) {
+                for (int j = 0; j < aux.size(); j++) {
+                    if (!unirTodo.contains(aux.get(j))) {
+                        unirTodo.add(aux.get(j));
+                    }
+                }
+            } else {
+                String estadoString = aux.get(0);
+                if (!unirTodo.contains(estadoString)) {
+                    unirTodo.add(estadoString);
+                }
+            }
+        }
         return unirTodo;
     }
 
