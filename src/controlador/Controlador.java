@@ -271,7 +271,13 @@ public class Controlador {
         
         return matriz;
     }
-
+    /**
+     * Obtiene Cada transicion en un substring a partir de una hilera con todas
+     * las transiciones del atomata retornando cada transicicion en un item
+     * de un ArryList
+     * @param hilera
+     * @return 
+     */
     private ArrayList<String> splitTransiciones(String hilera) {
         
         ArrayList<String> retorno = new ArrayList<>();
@@ -298,46 +304,80 @@ public class Controlador {
         return retorno;
     }
     
+    /**
+     * Agrega el estado en el af
+     * @param estado 
+     */
     public void agregarEstado(String estado)
     {
         af.agregarEstado(estado, contadorEstados);
         contadorEstados++;
     }
+    /**
+     * Obtiene todos los estados del af en un HashMap
+     * @return 
+     */
     public HashMap<String,Integer> obtenerEstados()
     {
         return af.obtenerEstados();
     }
     
+    /**
+     * Agrega un simbolo en el af
+     * @param simbolo 
+     */
     public void agregarSimbolo(String simbolo)
     {
         af.agregarSimbolos(simbolo, contadorSimbolos);
         contadorSimbolos++;
     }
-    
+    /**
+     * Obtiene todos los simbolos del af en un HashMap
+     * @return 
+     */
     public HashMap<String,Integer> obtenerSimbolos()
     {
         return af.obtenerSimbolos();
     }
-    
+    /**
+     * Agrega el estado inicial al af
+     * @param estadoInicial 
+     */
     public void agregarEstadoInicial(String estadoInicial)
     {
         af.agregarEstadoInicial(estadoInicial);
     }
-    
+    /**
+     * Agrega el estado de aceptacion al af
+     * @param estadoAceptacion 
+     */
     public void agregarEstadoAceptacion(String estadoAceptacion)
     {
         af.agregarEstadoAceptacion(estadoAceptacion);
     }
-    
+    /**
+     * agrega una trasicion al af
+     * @param estadoActual
+     * @param simbolo
+     * @param nuevoEstado 
+     */
     public void agregarTransicion(String estadoActual,String simbolo,String nuevoEstado)
     {
         af.agregarTransicion(estadoActual, simbolo, nuevoEstado);
     }
     
+    /**
+     * Convierte el AFDN a un AFD
+     */
     public void convertirAF(){
        af.convertirAFNDtoAFD();
     }
     
+    /**
+     * Obtiene todas las transiociones y las convierte a estring para mostrarlas
+     * en la tabla de la UI
+     * @return 
+     */
     public Object[][] obtenerTransiciones()
     {   
         Object[][] mat = af.obtenerTransiciones();
@@ -384,6 +424,10 @@ public class Controlador {
         }    
     }
 
+    /**
+     * contruye la cadena del automata para guardarla en el archivo de texto
+     * @return 
+     */
     public String obtenerAutomata() {
         String automata = "{";
         
@@ -467,11 +511,19 @@ public class Controlador {
         return automata;
     }
     
+    /**
+     * Obtiene los estados de aceptacion en un ArrayList y lo retorna
+     * @return 
+     */
     public ArrayList<String> obtenerEstadosAceptacion()
     {
         return af.obtenerEstadoAceptacion();
     }
     
+    /**
+     * Obtiene los estados iniciales en un ArrayList y lo retorna
+     * @return 
+     */
     public ArrayList<String> obtenerEstadosInicial()
     {
         return af.obtenerEstadoInicial();
