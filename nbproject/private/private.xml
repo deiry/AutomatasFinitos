@@ -3,9 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Github/AutomatasFinitos/src/vista/VistaPrincipal.java</file>
-            <file>file:/D:/Github/AutomatasFinitos/src/vista/PanelAutomata.java</file>
-            <file>file:/D:/Github/AutomatasFinitos/src/controlador/Controlador.java</file>
+            <file>file:/S:/Udea/Programacion/AutomatasFinitos/src/Modelo/AutomataFinito.java</file>
+            <file>file:/S:/Udea/Programacion/AutomatasFinitos/src/Modelo/AFNoDeterministico.java</file>
+            <file>file:/S:/Udea/Programacion/AutomatasFinitos/src/controlador/Controlador.java</file>
+            <file>file:/S:/Udea/Programacion/AutomatasFinitos/src/Modelo/AutomatasFinitos.java</file>
+            <file>file:/S:/Udea/Programacion/AutomatasFinitos/src/Modelo/AFDeterministico.java</file>
+            <file>file:/S:/Udea/Programacion/AutomatasFinitos/src/Modelo/Estado.java</file>
         </group>
     </open-files>
 </project-private>
