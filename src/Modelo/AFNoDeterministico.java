@@ -167,9 +167,23 @@ public class AFNoDeterministico extends AutomataFinito {
 
                 }
             }
-        }
+        } 
         System.out.println("Estdos finales " + estadosCompletos.toString());
         System.out.println("transiciones finales "+ transicionesNuevosEstados.toString());
+    }
+    
+    public boolean validarRepetidos(HashMap<String, List<String>> nuevoEstados, ArrayList transicionU){
+        for (Map.Entry<String, List<String>> entry : nuevoEstados.entrySet()) {
+            List<String> arrayEstados = entry.getValue();
+            String estado = "";
+            for (int i = 0; i < arrayEstados.size(); i++) {
+                estado = arrayEstados.get(i);
+                for (int j = 0; j < transicionU.size(); j++) {
+                    
+                }
+            }
+        }
+    return false;
     }
 
     public ArrayList<String> convertirHashMaptoArray(HashMap<String, Integer> map) {
@@ -186,6 +200,13 @@ public class AFNoDeterministico extends AutomataFinito {
 
         return aux;
     }
+    
+   public HashMap<String,Integer> convertirArraytoHashMap(ArrayList<String> array){
+       HashMap<String,Integer> map = new HashMap<>();
+       
+   return null;
+   
+   }
 
     /**
      * con la lista de estados buscar las transiones de cada uno de los estados
