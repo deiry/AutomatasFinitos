@@ -48,6 +48,11 @@ public class Controlador {
         return instance;
     }
     
+    /**
+     * crea el automata a partir de una hilera
+     * ejemplo: {[Q0,Q1,Q2,Q3][a1,a2][(Q0,a1,Q1)(Q1,a2,Q3)][Q0][Q3]}
+     * @param stringAutomata 
+     */
     public void construirAtomata(String stringAutomata)
     {
         af = new AFNoDeterministico();
@@ -91,6 +96,11 @@ public class Controlador {
         System.out.println("ERROR");
     }
     
+    /**
+     * divide el automata por componentes pero es un subestring
+     * @param stringAutomata
+     * @return 
+     */
     private ArrayList obtenerCompontesAtomata(String stringAutomata)
     {
         ArrayList<String> automata = new ArrayList<>();
@@ -122,27 +132,55 @@ public class Controlador {
         return automata;
     }
 
+    /**
+     * obtiene los estados a partir de un substring donde cada estado esta 
+     * separado por comas, devolviendo un HashMap 
+     * @param strEstados
+     * @return 
+     */
     private HashMap obtenerEstados(String strEstados) 
     {
         return subStringComa(strEstados);  
     }
 
+    /**
+     * obtiene los simbolos a partir de un substring donde cada simbolo esta 
+     * separado por comas, devolviendo un HashMap 
+     * @param strLenguaje
+     * @return 
+     */
     private HashMap obtenerLenguaje(String strLenguaje) 
     {
         return subStringComa(strLenguaje);
     }
 
-    
-
+    /**
+     * obtiene los estados iniciales a partir de un substring donde cada 
+     * estado inicial estan separado por comas, devolviendo un HashMap 
+     * @param strEstadosIniciales
+     * @return 
+     */
     private HashMap obtenerEstadosIniciales(String strEstadosIniciales) 
     {
          return subStringComa(strEstadosIniciales);
     }
 
+    /**
+     * obtiene los estados de aceptacion a partir de un substring donde 
+     * cada estado esta separado por comas, devolviendo un HashMap
+     * @param strEstadosAceptacion
+     * @return 
+     */
     private HashMap obtenerEstadosAceptacion(String strEstadosAceptacion) {
         return subStringComa(strEstadosAceptacion);
     }
     
+    /**
+     * devuelve un HashMap una clave String y un valor entero, obteniendo las
+     * claves a partir de dividir la hilera que tiene cada clave separada por comas
+     * @param hilera
+     * @return 
+     */
     private HashMap subStringComa(String hilera)
     {
         HashMap<String,Integer> retorno = new HashMap<>();
@@ -165,7 +203,13 @@ public class Controlador {
       
         return retorno;
     }
-    
+    /**
+     * devuelve un ArrayList una clave String y un valor entero, obteniendo las
+     * claves a partir de dividir la hilera que tiene cada clave separada por comas
+     * @param hilera
+     * @param a
+     * @return 
+     */
     private ArrayList<String> subStringComa(String hilera,int a)
     {
         ArrayList<String> retorno = new ArrayList<>();
@@ -189,6 +233,13 @@ public class Controlador {
         return retorno;
     }
 
+    /**
+     * 
+     * @param hilera
+     * @param estados
+     * @param lenguaje
+     * @return 
+     */
     private Object[][] obtenerTransiciones(String hilera, HashMap<String,Integer> estados, HashMap<String,Integer> lenguaje) 
     {
         Object[][] matriz = new Object[estados.size()][lenguaje.size()];
