@@ -298,7 +298,7 @@ public class AFDeterministico extends AutomataFinito {
         }
 
         this.setEstados(union);
-        System.out.println("Estados "+estados.toString());
+        System.out.println("Estados " + estados.toString());
     }
 
     public void imprimirArray(ArrayList list) {
@@ -309,6 +309,43 @@ public class AFDeterministico extends AutomataFinito {
         }
     }
 
+    public void contruirTransiciones(Object[][] transicionesOld, HashMap<String, List<List<String>>> transicionesNuevas) {
+
+        List<String> aux;
+        String[][] transicionFinal = new String[sizeEstados()][simbolos.size()];
+
+
+        //Segunda opcion
+        for (Map.Entry<String, Integer> entry : estados.entrySet()) {
+            String estado = entry.getKey();
+            Integer posEstado = entry.getValue();
+            for (Map.Entry<String, Integer> entry1 : simbolos.entrySet()) {
+                String simbolo = entry1.getKey();
+                Integer posSimbolo = entry1.getValue();
+
+                if (posEstado < transicionesOld.length) {
+                    String unionArray = unionEstadosTransicion((List) transicionesOld[posEstado][posSimbolo]);
+                    transicionFinal[posEstado][posSimbolo] = unionArray;
+                } else {
+                    aux = transicionesNuevas.get(estado).get(posSimbolo);
+                    String unionString = unionEstadosTransicion(aux);
+                    transicionFinal[posEstado][posSimbolo] = unionString;
+                }
+
+            }
+        }
+        this.setTransiciones(transicionFinal);
+        imprimirTransiciones();
+    }
+    
+    public void construirEstados(ArrayList<String> estadosList){
+    HashMap<String,Integer> estadoMap = new HashMap<>();
+        for (int i = 0; i < estadosList.size(); i++) {
+            estadoMap.put(estadosList.get(i), i);
+        }
+        this.setEstados(estadoMap);
+        System.out.println("Estados asigandos "+ estados.toString());
+    }
     @Override
     public void agregarEstado(String nombre, int posicion) {
         this.estados.put(nombre, posicion);
@@ -373,7 +410,5 @@ public class AFDeterministico extends AutomataFinito {
     public void convertirAFNDtoAFD() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
 
 }

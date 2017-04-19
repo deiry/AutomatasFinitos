@@ -170,8 +170,15 @@ public class AFNoDeterministico extends AutomataFinito {
         } 
         System.out.println("Estdos finales " + estadosCompletos.toString());
         System.out.println("transiciones finales "+ transicionesNuevosEstados.toString());
+        AFDeterministico afd = new AFDeterministico();
+        afd.setSimbolos(simbolos);
+        afd.construirEstados(estadosCompletos);
+        afd.contruirTransiciones(transiciones, transicionesNuevosEstados);
     }
     
+    
+    
+        
     public boolean validarRepetidos(HashMap<String, List<String>> nuevoEstados, ArrayList transicionU){
         for (Map.Entry<String, List<String>> entry : nuevoEstados.entrySet()) {
             List<String> arrayEstados = entry.getValue();
@@ -186,27 +193,6 @@ public class AFNoDeterministico extends AutomataFinito {
     return false;
     }
 
-    public ArrayList<String> convertirHashMaptoArray(HashMap<String, Integer> map) {
-
-        ArrayList<String> aux = new ArrayList<String>();
-        for (Map.Entry<String, Integer> entry : map.entrySet()) {
-
-            String key = entry.getKey();
-            Integer value = entry.getValue();
-            if (key != null && value != null) {
-                aux.add(value, key);
-            }
-        }
-
-        return aux;
-    }
-    
-   public HashMap<String,Integer> convertirArraytoHashMap(ArrayList<String> array){
-       HashMap<String,Integer> map = new HashMap<>();
-       
-   return null;
-   
-   }
 
     /**
      * con la lista de estados buscar las transiones de cada uno de los estados
@@ -234,17 +220,10 @@ public class AFNoDeterministico extends AutomataFinito {
                 }
             }
         }
+        unirTodo = ordenarTransicion(unirTodo);
         return unirTodo;
     }
 
-    public String unionEstadosTransicion(List<String> lista) {
-        String estadoUnion = "";
-        for (int i = 0; i < lista.size(); i++) {
-            estadoUnion += lista.get(i);
-        }
-
-        return estadoUnion;
-    }
 
     @Override
     public void agregarTransicion(String estadoActual, String simbolo, String nuevoEstado) {
