@@ -495,16 +495,20 @@ public class Controlador {
     }
 
     public boolean reconocer(String hilera) {
+        AutomataFinito afCopy = af;
+        if (identificar().equals("AFND")) {
+            afCopy = af.convertirAFNDtoAFD();
+        }
         List<String> listHilera = new ArrayList<>();
         for (int i = 0; i < hilera.length(); i++) {
             listHilera.add(String.valueOf(hilera.charAt(i)));
         }
-        boolean rta = af.reconocer(listHilera);
+        boolean rta = afCopy.reconocer(listHilera);
         return rta;
     }
 
     public String identificar() {
-        String respuesta = "";
+        String respuesta = "AFD";
         Object[][] transicion = af.obtenerTransiciones();
         for (int i = 0; i < transicion.length; i++) {
             for (int j = 0; j < transicion[i].length; j++) {
@@ -516,8 +520,7 @@ public class Controlador {
                     if (list != null) {
                         if (list.size() > 1) {
                             respuesta = "AFND";
-                        } else {
-                            respuesta = "AFD";
+                            return respuesta;
                         }
                     }
                 }

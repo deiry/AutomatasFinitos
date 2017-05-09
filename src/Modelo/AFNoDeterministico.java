@@ -173,12 +173,12 @@ public class AFNoDeterministico extends AutomataFinito {
         }
 
         System.out.println("Estdos finales " + estadosCompletos.toString());
-        System.out.println("transiciones finales " + transicionesNuevosEstados.toString());
         AFDeterministico afd = new AFDeterministico();
         afd.setSimbolos(simbolos);
         afd.construirEstados(estadosCompletos);
         afd.contruirTransiciones(transiciones, transicionesNuevosEstados);
-        afd.setEstadoInicial(estadosInicialesAF);
+        afd.setEstadoInicial(estadosIniciales.get(0));
+        afd.setEstadoAceptacion(estadosAceptacion);
         afd.setEstadoAceptacion(estadosAceptacionAF);
         System.out.println("Estado aceptacion");
         afd.imprimirArray(estadosAceptacionAF);
@@ -202,19 +202,23 @@ public class AFNoDeterministico extends AutomataFinito {
 
         return estadoUnion;
     }
+    
+    public void actualizarEstadoAceptacion(){
+        for (int i = 0; i < estadosAceptacion.size(); i++) {
+            
+        }
+    }
 
     public void validarEstadoAceptacion(List<String> lista) {
         String estadoUnion = "";
         String estadosR;
-        boolean acep = true;
+        boolean acep = false;
 
         for (int i = 0; i < lista.size(); i++) {
             estadosR = lista.get(i);
             if (this.estadosAceptacion.contains(estadosR)) {
                 acep = true;
-            } else {
-                acep = false;
-            }
+            } 
             estadoUnion += estadosR;
         }
         if (acep) {
@@ -344,7 +348,7 @@ public class AFNoDeterministico extends AutomataFinito {
     }
 
     @Override
-    public void unirEstados() {
+    public HashMap unirEstados() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -127,7 +127,7 @@ public abstract class AutomataFinito {
 
     public abstract ArrayList<String> obtenerEstadoAceptacion();
 
-    public abstract void unirEstados();
+    public abstract HashMap<String, Integer> unirEstados();
 
     public abstract AFDeterministico convertirAFNDtoAFD();
 
