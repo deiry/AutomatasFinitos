@@ -27,6 +27,7 @@ public class PanelIdentificar extends javax.swing.JPanel {
     public PanelIdentificar() {
         initComponents();
         controlador = Controlador.getInstance();
+        lb_respuesta.setText(controlador.identificar());
     }
 
     /**
@@ -57,7 +58,6 @@ public class PanelIdentificar extends javax.swing.JPanel {
         lb_respuesta.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         lb_respuesta.setForeground(new java.awt.Color(0, 204, 51));
         lb_respuesta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lb_respuesta.setText("AFD");
         jPanel5.add(lb_respuesta);
 
         jPanel2.add(jPanel5);

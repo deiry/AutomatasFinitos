@@ -5,6 +5,7 @@
  */
 package vista;
 
+import Modelo.AutomataFinito;
 import controlador.Controlador;
 import java.io.BufferedReader;
 import java.io.File;
@@ -22,12 +23,15 @@ import javax.swing.JPanel;
 public class VistaPrincipal extends javax.swing.JFrame {
 
     private Controlador controlador;
+
     /**
      * Creates new form VistaPrincipal
      */
     public VistaPrincipal() {
         initComponents();
+
         btn_vista_automata.setEnabled(false);
+
     }
 
     /**
@@ -143,6 +147,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jp_operaciones_automata.add(jButton4);
 
         jButton5.setText("Simplificar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
         jp_operaciones_automata.add(jButton5);
 
         Convertir.setText("Convertir");
@@ -227,6 +236,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        controlador = Controlador.getInstance();
         String automata = controlador.obtenerAutomata();
         guardarArchivo(automata);
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -237,12 +247,15 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_vista_automataActionPerformed
 
     private void ConvertirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConvertirActionPerformed
-        
+
         Controlador ctrl = Controlador.getInstance();
         ctrl.convertirAF();
+        PanelAutomata panelAutomata = new PanelAutomata();
+        mostrarPanel(jp_contenedor_principal, panelAutomata);
     }//GEN-LAST:event_ConvertirActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+
         PanelReconocer panelReconocer = new PanelReconocer();
         mostrarPanel(jp_contenedor_principal, panelReconocer);
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -252,20 +265,28 @@ public class VistaPrincipal extends javax.swing.JFrame {
         mostrarPanel(jp_contenedor_principal, panelIdentificar);
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        Controlador ctrl = Controlador.getInstance();
+        ctrl.simplificar();
+        PanelAutomata panelAutomata = new PanelAutomata();
+        mostrarPanel(jp_contenedor_principal, panelAutomata);
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * metodo que sobrescribe el contendio de un panel para hacer las vistas
      * dinamicas
+     *
      * @param contenedor contenedor al que se le inyecta el nuevo panel
      * @param nuevoPanel panel a insertar
      */
-    private void mostrarPanel(JPanel contenedor,JPanel nuevoPanel)
-    {
+    private void mostrarPanel(JPanel contenedor, JPanel nuevoPanel) {
         contenedor.removeAll();
         contenedor.revalidate();
         contenedor.add(nuevoPanel);
         nuevoPanel.setVisible(true);
     }
+
     /**
      * @param args the command line arguments
      */
@@ -300,70 +321,64 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }
         });
     }
-    
-    private String abrirArchivo() 
-    {
-        String aux="";   
-        String texto="";
-        try
-        {
-         /**llamamos el metodo que permite cargar la ventana*/
-         JFileChooser file=new JFileChooser();
-         file.showOpenDialog(this);
-         /**abrimos el archivo seleccionado*/
-         File abre = file.getSelectedFile();
 
-         /**recorremos el archivo, lo leemos para plasmarlo
-         *en el area de texto*/
-         if(abre!=null)
-         {     
-            FileReader archivos=new FileReader(abre);
-            BufferedReader lee=new BufferedReader(archivos);
-            while((aux=lee.readLine())!=null)
-            {
-               texto+= aux+ "\n";
+    private String abrirArchivo() {
+        String aux = "";
+        String texto = "";
+        try {
+            /**
+             * llamamos el metodo que permite cargar la ventana
+             */
+            JFileChooser file = new JFileChooser();
+            file.showOpenDialog(this);
+            /**
+             * abrimos el archivo seleccionado
+             */
+            File abre = file.getSelectedFile();
+
+            /**
+             * recorremos el archivo, lo leemos para plasmarlo en el area de texto
+             */
+            if (abre != null) {
+                FileReader archivos = new FileReader(abre);
+                BufferedReader lee = new BufferedReader(archivos);
+                while ((aux = lee.readLine()) != null) {
+                    texto += aux + "\n";
+                }
+                lee.close();
             }
-               lee.close();
-          }    
-         }
-         catch(IOException ex)
-         {
-           JOptionPane.showMessageDialog(null,ex+"" +
-                 "\nNo se ha encontrado el archivo",
-                       "ADVERTENCIA!!!",JOptionPane.WARNING_MESSAGE);
-          }
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, ex + ""
+                    + "\nNo se ha encontrado el archivo",
+                    "ADVERTENCIA!!!", JOptionPane.WARNING_MESSAGE);
+        }
         return texto;//El texto se almacena en el JTextArea
     }
-    
-    private void guardarArchivo(String areaDeTexto) 
-    {
-        try
-        {
-         String nombre="";
-         JFileChooser file=new JFileChooser();
-         file.showSaveDialog(this);
-         File guarda =file.getSelectedFile();
 
-         if(guarda !=null)
-         {
-          /*guardamos el archivo y le damos el formato directamente,
+    private void guardarArchivo(String areaDeTexto) {
+        try {
+            String nombre = "";
+            JFileChooser file = new JFileChooser();
+            file.showSaveDialog(this);
+            File guarda = file.getSelectedFile();
+
+            if (guarda != null) {
+                /*guardamos el archivo y le damos el formato directamente,
            * si queremos que se guarde en formato doc lo definimos como .doc*/
-           FileWriter  save=new FileWriter(guarda+".txt");
-           save.write(areaDeTexto);
-           save.close();
-           JOptionPane.showMessageDialog(null,
-                "El archivo se a guardado Exitosamente",
-                    "Información",JOptionPane.INFORMATION_MESSAGE);
-           }
+                FileWriter save = new FileWriter(guarda + ".txt");
+                save.write(areaDeTexto);
+                save.close();
+                JOptionPane.showMessageDialog(null,
+                        "El archivo se a guardado Exitosamente",
+                        "Información", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null,
+                    "Su archivo no se ha guardado",
+                    "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
-         catch(IOException ex)
-         {
-          JOptionPane.showMessageDialog(null,
-               "Su archivo no se ha guardado",
-                  "Advertencia",JOptionPane.WARNING_MESSAGE);
-         }
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Convertir;
@@ -384,5 +399,4 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel lb_tipo_automata;
     // End of variables declaration//GEN-END:variables
 
-    
 }

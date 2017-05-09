@@ -22,6 +22,7 @@ public class AFDeterministico extends AutomataFinito {
     private String[][] transiciones;
     private ArrayList<List> particiones;
     private String estadoActual, estadoNuevo;
+    private Vector<String> tranUnion;
 
     public AFDeterministico(HashMap<String, Integer> estados, HashMap<String, Integer> simbolos, String estadoInicial, List<String> estadoAceptacion, String[][] transiciones) {
         this.estados = estados;
@@ -150,10 +151,12 @@ public class AFDeterministico extends AutomataFinito {
     @Override
     public void simplificar() {
         this.analizarEstadosInalcanzables();
+        System.out.println("Transiciones despues de estados inalcanzables");
+        imprimirTransiciones();
         this.particiones = creacionParticiones();
-        String nuevoE = "";
+        String nuevoE;
         int partIni;
-        List<String> particion = new Vector();
+        List<String> particion;
         boolean cambio = false;
         int i = 0;
         while (i < particiones.size()) {
@@ -197,7 +200,7 @@ public class AFDeterministico extends AutomataFinito {
         unirTransiciones();
     }
 
-    public void imprimirTransiciones() {
+      public void imprimirTransiciones() {
         System.out.println("Transiciones");
         for (int i = 0; i < transiciones.length; i++) {
             for (int j = 0; j < transiciones[i].length; j++) {
@@ -236,12 +239,12 @@ public class AFDeterministico extends AutomataFinito {
     }
 
     public void unirTransiciones() {
-
+        HashMap<String, Integer> nuevosEstados = unirEstados();
         Vector<String> aux = new Vector();
         String nuevoE = "";
         String estadosU = "";
         String[][] tran = new String[particiones.size()][this.sizeSimbolos()];
-        Iterator<List> it = particiones.iterator();
+
         for (int j = 0; j < particiones.size(); j++) {
             List particion = particiones.get(j);
 
@@ -265,7 +268,9 @@ public class AFDeterministico extends AutomataFinito {
 
                 } else {
                     estadosU = nuevoEstado((String) particion.get(0), simbolo);
+                    estadosU = validarNuevoEstado(estadosU);
                 }
+                //int posEstado = nuevosEstados.get(estadosU);
                 tran[j][posSimbolo] = estadosU;
 
             }
@@ -273,12 +278,49 @@ public class AFDeterministico extends AutomataFinito {
 
         this.setTransiciones(tran);
         imprimirTransiciones();
-        unirEstados();
+        this.setEstados(nuevosEstados);
+        this.setEstadoInicial(validarNuevoEstado(estadoInicial));
+        this.setEstadoAceptacion(validarNuevoEstadosAceptacion());
+
     }
 
-    public void unirEstados() {
+    public List validarNuevoEstadosAceptacion() {
+        List<String> nuevosEstadosAceptacion = new ArrayList<>();
+        String estadoAcep;
+        for (int i = 0; i < estadoAceptacion.size(); i++) {
+            estadoAcep = validarNuevoEstado(estadoAceptacion.get(i));
+            if (!nuevosEstadosAceptacion.contains(estadoAcep)) {
+                nuevosEstadosAceptacion.add(estadoAcep);
+
+            }
+        }
+        return nuevosEstadosAceptacion;
+    }
+
+    public String validarNuevoEstado(String estadoU) {
+        String transicionN = "";
+        for (int i = 0; i < particiones.size(); i++) {
+            List particion = particiones.get(i);
+            if (particion.size() > 1) {
+                for (int j = 0; j < particion.size(); j++) {
+                    if (particion.get(j).equals(estadoU)) {
+                        transicionN = tranUnion.get(i);
+                        return transicionN;
+                    }
+                }
+            } else {
+                if (particion.get(0).equals(estadoU)) {
+                    transicionN = estadoU;
+                }
+            }
+
+        }
+        return transicionN;
+    }
+
+    public HashMap<String, Integer> unirEstados() {
         HashMap<String, Integer> union = new HashMap<>();
-        Vector<String> tranUnion = new Vector();
+        tranUnion = new Vector();
         String estadoN = "";
         int pos = 0;
         Iterator<List> it = particiones.iterator();
@@ -294,17 +336,20 @@ public class AFDeterministico extends AutomataFinito {
 
             union.put(estadoN, pos);
             tranUnion.add(pos, estadoN);
+            estadoN = "";
             pos++;
         }
+        return union;
 
-        this.setEstados(union);
-        System.out.println("Estados " + estados.toString());
+        //  this.setEstados(union);
+        // System.out.println("Estados " + estados.toString());
     }
 
-    public void imprimirArray(ArrayList list) {
-        Iterator<List> it = list.iterator();
+    public void imprimirArray(List<String> list) {
+        Iterator<String> it = list.iterator();
+        System.out.println("");
         while (it.hasNext()) {
-            String next = it.next().toString();
+            String next = it.next();
             System.out.print(next + " -");
         }
     }
@@ -313,7 +358,6 @@ public class AFDeterministico extends AutomataFinito {
 
         List<String> aux;
         String[][] transicionFinal = new String[sizeEstados()][simbolos.size()];
-
 
         //Segunda opcion
         for (Map.Entry<String, Integer> entry : estados.entrySet()) {
@@ -337,15 +381,15 @@ public class AFDeterministico extends AutomataFinito {
         this.setTransiciones(transicionFinal);
         imprimirTransiciones();
     }
-    
-    public void construirEstados(ArrayList<String> estadosList){
-    HashMap<String,Integer> estadoMap = new HashMap<>();
+
+    public void construirEstados(ArrayList<String> estadosList) {
+        HashMap<String, Integer> estadoMap = new HashMap<>();
         for (int i = 0; i < estadosList.size(); i++) {
             estadoMap.put(estadosList.get(i), i);
         }
         this.setEstados(estadoMap);
-        System.out.println("Estados asigandos "+ estados.toString());
     }
+
     @Override
     public void agregarEstado(String nombre, int posicion) {
         this.estados.put(nombre, posicion);
@@ -407,7 +451,7 @@ public class AFDeterministico extends AutomataFinito {
     }
 
     @Override
-    public void convertirAFNDtoAFD() {
+    public AFDeterministico convertirAFNDtoAFD() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

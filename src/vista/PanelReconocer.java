@@ -5,6 +5,7 @@
  */
 package vista;
 
+import Modelo.AutomataFinito;
 import controlador.Controlador;
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -95,12 +96,11 @@ public class PanelReconocer extends javax.swing.JPanel {
 
         jPanel2.add(jp_estados);
 
-        jPanel5.setLayout(new java.awt.GridLayout());
+        jPanel5.setLayout(new java.awt.GridLayout(1, 0));
 
         lb_respuesta.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         lb_respuesta.setForeground(new java.awt.Color(0, 204, 51));
         lb_respuesta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lb_respuesta.setText("ACEPTADA");
         jPanel5.add(lb_respuesta);
 
         jPanel2.add(jPanel5);
@@ -111,6 +111,11 @@ public class PanelReconocer extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String hilera = tf_hilera.getText().toString();
         Boolean b = null;//reconocer aca se llama el metodo
+        Controlador ctrl = Controlador.getInstance();
+        AutomataFinito afAux = ctrl.obtenerAutomataFinito();
+        
+       // ctrl.convertirAF();
+        b = ctrl.reconocer(hilera);
         if(b)
         {
             lb_respuesta.setText("ACEPTADA");
@@ -125,7 +130,7 @@ public class PanelReconocer extends javax.swing.JPanel {
         {
             
         }
-        
+        ctrl.setAutomataFinito(afAux);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void tf_hileraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_hileraActionPerformed
