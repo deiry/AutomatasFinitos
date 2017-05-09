@@ -16,6 +16,7 @@ import java.util.*;
  * @author DEIRY
  */
 public class AFDeterministico extends AutomataFinito {
+    
 
     private String estadoInicial;
     private List<String> estadoAceptacion;
@@ -301,10 +302,11 @@ public class AFDeterministico extends AutomataFinito {
         System.out.println("Estados " + estados.toString());
     }
 
-    public void imprimirArray(ArrayList list) {
-        Iterator<List> it = list.iterator();
+    public void imprimirArray(List<String> list) {
+        Iterator<String> it = list.iterator();
+        System.out.println("");
         while (it.hasNext()) {
-            String next = it.next().toString();
+            String next = it.next();
             System.out.print(next + " -");
         }
     }
@@ -343,8 +345,7 @@ public class AFDeterministico extends AutomataFinito {
         for (int i = 0; i < estadosList.size(); i++) {
             estadoMap.put(estadosList.get(i), i);
         }
-        this.setEstados(estadoMap);
-        System.out.println("Estados asigandos "+ estados.toString());
+        this.setEstados(estadoMap);     
     }
     @Override
     public void agregarEstado(String nombre, int posicion) {
@@ -407,7 +408,7 @@ public class AFDeterministico extends AutomataFinito {
     }
 
     @Override
-    public void convertirAFNDtoAFD() {
+    public AFDeterministico convertirAFNDtoAFD() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

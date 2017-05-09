@@ -18,6 +18,8 @@ public abstract class AutomataFinito {
 
     protected HashMap<String, Integer> estados;
     protected HashMap<String, Integer> simbolos;
+    
+    
 
     public AutomataFinito() {
         this.estados = new HashMap<>();
@@ -57,9 +59,12 @@ public abstract class AutomataFinito {
     }
 
     public String unionEstadosTransicion(List<String> lista) {
+        
         String estadoUnion = "";
+        String estados;
         for (int i = 0; i < lista.size(); i++) {
-            estadoUnion += lista.get(i);
+            estados = lista.get(i);         
+            estadoUnion += estados;
         }
 
         return estadoUnion;
@@ -124,6 +129,6 @@ public abstract class AutomataFinito {
 
     public abstract void unirEstados();
 
-    public abstract void convertirAFNDtoAFD();
+    public abstract AFDeterministico convertirAFNDtoAFD();
 
 }
