@@ -177,11 +177,8 @@ public class AFNoDeterministico extends AutomataFinito {
         afd.setSimbolos(simbolos);
         afd.construirEstados(estadosCompletos);
         afd.contruirTransiciones(transiciones, transicionesNuevosEstados);
-        afd.setEstadoInicial(estadosIniciales.get(0));
-        afd.setEstadoAceptacion(estadosAceptacion);
+        afd.setEstadoInicial(estadosIniciales.get(0));       
         afd.setEstadoAceptacion(estadosAceptacionAF);
-        System.out.println("Estado aceptacion");
-        afd.imprimirArray(estadosAceptacionAF);
         System.out.println("Estado inicial "+estadosInicialesAF);
         return afd;
     }
