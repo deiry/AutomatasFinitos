@@ -5,6 +5,15 @@
  */
 package vista;
 
+import Modelo.AutomataFinito;
+import controlador.Controlador;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -13,11 +22,16 @@ import javax.swing.JPanel;
  */
 public class VistaPrincipal extends javax.swing.JFrame {
 
+    private Controlador controlador;
+
     /**
      * Creates new form VistaPrincipal
      */
     public VistaPrincipal() {
         initComponents();
+
+        btn_vista_automata.setEnabled(false);
+
     }
 
     /**
@@ -30,6 +44,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jp_modificar_automata = new javax.swing.JPanel();
+        btn_vista_automata = new javax.swing.JButton();
         btn_vista_estados = new javax.swing.JButton();
         btn_vista_simbolos = new javax.swing.JButton();
         btn_vista_estado_incial = new javax.swing.JButton();
@@ -43,10 +58,19 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         Convertir = new javax.swing.JButton();
         jp_contenedor_principal = new javax.swing.JPanel();
+        lb_tipo_automata = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jp_modificar_automata.setLayout(new java.awt.GridLayout(6, 1));
+
+        btn_vista_automata.setText("Automata");
+        btn_vista_automata.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_vista_automataActionPerformed(evt);
+            }
+        });
+        jp_modificar_automata.add(btn_vista_automata);
 
         btn_vista_estados.setText("Estados");
         btn_vista_estados.addActionListener(new java.awt.event.ActionListener() {
@@ -56,7 +80,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         });
         jp_modificar_automata.add(btn_vista_estados);
 
-        btn_vista_simbolos.setText("Simbolos");
+        btn_vista_simbolos.setText("Símbolos");
         btn_vista_simbolos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_vista_simbolosActionPerformed(evt);
@@ -91,24 +115,58 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jp_operaciones_automata.setLayout(new java.awt.GridLayout(1, 6));
 
         jButton1.setText("Abrir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jp_operaciones_automata.add(jButton1);
 
         jButton2.setText("Guardar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jp_operaciones_automata.add(jButton2);
 
         jButton3.setText("Identificar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jp_operaciones_automata.add(jButton3);
 
         jButton4.setText("Reconocer");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
         jp_operaciones_automata.add(jButton4);
 
         jButton5.setText("Simplificar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
         jp_operaciones_automata.add(jButton5);
 
         Convertir.setText("Convertir");
+        Convertir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConvertirActionPerformed(evt);
+            }
+        });
         jp_operaciones_automata.add(Convertir);
 
         jp_contenedor_principal.setLayout(new java.awt.CardLayout());
+
+        lb_tipo_automata.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lb_tipo_automata.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb_tipo_automata.setText("AFD");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -116,17 +174,23 @@ public class VistaPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jp_modificar_automata, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jp_modificar_automata, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lb_tipo_automata, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jp_operaciones_automata, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jp_operaciones_automata, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
                     .addComponent(jp_contenedor_principal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jp_operaciones_automata, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jp_operaciones_automata, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lb_tipo_automata, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(2, 2, 2)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jp_modificar_automata, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
@@ -160,21 +224,69 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private void btn_vista_transicionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_vista_transicionesActionPerformed
         PanelTransiciones panelTransiciones = new PanelTransiciones();
         mostrarPanel(jp_contenedor_principal, panelTransiciones);
+        btn_vista_automata.setEnabled(true);
     }//GEN-LAST:event_btn_vista_transicionesActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String texto = abrirArchivo();
+        controlador = Controlador.getInstance();
+        controlador.construirAtomata(texto);
+        PanelAutomata panelAutomata = new PanelAutomata();
+        mostrarPanel(jp_contenedor_principal, panelAutomata);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        controlador = Controlador.getInstance();
+        String automata = controlador.obtenerAutomata();
+        guardarArchivo(automata);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void btn_vista_automataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_vista_automataActionPerformed
+        PanelAutomata panelAutomata = new PanelAutomata();
+        mostrarPanel(jp_contenedor_principal, panelAutomata);
+    }//GEN-LAST:event_btn_vista_automataActionPerformed
+
+    private void ConvertirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConvertirActionPerformed
+
+        Controlador ctrl = Controlador.getInstance();
+        ctrl.convertirAF();
+        PanelAutomata panelAutomata = new PanelAutomata();
+        mostrarPanel(jp_contenedor_principal, panelAutomata);
+    }//GEN-LAST:event_ConvertirActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+
+        PanelReconocer panelReconocer = new PanelReconocer();
+        mostrarPanel(jp_contenedor_principal, panelReconocer);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        PanelIdentificar panelIdentificar = new PanelIdentificar();
+        mostrarPanel(jp_contenedor_principal, panelIdentificar);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        Controlador ctrl = Controlador.getInstance();
+        ctrl.simplificar();
+        PanelAutomata panelAutomata = new PanelAutomata();
+        mostrarPanel(jp_contenedor_principal, panelAutomata);
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * metodo que sobrescribe el contendio de un panel para hacer las vistas
      * dinamicas
+     *
      * @param contenedor contenedor al que se le inyecta el nuevo panel
      * @param nuevoPanel panel a insertar
      */
-    private void mostrarPanel(JPanel contenedor,JPanel nuevoPanel)
-    {
+    private void mostrarPanel(JPanel contenedor, JPanel nuevoPanel) {
         contenedor.removeAll();
         contenedor.revalidate();
         contenedor.add(nuevoPanel);
         nuevoPanel.setVisible(true);
     }
+
     /**
      * @param args the command line arguments
      */
@@ -210,8 +322,67 @@ public class VistaPrincipal extends javax.swing.JFrame {
         });
     }
 
+    private String abrirArchivo() {
+        String aux = "";
+        String texto = "";
+        try {
+            /**
+             * llamamos el metodo que permite cargar la ventana
+             */
+            JFileChooser file = new JFileChooser();
+            file.showOpenDialog(this);
+            /**
+             * abrimos el archivo seleccionado
+             */
+            File abre = file.getSelectedFile();
+
+            /**
+             * recorremos el archivo, lo leemos para plasmarlo en el area de texto
+             */
+            if (abre != null) {
+                FileReader archivos = new FileReader(abre);
+                BufferedReader lee = new BufferedReader(archivos);
+                while ((aux = lee.readLine()) != null) {
+                    texto += aux + "\n";
+                }
+                lee.close();
+            }
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, ex + ""
+                    + "\nNo se ha encontrado el archivo",
+                    "ADVERTENCIA!!!", JOptionPane.WARNING_MESSAGE);
+        }
+        return texto;//El texto se almacena en el JTextArea
+    }
+
+    private void guardarArchivo(String areaDeTexto) {
+        try {
+            String nombre = "";
+            JFileChooser file = new JFileChooser();
+            file.showSaveDialog(this);
+            File guarda = file.getSelectedFile();
+
+            if (guarda != null) {
+                /*guardamos el archivo y le damos el formato directamente,
+           * si queremos que se guarde en formato doc lo definimos como .doc*/
+                FileWriter save = new FileWriter(guarda + ".txt");
+                save.write(areaDeTexto);
+                save.close();
+                JOptionPane.showMessageDialog(null,
+                        "El archivo se a guardado Exitosamente",
+                        "Información", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null,
+                    "Su archivo no se ha guardado",
+                    "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Convertir;
+    private javax.swing.JButton btn_vista_automata;
     private javax.swing.JButton btn_vista_estado_acpetacion;
     private javax.swing.JButton btn_vista_estado_incial;
     private javax.swing.JButton btn_vista_estados;
@@ -225,5 +396,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jp_contenedor_principal;
     private javax.swing.JPanel jp_modificar_automata;
     private javax.swing.JPanel jp_operaciones_automata;
+    private javax.swing.JLabel lb_tipo_automata;
     // End of variables declaration//GEN-END:variables
+
 }
