@@ -47,9 +47,13 @@ public class PanelSimbolos extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_simbolos = new javax.swing.JTable();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.GridLayout(1, 2));
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new java.awt.GridLayout(6, 1));
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -68,6 +72,8 @@ public class PanelSimbolos extends javax.swing.JPanel {
         jLabel1.setText("Agregar Simbolos");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel2.add(jLabel1);
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
         btn_agregar_estado.setText("Agregar");
         btn_agregar_estado.addActionListener(new java.awt.event.ActionListener() {
@@ -99,6 +105,8 @@ public class PanelSimbolos extends javax.swing.JPanel {
 
         jPanel2.add(jPanel4);
 
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -114,6 +122,7 @@ public class PanelSimbolos extends javax.swing.JPanel {
 
         add(jPanel2);
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
         tbl_simbolos.setModel(new javax.swing.table.DefaultTableModel(

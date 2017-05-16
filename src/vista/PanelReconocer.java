@@ -47,14 +47,18 @@ public class PanelReconocer extends javax.swing.JPanel {
         jPanel5 = new javax.swing.JPanel();
         lb_respuesta = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.GridLayout(1, 2));
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new java.awt.GridLayout(3, 1));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Por favor ingresar la hilera a reconocer");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel2.add(jLabel1);
+
+        jp_estados.setBackground(new java.awt.Color(255, 255, 255));
 
         tf_hilera.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         tf_hilera.addActionListener(new java.awt.event.ActionListener() {
@@ -96,6 +100,7 @@ public class PanelReconocer extends javax.swing.JPanel {
 
         jPanel2.add(jp_estados);
 
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setLayout(new java.awt.GridLayout(1, 0));
 
         lb_respuesta.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N

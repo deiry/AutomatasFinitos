@@ -78,8 +78,10 @@ public class PanelAutomata extends javax.swing.JPanel {
         pn_contenedor_tabla_transiciones = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.GridLayout(1, 2));
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new java.awt.BorderLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -88,15 +90,18 @@ public class PanelAutomata extends javax.swing.JPanel {
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel2.add(jLabel1, java.awt.BorderLayout.NORTH);
 
+        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setMinimumSize(new java.awt.Dimension(100, 100));
         jPanel6.setLayout(new java.awt.GridLayout(1, 0));
         jPanel2.add(jPanel6, java.awt.BorderLayout.PAGE_END);
 
+        jp_estadoss.setBackground(new java.awt.Color(255, 255, 255));
         jp_estadoss.setAlignmentX(5.0F);
         jp_estadoss.setAlignmentY(5.0F);
         jp_estadoss.setAutoscrolls(true);
         jp_estadoss.setLayout(new java.awt.GridLayout(2, 1));
 
+        jp_estadoss1.setBackground(new java.awt.Color(255, 255, 255));
         jp_estadoss1.setAlignmentX(5.0F);
         jp_estadoss1.setAlignmentY(5.0F);
         jp_estadoss1.setAutoscrolls(true);
@@ -106,11 +111,13 @@ public class PanelAutomata extends javax.swing.JPanel {
         jLabel5.setText("Estado de Aceptacion");
         jp_estadoss1.add(jLabel5);
 
-        pn_estado_aceptacion.setLayout(new java.awt.GridLayout());
+        pn_estado_aceptacion.setBackground(new java.awt.Color(255, 255, 255));
+        pn_estado_aceptacion.setLayout(new java.awt.GridLayout(1, 0));
         jp_estadoss1.add(pn_estado_aceptacion);
 
         jp_estadoss.add(jp_estadoss1);
 
+        jp_estadoss2.setBackground(new java.awt.Color(255, 255, 255));
         jp_estadoss2.setAlignmentX(5.0F);
         jp_estadoss2.setAlignmentY(5.0F);
         jp_estadoss2.setAutoscrolls(true);
@@ -120,7 +127,8 @@ public class PanelAutomata extends javax.swing.JPanel {
         jLabel6.setText("Estado Inicial");
         jp_estadoss2.add(jLabel6);
 
-        pn_estado_inicial.setLayout(new java.awt.GridLayout());
+        pn_estado_inicial.setBackground(new java.awt.Color(255, 255, 255));
+        pn_estado_inicial.setLayout(new java.awt.GridLayout(1, 0));
         jp_estadoss2.add(pn_estado_inicial);
 
         jp_estadoss.add(jp_estadoss2);
@@ -129,7 +137,10 @@ public class PanelAutomata extends javax.swing.JPanel {
 
         add(jPanel2);
 
+        pn_contenedor_tabla_transiciones.setBackground(new java.awt.Color(255, 255, 255));
         pn_contenedor_tabla_transiciones.setLayout(new java.awt.GridLayout(3, 1));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         pn_contenedor_tabla_transiciones.add(jPanel1);
 
         add(pn_contenedor_tabla_transiciones);

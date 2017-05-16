@@ -50,6 +50,7 @@ public class PanelEstadoInicial extends javax.swing.JPanel {
 
         setLayout(new java.awt.GridLayout(1, 2));
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new java.awt.GridLayout(3, 1));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -57,6 +58,7 @@ public class PanelEstadoInicial extends javax.swing.JPanel {
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel2.add(jLabel1);
 
+        jp_estados.setBackground(new java.awt.Color(255, 255, 255));
         jp_estados.setLayout(new java.awt.GridLayout(3, 8));
 
         jButton1.setText("UPCI");
@@ -72,6 +74,8 @@ public class PanelEstadoInicial extends javax.swing.JPanel {
         jp_estados.add(jButton4);
 
         jPanel2.add(jp_estados);
+
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);

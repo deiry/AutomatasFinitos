@@ -80,8 +80,10 @@ public class PanelTransiciones extends javax.swing.JPanel {
         jp_simbolos = new javax.swing.JPanel();
         pn_contenedor_tabla_transiciones = new javax.swing.JPanel();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.GridLayout(1, 2));
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new java.awt.BorderLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -90,8 +92,9 @@ public class PanelTransiciones extends javax.swing.JPanel {
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel2.add(jLabel1, java.awt.BorderLayout.NORTH);
 
+        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setMinimumSize(new java.awt.Dimension(100, 100));
-        jPanel6.setLayout(new java.awt.GridLayout());
+        jPanel6.setLayout(new java.awt.GridLayout(1, 0));
 
         jButton1.setText("Agregar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -103,11 +106,13 @@ public class PanelTransiciones extends javax.swing.JPanel {
 
         jPanel2.add(jPanel6, java.awt.BorderLayout.PAGE_END);
 
+        jp_estadoss.setBackground(new java.awt.Color(255, 255, 255));
         jp_estadoss.setAlignmentX(5.0F);
         jp_estadoss.setAlignmentY(5.0F);
         jp_estadoss.setAutoscrolls(true);
-        jp_estadoss.setLayout(new java.awt.GridLayout());
+        jp_estadoss.setLayout(new java.awt.GridLayout(1, 0));
 
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setMinimumSize(new java.awt.Dimension(100, 100));
         jPanel4.setLayout(new java.awt.BorderLayout());
 
@@ -115,12 +120,14 @@ public class PanelTransiciones extends javax.swing.JPanel {
         jLabel2.setText("Estado Actual");
         jPanel4.add(jLabel2, java.awt.BorderLayout.PAGE_START);
 
+        jp_estado_actual.setBackground(new java.awt.Color(255, 255, 255));
         jp_estado_actual.setMinimumSize(new java.awt.Dimension(100, 100));
-        jp_estado_actual.setLayout(new java.awt.GridLayout());
+        jp_estado_actual.setLayout(new java.awt.GridLayout(1, 0));
         jPanel4.add(jp_estado_actual, java.awt.BorderLayout.CENTER);
 
         jp_estadoss.add(jPanel4);
 
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setMinimumSize(new java.awt.Dimension(100, 100));
         jPanel5.setLayout(new java.awt.BorderLayout());
 
@@ -128,12 +135,14 @@ public class PanelTransiciones extends javax.swing.JPanel {
         jLabel3.setText("Estado Siguiente");
         jPanel5.add(jLabel3, java.awt.BorderLayout.PAGE_START);
 
+        jp_estado_siguiente.setBackground(new java.awt.Color(255, 255, 255));
         jp_estado_siguiente.setMinimumSize(new java.awt.Dimension(100, 100));
-        jp_estado_siguiente.setLayout(new java.awt.GridLayout());
+        jp_estado_siguiente.setLayout(new java.awt.GridLayout(1, 0));
         jPanel5.add(jp_estado_siguiente, java.awt.BorderLayout.CENTER);
 
         jp_estadoss.add(jPanel5);
 
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setMinimumSize(new java.awt.Dimension(100, 100));
         jPanel3.setLayout(new java.awt.BorderLayout());
 
@@ -141,8 +150,9 @@ public class PanelTransiciones extends javax.swing.JPanel {
         jLabel4.setText("Simbolo de Entrada");
         jPanel3.add(jLabel4, java.awt.BorderLayout.PAGE_START);
 
+        jp_simbolos.setBackground(new java.awt.Color(255, 255, 255));
         jp_simbolos.setMinimumSize(new java.awt.Dimension(100, 100));
-        jp_simbolos.setLayout(new java.awt.GridLayout());
+        jp_simbolos.setLayout(new java.awt.GridLayout(1, 0));
         jPanel3.add(jp_simbolos, java.awt.BorderLayout.CENTER);
 
         jp_estadoss.add(jPanel3);
@@ -151,6 +161,7 @@ public class PanelTransiciones extends javax.swing.JPanel {
 
         add(jPanel2);
 
+        pn_contenedor_tabla_transiciones.setBackground(new java.awt.Color(255, 255, 255));
         pn_contenedor_tabla_transiciones.setLayout(new java.awt.GridLayout(1, 1));
         add(pn_contenedor_tabla_transiciones);
     }// </editor-fold>//GEN-END:initComponents
