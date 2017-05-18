@@ -157,6 +157,10 @@ public class PanelAutomata extends javax.swing.JPanel {
             for (int i = 0 ; i< estados.size(); i++) {
                 String key = estados.get(i);
                 JButton btn = new JButton(key);
+                btn.setForeground(new  java.awt.Color(255, 255, 255));
+                btn.setBackground(new Color(58,171,169));
+                
+                
                 pn_estado_inicial.add(btn);
             } 
         }   
@@ -172,6 +176,8 @@ public class PanelAutomata extends javax.swing.JPanel {
             for (int i = 0 ; i< estados.size(); i++) {
                 String key = estados.get(i);
                 JButton btn = new JButton(key);
+                btn.setForeground(new  java.awt.Color(255, 255, 255));
+                btn.setBackground(new Color(58,171,169));
                 pn_estado_aceptacion.add(btn);
             } 
         } 

@@ -96,7 +96,10 @@ public class PanelTransiciones extends javax.swing.JPanel {
         jPanel6.setMinimumSize(new java.awt.Dimension(100, 100));
         jPanel6.setLayout(new java.awt.GridLayout(1, 0));
 
+        jButton1.setBackground(new java.awt.Color(58, 171, 169));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Agregar");
+        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);

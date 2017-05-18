@@ -66,7 +66,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
-        getContentPane().setLayout(new java.awt.GridLayout());
+        getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel2.setBackground(new java.awt.Color(58, 171, 169));
 
@@ -80,12 +80,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jButton6.setForeground(new java.awt.Color(255, 255, 255));
         jButton6.setText("A");
         jButton6.setBorder(null);
+        jButton6.setContentAreaFilled(false);
         jPanel1.add(jButton6);
 
         jButton7.setBackground(new java.awt.Color(255, 255, 255));
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
         jButton7.setText("B");
         jButton7.setBorder(null);
+        jButton7.setContentAreaFilled(false);
         jPanel1.add(jButton7);
 
         jp_modificar_automata.add(jPanel1);
@@ -93,6 +95,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btn_vista_automata.setForeground(new java.awt.Color(255, 255, 255));
         btn_vista_automata.setText("Automata");
         btn_vista_automata.setBorder(null);
+        btn_vista_automata.setContentAreaFilled(false);
+        btn_vista_automata.setFocusPainted(false);
         btn_vista_automata.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_vista_automataActionPerformed(evt);
@@ -103,6 +107,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btn_vista_estados.setForeground(new java.awt.Color(255, 255, 255));
         btn_vista_estados.setText("Estados");
         btn_vista_estados.setBorder(null);
+        btn_vista_estados.setContentAreaFilled(false);
+        btn_vista_estados.setFocusPainted(false);
         btn_vista_estados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_vista_estadosActionPerformed(evt);
@@ -113,6 +119,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btn_vista_simbolos.setForeground(new java.awt.Color(255, 255, 255));
         btn_vista_simbolos.setText("Símbolos");
         btn_vista_simbolos.setBorder(null);
+        btn_vista_simbolos.setContentAreaFilled(false);
+        btn_vista_simbolos.setFocusPainted(false);
         btn_vista_simbolos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_vista_simbolosActionPerformed(evt);
@@ -123,6 +131,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btn_vista_estado_incial.setForeground(new java.awt.Color(255, 255, 255));
         btn_vista_estado_incial.setText("Estado Inicial");
         btn_vista_estado_incial.setBorder(null);
+        btn_vista_estado_incial.setContentAreaFilled(false);
+        btn_vista_estado_incial.setFocusPainted(false);
         btn_vista_estado_incial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_vista_estado_incialActionPerformed(evt);
@@ -133,6 +143,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btn_vista_estado_acpetacion.setForeground(new java.awt.Color(255, 255, 255));
         btn_vista_estado_acpetacion.setText("Estado Aceptación");
         btn_vista_estado_acpetacion.setBorder(null);
+        btn_vista_estado_acpetacion.setContentAreaFilled(false);
+        btn_vista_estado_acpetacion.setFocusPainted(false);
         btn_vista_estado_acpetacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_vista_estado_acpetacionActionPerformed(evt);
@@ -143,6 +155,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btn_vista_transiciones.setForeground(new java.awt.Color(255, 255, 255));
         btn_vista_transiciones.setText("Transiciones");
         btn_vista_transiciones.setBorder(null);
+        btn_vista_transiciones.setContentAreaFilled(false);
+        btn_vista_transiciones.setFocusPainted(false);
         btn_vista_transiciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_vista_transicionesActionPerformed(evt);
@@ -155,7 +169,12 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Abrir");
+        jButton1.setToolTipText("Abrir Automata");
         jButton1.setBorder(null);
+        jButton1.setBorderPainted(false);
+        jButton1.setContentAreaFilled(false);
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.setFocusPainted(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -165,7 +184,12 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Guardar");
+        jButton2.setToolTipText("Guardar Automata");
         jButton2.setBorder(null);
+        jButton2.setBorderPainted(false);
+        jButton2.setContentAreaFilled(false);
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton2.setFocusPainted(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -175,7 +199,10 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Identificar");
+        jButton3.setToolTipText("Identificar que tipo es el AF");
         jButton3.setBorder(null);
+        jButton3.setContentAreaFilled(false);
+        jButton3.setFocusPainted(false);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -185,7 +212,10 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
         jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setText("Reconocer");
+        jButton4.setToolTipText("Reconocer una hilera");
         jButton4.setBorder(null);
+        jButton4.setContentAreaFilled(false);
+        jButton4.setFocusPainted(false);
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -196,6 +226,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jButton5.setForeground(new java.awt.Color(255, 255, 255));
         jButton5.setText("Simplificar");
         jButton5.setBorder(null);
+        jButton5.setContentAreaFilled(false);
+        jButton5.setFocusPainted(false);
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -206,6 +238,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
         Convertir.setForeground(new java.awt.Color(255, 255, 255));
         Convertir.setText("Convertir");
         Convertir.setBorder(null);
+        Convertir.setContentAreaFilled(false);
+        Convertir.setFocusPainted(false);
         Convertir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ConvertirActionPerformed(evt);

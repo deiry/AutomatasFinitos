@@ -75,7 +75,10 @@ public class PanelSimbolos extends javax.swing.JPanel {
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
+        btn_agregar_estado.setBackground(new java.awt.Color(58, 171, 169));
+        btn_agregar_estado.setForeground(new java.awt.Color(255, 255, 255));
         btn_agregar_estado.setText("Agregar");
+        btn_agregar_estado.setBorderPainted(false);
         btn_agregar_estado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_agregar_estadoActionPerformed(evt);

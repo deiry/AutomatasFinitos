@@ -462,7 +462,7 @@ public class Controlador {
 
         automata = automata + "][";
         for (int i = 0; i < estadoInicial.size(); i++) {
-            automata = automata + estadoAcpetacion.get(i);
+            automata = automata + estadoInicial.get(i);
             if (i < estadoInicial.size() - 1) {
                 automata = automata + ",";
             }

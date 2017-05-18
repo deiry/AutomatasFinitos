@@ -125,6 +125,8 @@ public class PanelEstadoInicial extends javax.swing.JPanel {
                         controlador.agregarEstadoInicial(estado);
                         btn.setEnabled(false);
                         btn.setBackground(Color.gray);
+                        btn.setForeground(new  java.awt.Color(255, 255, 255));
+                        //btn.setBackground(new Color(58,171,169));
                     }
                 };
                 btn.addActionListener(l);
