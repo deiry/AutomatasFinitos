@@ -37,12 +37,8 @@ public class Controlador {
         this.contadorSimbolos = 0;
         this.selector = 1;
         af = new AFNoDeterministico();
+        af2 = null;
 
-//        af.agregarEstado("q1", 0);
-//        af.agregarEstado("q2", 1);
-//        af.agregarEstado("q3", 2);
-//        af.agregarSimbolos("0", 0);
-//        af.agregarSimbolos("1", 1);
     }
 
     public static Controlador getInstance() {
@@ -619,5 +615,12 @@ public class Controlador {
     public int getSelector()
     {
         return this.selector;
+    }
+
+    public void reiniciarVariables() {
+       this.contadorEstados = 0;
+        this.contadorSimbolos = 0;
+        this.selector = 1;
+        af = new AFNoDeterministico();
     }
 }
