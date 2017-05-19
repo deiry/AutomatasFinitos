@@ -48,7 +48,7 @@ public class AFND extends AutomataFinito {
         AFD afd = new AFD();
 
         AF.igualTransiciones(estadosFinalesAFD, simbolos.size());
-        this.configurarEstadoDeterministico(estadosFinalesAFD);
+        this.convertirEstadosDeterministico(estadosFinalesAFD);
         afd.setEstados(estadosFinalesAFD);
         afd.setSimbolos(simbolos);
         afd.setEstadoInicial(AF.buscarEstadoInicial(estadosFinalesAFD));
@@ -82,7 +82,7 @@ public class AFND extends AutomataFinito {
         }
     }
 
-    public void configurarEstadoDeterministico(ArrayList<Estado> estadosAFD) {
+    public void convertirEstadosDeterministico(ArrayList<Estado> estadosAFD) {
         int idE = 1;
         for (Estado estado : estadosAFD) {
             estado.setListDatos(new LinkedList<>());

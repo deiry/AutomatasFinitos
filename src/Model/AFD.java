@@ -38,11 +38,13 @@ public class AFD extends AutomataFinito {
         System.out.println(validarNuevasParticiones(vector, 0));
         imprimirParticiones();
         nuevosEstados = unirEstadosParticiones();
+        //this.configurarIdDeterministico(nuevosEstados);
         this.unirTransiciones(nuevosEstados);
         afSimplificado.setEstados(nuevosEstados);
+        afSimplificado.setSimbolos(simbolos);
         System.out.println("");
 
-        return this;
+        return afSimplificado;
     }
 
     public ArrayList<Estado> unirEstadosParticiones() {
@@ -57,6 +59,7 @@ public class AFD extends AutomataFinito {
                 for (int i = 1; i < particion.size(); i++) {
                     aux = this.getEstado(particion.get(i));
                     estadoFinal = AF.unionEstados(estadoFinal, aux);
+                    
                 }
                 estadoFinal.setPosEstado(posEstado);
                 nuevosEstados.add(posEstado, estadoFinal);
@@ -65,12 +68,14 @@ public class AFD extends AutomataFinito {
         this.imprimirEstados(nuevosEstados);
         return nuevosEstados;
     }
+    
+
 
     public void unirTransiciones(ArrayList<Estado> estado) {
 
         for (Estado est : estado) {
             for (int i = 0; i < simbolos.size(); i++) {
-                Estado tran = AF.unirTransiciones(est, i);              
+                Estado tran = AF.unirTransiciones(est, i);
                 est.setTransicion(tran, i);
             }
         }
@@ -164,8 +169,16 @@ public class AFD extends AutomataFinito {
             tranPart[posTran] = super.getEstado(pos).getParticionToSimbolo(simbolo);
 
         }
-        AF.imprimirVector(tranPart);
+
         return tranPart;
+    }
+
+    public void configurarIdDeterministico(ArrayList<Estado> estados) {
+        int id = 1;
+        for (Estado est : estados) {
+            est.setId(id);
+            id++;
+        }
     }
 
     public void analizarEstados(Estado estado, int[] visitado) {

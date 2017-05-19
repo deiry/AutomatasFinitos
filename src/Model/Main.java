@@ -65,8 +65,8 @@ public class Main {
         D.setEstadoAcep(true);
         D.setEstadoInicial(false);          
         afd.agregarEstado(D);
-        afd.imprimirEstados(afd.getEstados());
-        afd.simplificar();
+        
+        AFD simplicado = afd.simplificar();
 
     }
 }
