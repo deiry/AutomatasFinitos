@@ -44,17 +44,22 @@ public class PanelIdentificar extends javax.swing.JPanel {
         jPanel5 = new javax.swing.JPanel();
         lb_respuesta = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.GridLayout(1, 2));
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new java.awt.GridLayout(3, 1));
 
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("El Automata es:");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel2.add(jLabel1);
 
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setLayout(new java.awt.GridLayout(1, 0));
 
+        lb_respuesta.setBackground(new java.awt.Color(255, 255, 255));
         lb_respuesta.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         lb_respuesta.setForeground(new java.awt.Color(0, 204, 51));
         lb_respuesta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

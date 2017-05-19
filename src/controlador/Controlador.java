@@ -25,7 +25,9 @@ public class Controlador {
     private AFNoDeterministico afnd;
     private int contadorEstados;
     private int contadorSimbolos;
+    private int selector;
     private AutomataFinito af;
+    private AutomataFinito af2;
     private static Controlador instance = null;
 
     protected Controlador() {
@@ -33,13 +35,10 @@ public class Controlador {
         vp.setVisible(true);
         this.contadorEstados = 0;
         this.contadorSimbolos = 0;
+        this.selector = 1;
         af = new AFNoDeterministico();
+        af2 = null;
 
-//        af.agregarEstado("q1", 0);
-//        af.agregarEstado("q2", 1);
-//        af.agregarEstado("q3", 2);
-//        af.agregarSimbolos("0", 0);
-//        af.agregarSimbolos("1", 1);
     }
 
     public static Controlador getInstance() {
@@ -56,6 +55,7 @@ public class Controlador {
      * @param stringAutomata
      */
     public void construirAtomata(String stringAutomata) {
+       
         af = new AFNoDeterministico();
         ArrayList<String> componentesAF = obtenerCompontesAtomata(stringAutomata);
 
@@ -90,6 +90,8 @@ public class Controlador {
         } else {
             error();
         }
+        
+        selectorAF(af);
     }
 
     private void construirAFD() {
@@ -316,6 +318,14 @@ public class Controlador {
     public HashMap<String, Integer> obtenerEstados() {
         return af.obtenerEstados();
     }
+    public HashMap<String, Integer> obtenerEstados2() {
+        if (af2 != null) {
+            return af.obtenerEstados();
+        }
+        else{
+            return null;
+        }
+    }
 
     public void agregarSimbolo(String simbolo) {
         af.agregarSimbolos(simbolo, contadorSimbolos);
@@ -324,6 +334,16 @@ public class Controlador {
 
     public HashMap<String, Integer> obtenerSimbolos() {
         return af.obtenerSimbolos();
+    }
+    
+    public HashMap<String, Integer> obtenerSimbolos2() {
+        if (af2 != null) {
+        return af2.obtenerSimbolos();
+        }
+        else{
+            return null;
+        }
+        
     }
 
     public void agregarEstadoInicial(String estadoInicial) {
@@ -395,6 +415,11 @@ public class Controlador {
     }
 
     public String obtenerAutomata() {
+        AutomataFinito afAux = null;
+        if (selector == 2) {
+            afAux = this.af;
+            this.af = af2;
+        }
         String automata = "{";
 
         HashMap<String, Integer> estados = af.getEstados();
@@ -462,7 +487,7 @@ public class Controlador {
 
         automata = automata + "][";
         for (int i = 0; i < estadoInicial.size(); i++) {
-            automata = automata + estadoAcpetacion.get(i);
+            automata = automata + estadoInicial.get(i);
             if (i < estadoInicial.size() - 1) {
                 automata = automata + ",";
             }
@@ -475,6 +500,9 @@ public class Controlador {
             }
         }
         automata = automata + "]}";
+        if (selector == 2) {
+            this.af = afAux;
+        }
         return automata;
     }
 
@@ -486,6 +514,27 @@ public class Controlador {
         return af.obtenerEstadoInicial();
     }
 
+    public ArrayList<String> obtenerEstadosAceptacion2() {
+        if (af2 != null) {
+            return af2.obtenerEstadoAceptacion();
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public ArrayList<String> obtenerEstadosInicial2() {
+        if (af2 != null) {
+            return af2.obtenerEstadoInicial();
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    
     public AutomataFinito obtenerAutomataFinito() {
         return af;
     }
@@ -529,4 +578,49 @@ public class Controlador {
         return respuesta;
     }
 
+    public void seleccionarAfA() 
+    {
+        if(selector != 1)
+        {
+            this.selector = 1;
+        }
+    }
+
+    public void seleccionarAfB() 
+    {
+        if(selector != 2)
+        {
+            this.selector = 2;
+        }
+    }
+
+    /**
+     * metodo que valida cual automata esta seleccionado para contruir el automata
+     * @param af 
+     */
+    private void selectorAF(AutomataFinito af) {
+        if (this.selector == 1) {
+            this.af = af;
+        }
+        else if(this.selector == 2)
+        {
+            this.af2 = af;
+        }
+        else
+        {
+            this.af = null;
+        }
+    }
+    
+    public int getSelector()
+    {
+        return this.selector;
+    }
+
+    public void reiniciarVariables() {
+       this.contadorEstados = 0;
+        this.contadorSimbolos = 0;
+        this.selector = 1;
+        af = new AFNoDeterministico();
+    }
 }
