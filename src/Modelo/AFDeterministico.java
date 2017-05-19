@@ -198,6 +198,7 @@ public class AFDeterministico extends AutomataFinito {
         }
         System.out.println("Particiones " + particiones.toString().toString());
         unirTransiciones();
+        imprimirArray(estadoAceptacion);
     }
 
       public void imprimirTransiciones() {
