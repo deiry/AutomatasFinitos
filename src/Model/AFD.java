@@ -6,7 +6,6 @@
 package Model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  *
@@ -35,38 +34,105 @@ public class AFD extends AutomataFinito {
         this.crearParticiones(nuevosEstados);
         imprimirParticiones();
 
-        construirVectorTransiciones(0, 0);
-
+        int[] vector = construirVectorTransiciones(0, 0);
+        System.out.println(validarNuevasParticiones(vector, 0));
+        imprimirParticiones();
+        nuevosEstados = unirEstadosParticiones();
+        this.unirTransiciones(nuevosEstados);
         afSimplificado.setEstados(nuevosEstados);
         System.out.println("");
-        afSimplificado.imprimirEstados();
+
         return this;
+    }
+
+    public ArrayList<Estado> unirEstadosParticiones() {
+        Estado aux;
+        ArrayList<Estado> nuevosEstados = new ArrayList<>();
+        int posEstado = 0;
+
+        for (ArrayList<Integer> particion : particiones) {
+            if (particion.size() > 0) {
+                Estado estadoFinal = this.getEstado(particion.get(0));
+
+                for (int i = 1; i < particion.size(); i++) {
+                    aux = this.getEstado(particion.get(i));
+                    estadoFinal = AF.unionEstados(estadoFinal, aux);
+                }
+                estadoFinal.setPosEstado(posEstado);
+                nuevosEstados.add(posEstado, estadoFinal);
+            }
+        }
+        this.imprimirEstados(nuevosEstados);
+        return nuevosEstados;
+    }
+
+    public void unirTransiciones(ArrayList<Estado> estado) {
+
+        for (Estado est : estado) {
+            for (int i = 0; i < simbolos.size(); i++) {
+                Estado tran = AF.unirTransiciones(est, i);              
+                est.setTransicion(tran, i);
+            }
+        }
+        this.imprimirTransiciones(estado);
     }
 
     public int numeroParticiones() {
         return particiones.size();
     }
 
+    public ArrayList[] separarParticiones(int[] tran) {
+        ArrayList<Integer>[] separar = inicializarArray(numeroParticiones());
+
+        for (int i = 0; i < tran.length; i++) {
+            int partS = tran[i];
+            separar[partS].add(i);
+        }
+        return separar;
+    }
+
+    public ArrayList<Integer>[] inicializarArray(int numero) {
+
+        ArrayList<Integer>[] separar = new ArrayList[numero];
+        for (int i = 0; i < separar.length; i++) {
+            separar[i] = new ArrayList<>();
+        }
+        return separar;
+    }
+
     public boolean validarNuevasParticiones(int[] tranPart, int particion) {
+        boolean cambio = false;
+        ArrayList<Integer>[] separar = separarParticiones(tranPart);
+        int tam0 = separar[0].size();
+        int tam1 = separar[1].size();
+        int posRef;
+        if (tam1 > tam0) {
+            posRef = 1;
+        } else {
+            posRef = 0;
+        }
 
-        int posReferencia = tranPart[0];
-        ArrayList<Integer>[] separar = new ArrayList[numeroParticiones()];
-        ArrayList<Integer> aux;
-        boolean bandera = false;
-        int [] numeroPart = new int[numeroParticiones()];
-
-        for (int i = 1; i < tranPart.length; i++) {
-            int tran = tranPart[i];
-            if (separar[tran] == null) {
-                aux = new ArrayList<>();
-                aux.add(i);
-                separar[tran] = aux;
-            } else {
-                aux = separar[tran];
-                aux.add(i);
+        for (int i = 0; i < separar.length; i++) {
+            if (i != posRef && separar[i].size() > 0) {
+                cambio = true;
+                this.agregarParticion(separar[i]);
+                this.eliminarParticion(separar[i], particion);
             }
         }
-        return bandera;
+
+        return cambio;
+    }
+
+    public void eliminarParticion(ArrayList<Integer> nuevaPar, int posParticion) {
+        ArrayList<Integer> particion = this.particiones.get(posParticion);
+
+        for (int i = 0; i < nuevaPar.size(); i++) {
+            particion.remove(nuevaPar.get(i));
+        }
+    }
+
+    public void agregarParticion(ArrayList<Integer> nuevaParticion) {
+        particiones.add(nuevaParticion);
     }
 
     public void agregarParticion(int nuevaPart) {
@@ -137,10 +203,10 @@ public class AFD extends AutomataFinito {
         for (Estado est : estados) {
             if (est.getParticion() == 0) {
                 part0.add(est.getPosEstado());
-            }else if(est.getParticion() == 1){
+            } else if (est.getParticion() == 1) {
                 part1.add(est.getPosEstado());
             }
-           
+
         }
         particiones.add(part0);
         particiones.add(part1);

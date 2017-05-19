@@ -38,7 +38,8 @@ public class Estado {
     }
 
     public String getData() {
-        return data;
+       
+        return AF.validarRepetidosData(data);
     }
 
     public void setData(String data) {
@@ -174,7 +175,7 @@ public class Estado {
     }
 
     public void addListData(Estado dato) {
-
+      
         if (dato.getTamDatos() == 1 && !perteneceListDatos(dato.getId())) {
             listDatos.add(dato);
         } else {
@@ -245,6 +246,9 @@ public class Estado {
     }
     
     public int getParticionToSimbolo(int i){
+        if (this.getTransicion(i)== null) {
+            
+        }
         return getTransicion(i).getParticion();
     }
 

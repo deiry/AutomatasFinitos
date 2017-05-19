@@ -5,6 +5,7 @@
  */
 package Model;
 
+import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -40,7 +41,7 @@ public class AF {
 
         estadoU.addListData(this1);
         estadoU.addListData(estado2);
-
+       
         return estadoU;
     }
 
@@ -56,11 +57,28 @@ public class AF {
         return false;
     }
 
-    public static Estado igualEstado(ArrayList<Estado> estadosfinal, int nuevoE) {
+    public static String validarRepetidosData(String data) {
+        char[] arraycar = data.toCharArray();
+        for (int i = 0; i < arraycar.length; i++) {
+            for (int j = 0; j < arraycar.length - 1; j++) {
+                if (i != j) {
+                    if (arraycar[i] == arraycar[j]) {
+                        arraycar[j] = ' ';
+                    }
+                }
+            }
+        }
+        String s = new String(arraycar);
+        s = s.replace(" ", "");
+        
+        return s;
+    }
+
+    public static Estado igualEstado(ArrayList<Estado> estadosfinal, int idNuevo) {
         Estado est;
         for (int i = 0; i < estadosfinal.size(); i++) {
             est = estadosfinal.get(i);
-            if (est.getId() == nuevoE) {
+            if (est.getId() == idNuevo) {
                 return est;
             }
         }
@@ -96,11 +114,11 @@ public class AF {
         }
 
     }
-    
-    public static void imprimirVector(int[]vec){
-    
+
+    public static void imprimirVector(int[] vec) {
+
         for (int i = 0; i < vec.length; i++) {
-            System.out.print(vec[i]+",");
+            System.out.print(vec[i] + ",");
         }
     }
 }

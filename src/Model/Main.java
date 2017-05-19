@@ -57,20 +57,7 @@ public class Main {
         C.addTransicion(C, 0);
 
         AFD afd = afnd.convertir();
-        Iterator<Estado> it = afd.getEstados().iterator();
-        while (it.hasNext()) {
-            Estado next = it.next();
-            String data = next.getData();
-            String tran1 = "", tran2 = "";
-            if (next.getTransicion(0) != null) {
-                tran1 = next.getTransicion(0).getData();
-            }
-            if (next.getTransicion(1) != null) {
-                tran2 = next.getTransicion(1).getData();
-            }
-            System.out.println(data + "| " + tran1 + "| " + tran2 + "| " + next.isEstadoAcep()
-                    + " " + next.isEstadoInicial() + " " + next.getParticion() + " " + next.getId() + " " + next.getTamDatos());
-        }
+        afd.imprimirTransiciones(afd.getEstados());
 
         
         Estado D = new Estado();
@@ -78,7 +65,7 @@ public class Main {
         D.setEstadoAcep(true);
         D.setEstadoInicial(false);          
         afd.agregarEstado(D);
-        afd.imprimirEstados();
+        afd.imprimirEstados(afd.getEstados());
         afd.simplificar();
 
     }

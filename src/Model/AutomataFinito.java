@@ -65,12 +65,30 @@ public abstract class AutomataFinito {
         return estados.get(i);
     }
     
-    public void imprimirEstados(){
+    public void imprimirEstados(ArrayList<Estado> estados){
         for(Estado est: estados){
             System.out.print(est.getData()+", ");
         
         }
         
+    }
+    
+    public void imprimirTransiciones(ArrayList<Estado> estados){
+        System.out.println("");
+     Iterator<Estado> it = estados.iterator();
+        while (it.hasNext()) {
+            Estado next = it.next();
+            String data = next.getData();
+            String tran1 = "", tran2 = "";
+            if (next.getTransicion(0) != null) {
+                tran1 = next.getTransicion(0).getData();
+            }
+            if (next.getTransicion(1) != null) {
+                tran2 = next.getTransicion(1).getData();
+            }
+            System.out.println(data + "| " + tran1 + "| " + tran2 + "| " + next.isEstadoAcep()
+                    + " " + next.isEstadoInicial() + " " + next.getParticion() + " " + next.getId() + " " + next.getTamDatos());
+        }
     }
     
 
