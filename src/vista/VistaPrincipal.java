@@ -31,7 +31,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         initComponents();
 
         btn_vista_automata.setEnabled(false);
-
+        jButton6.setFont(new java.awt.Font("Tahoma", 1, 30));
     }
 
     /**
@@ -81,6 +81,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jButton6.setText("A");
         jButton6.setBorder(null);
         jButton6.setContentAreaFilled(false);
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton6);
 
         jButton7.setBackground(new java.awt.Color(255, 255, 255));
@@ -88,6 +93,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jButton7.setText("B");
         jButton7.setBorder(null);
         jButton7.setContentAreaFilled(false);
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton7);
 
         jp_modificar_automata.add(jPanel1);
@@ -268,7 +278,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jp_operaciones_automata, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
                     .addComponent(jp_contenedor_principal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(129, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -322,6 +332,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         controlador.construirAtomata(texto);
         PanelAutomata panelAutomata = new PanelAutomata();
         mostrarPanel(jp_contenedor_principal, panelAutomata);
+        btn_vista_automata.setEnabled(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -361,6 +372,20 @@ public class VistaPrincipal extends javax.swing.JFrame {
         PanelAutomata panelAutomata = new PanelAutomata();
         mostrarPanel(jp_contenedor_principal, panelAutomata);
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        Controlador controlador = Controlador.getInstance();
+        controlador.seleccionarAfA();
+        jButton7.setFont(new java.awt.Font("Tahoma", 0, 11));
+        jButton6.setFont(new java.awt.Font("Tahoma", 1, 30));
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        Controlador controlador = Controlador.getInstance();
+        controlador.seleccionarAfB();
+        jButton6.setFont(new java.awt.Font("Tahoma", 0, 11));
+        jButton7.setFont(new java.awt.Font("Tahoma", 1,30));
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * metodo que sobrescribe el contendio de un panel para hacer las vistas
