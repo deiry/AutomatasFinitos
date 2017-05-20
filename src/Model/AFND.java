@@ -43,19 +43,41 @@ public class AFND extends AutomataFinito {
         }
     }
 
-    public AFD convertir() {
-        Estado estadoN = this.getEstadoInicial(0);
+    public AFD convertir(boolean interseccion) {
+        AFD afd = new AFD();
+        Estado estadoN;
+        if (estadosInciales.size() == 1) {
+            estadoN = this.getEstadoInicial(0);
+        } else {
+            estadoN = unirEstadosIniciales(interseccion);
+
+        }
+
         estadoN.setPosEstado(0);
         estadosFinalesAFD.add(0, estadoN);
         agregarNuevasTransiciones(estadoN);
-        AFD afd = new AFD();
-
         AF.igualTransiciones(estadosFinalesAFD, simbolos.size());
         this.convertirEstadosDeterministico(estadosFinalesAFD);
         afd.setEstados(estadosFinalesAFD);
         afd.setSimbolos(simbolos);
         afd.setEstadoInicial(AF.buscarEstadoInicial(estadosFinalesAFD));
+
         return afd;
+    }
+
+    public Estado unirEstadosIniciales(boolean interseccion) {
+
+        Estado aux = this.getEstado(0);
+        Estado aux2 = new Estado();
+        for (int i = 1; i < estadosInciales.size(); i++) {
+            aux2 = this.getEstado(i);
+            if (interseccion) {
+                aux2 = AF.interseccionEstados(aux, aux2);
+            } else {
+                aux2 = AF.unionEstados(aux, aux2);
+            }
+        }
+        return aux2;
     }
 
     public void agregarNuevasTransiciones(Estado estado) {
@@ -96,13 +118,17 @@ public class AFND extends AutomataFinito {
         }
     }
 
+    public AFND unionAutomata(AFND afnd2) {
+        return afnd2;
+    }
+
     public void addEstadosFinalesAFD(Estado estado) {
         estadosFinalesAFD.add(estadosFinalesAFD.size(), estado);
     }
 
     @Override
     public void addEstadoAceptacion(int posEstado) {
-         Estado estado = this.getEstado(posEstado);
+        Estado estado = this.getEstado(posEstado);
         estado.setEstadoAcep(true);
     }
 
@@ -110,5 +136,6 @@ public class AFND extends AutomataFinito {
     public int tamEstadosIniciales() {
         return estadosInciales.size();
     }
+
 
 }
