@@ -25,6 +25,7 @@ public abstract class AutomataFinito {
     public void agregarEstado(int pos, Estado estado) {
         estados.add(pos, estado);
     }
+   
 
     public void agregarEstado(Estado estado) {
         estado.setPosEstado(estados.size());
@@ -91,7 +92,13 @@ public abstract class AutomataFinito {
         }
     }
     
+
+    public abstract void addEstadoInicial(int posEstado);
     
+    public abstract void addEstadoAceptacion(int posEstado);
+    
+    public abstract int tamEstadosIniciales();
+
     
 
 }

@@ -23,8 +23,11 @@ public class AFND extends AutomataFinito {
 
     }
 
+    @Override
     public void addEstadoInicial(int posEstado) {
         estadosInciales.add(posEstado);
+        Estado estado = this.getEstado(posEstado);
+        estado.setEstadoInicial(true);
     }
 
     public Estado getEstadoInicial(int posEstado) {
@@ -121,6 +124,17 @@ public class AFND extends AutomataFinito {
 
     public void addEstadosFinalesAFD(Estado estado) {
         estadosFinalesAFD.add(estadosFinalesAFD.size(), estado);
+    }
+
+    @Override
+    public void addEstadoAceptacion(int posEstado) {
+         Estado estado = this.getEstado(posEstado);
+        estado.setEstadoAcep(true);
+    }
+
+    @Override
+    public int tamEstadosIniciales() {
+        return estadosInciales.size();
     }
 
 }

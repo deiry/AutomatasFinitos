@@ -5,7 +5,9 @@
  */
 package vista;
 
+import Model.Estado;
 import controlador.Controlador;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -49,7 +51,10 @@ public class PanelEstados extends javax.swing.JPanel {
 
         setLayout(new java.awt.GridLayout(1, 2));
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new java.awt.GridLayout(6, 1));
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -69,7 +74,12 @@ public class PanelEstados extends javax.swing.JPanel {
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel2.add(jLabel1);
 
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+
+        btn_agregar_estado.setBackground(new java.awt.Color(58, 171, 169));
+        btn_agregar_estado.setForeground(new java.awt.Color(255, 255, 255));
         btn_agregar_estado.setText("Agregar");
+        btn_agregar_estado.setBorderPainted(false);
         btn_agregar_estado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_agregar_estadoActionPerformed(evt);
@@ -98,6 +108,8 @@ public class PanelEstados extends javax.swing.JPanel {
         );
 
         jPanel2.add(jPanel4);
+
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -151,7 +163,7 @@ public class PanelEstados extends javax.swing.JPanel {
 
     private void actualizarListaEstados()
     {
-        HashMap<String,Integer> estados = controlador.obtenerEstados();
+        ArrayList<Estado> estados = controlador.obtenerEstados();
         if(estados != null)
         {
             DefaultTableModel model = (DefaultTableModel) tbl_estados.getModel();
@@ -161,13 +173,22 @@ public class PanelEstados extends javax.swing.JPanel {
             }
 
             int i = 0;
-            for (Map.Entry<String, Integer> entry : estados.entrySet()) {
+//            for (Map.Entry<String, Integer> entry : estados.entrySet()) {
+//                Vector row = new Vector();
+//                String key = entry.getKey();
+//                Integer value = entry.getValue();
+//                row.add(key);
+//                model.addRow(row);
+//            }
+            for (int j = 0; j < estados.size(); j++) {
                 Vector row = new Vector();
-                String key = entry.getKey();
-                Integer value = entry.getValue();
+                Estado estado = estados.get(i);
+                String key = estado.getData();
+                Integer value = estado.getId();
                 row.add(key);
                 model.addRow(row);
             }
+          
         }
     
     }
