@@ -5,7 +5,9 @@
  */
 package vista;
 
+import Model.Estado;
 import controlador.Controlador;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -161,7 +163,7 @@ public class PanelEstados extends javax.swing.JPanel {
 
     private void actualizarListaEstados()
     {
-        HashMap<String,Integer> estados = controlador.obtenerEstados();
+        ArrayList<Estado> estados = controlador.obtenerEstados();
         if(estados != null)
         {
             DefaultTableModel model = (DefaultTableModel) tbl_estados.getModel();
@@ -171,13 +173,22 @@ public class PanelEstados extends javax.swing.JPanel {
             }
 
             int i = 0;
-            for (Map.Entry<String, Integer> entry : estados.entrySet()) {
+//            for (Map.Entry<String, Integer> entry : estados.entrySet()) {
+//                Vector row = new Vector();
+//                String key = entry.getKey();
+//                Integer value = entry.getValue();
+//                row.add(key);
+//                model.addRow(row);
+//            }
+            for (int j = 0; j < estados.size(); j++) {
                 Vector row = new Vector();
-                String key = entry.getKey();
-                Integer value = entry.getValue();
+                Estado estado = estados.get(i);
+                String key = estado.getData();
+                Integer value = estado.getId();
                 row.add(key);
                 model.addRow(row);
             }
+          
         }
     
     }
