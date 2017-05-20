@@ -5,7 +5,7 @@
  */
 package vista;
 
-import Modelo.AutomataFinito;
+
 import controlador.Controlador;
 import java.io.BufferedReader;
 import java.io.File;

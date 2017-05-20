@@ -53,7 +53,7 @@ public abstract class AutomataFinito {
         this.simbolos = simbolos;
     }
 
-    public int getSizeEstado() {
+    public int getSizeEstados() {
         return estados.size();
     }
 
@@ -90,6 +90,8 @@ public abstract class AutomataFinito {
                     + " " + next.isEstadoInicial() + " " + next.getParticion() + " " + next.getId() + " " + next.getTamDatos());
         }
     }
+    
+    
     
 
 }

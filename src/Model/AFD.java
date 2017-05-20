@@ -6,6 +6,7 @@
 package Model;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -32,13 +33,34 @@ public class AFD extends AutomataFinito {
         analizarEstados(getEstado(estadoInicial), visitado);
         nuevosEstados = eliminarEstadosExtranos(visitado);
         this.crearParticiones(nuevosEstados);
-        imprimirParticiones();
+        int s = -1;
+        int[] tranPart;
+        boolean cambio = false;
+        while (s < simbolos.size()) {
+            s++;
+            for (int i = 0; i < particiones.size(); i++) {
+                ArrayList<Integer> particion = particiones.get(i);
+                if (particion.size() > 1) {
+                    tranPart = construirVectorTransiciones(i, s);
+                    if (validarNuevasParticiones(tranPart, i)) {
+                        s = -1;
+                        cambio = true;
+                        break;
 
-        int[] vector = construirVectorTransiciones(0, 0);
-        System.out.println(validarNuevasParticiones(vector, 0));
-        imprimirParticiones();
+                    }
+                    if (cambio) {
+                        break;
+                    }
+                }
+                if (cambio) {
+                    break;
+                }
+            }
+        }
+       
+
         nuevosEstados = unirEstadosParticiones();
-        //this.configurarIdDeterministico(nuevosEstados);
+
         this.unirTransiciones(nuevosEstados);
         afSimplificado.setEstados(nuevosEstados);
         afSimplificado.setSimbolos(simbolos);
@@ -59,7 +81,7 @@ public class AFD extends AutomataFinito {
                 for (int i = 1; i < particion.size(); i++) {
                     aux = this.getEstado(particion.get(i));
                     estadoFinal = AF.unionEstados(estadoFinal, aux);
-                    
+
                 }
                 estadoFinal.setPosEstado(posEstado);
                 nuevosEstados.add(posEstado, estadoFinal);
@@ -68,8 +90,6 @@ public class AFD extends AutomataFinito {
         this.imprimirEstados(nuevosEstados);
         return nuevosEstados;
     }
-    
-
 
     public void unirTransiciones(ArrayList<Estado> estado) {
 
@@ -158,16 +178,19 @@ public class AFD extends AutomataFinito {
         int[] tranPart;
         tranPart = new int[particion.size()];
         int posTran = 0;
-
-        if (particion.size() > 1) {
-            for (Integer pos : particion) {
+        try {
+            if (particion.size() > 1 && !particion.isEmpty()) {
+                for (Integer pos : particion) {
+                    tranPart[posTran] = super.getEstado(pos).getParticionToSimbolo(simbolo);
+                    posTran++;
+                }
+            } else if(!particion.isEmpty()){
+                int pos = particion.get(0);
                 tranPart[posTran] = super.getEstado(pos).getParticionToSimbolo(simbolo);
-                posTran++;
-            }
-        } else {
-            int pos = particion.get(0);
-            tranPart[posTran] = super.getEstado(pos).getParticionToSimbolo(simbolo);
 
+            }
+        } catch (Exception e) {
+            //JOptionPane.showMessageDialog(null, "Construir vector Tran", "ERROR", JOptionPane.WARNING_MESSAGE);
         }
 
         return tranPart;

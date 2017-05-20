@@ -5,7 +5,6 @@
  */
 package Model;
 
-import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -41,7 +40,19 @@ public class AF {
 
         estadoU.addListData(this1);
         estadoU.addListData(estado2);
-       
+
+        return estadoU;
+    }
+
+    public static Estado interseccionEstados(Estado this1, Estado estado2) {
+        Estado estadoU = new Estado();
+        if (this1.isEstadoAcep() && estado2.isEstadoAcep()) {
+            estadoU.setEstadoAcep(true);
+        }
+
+        estadoU.addListData(this1);
+        estadoU.addListData(estado2);
+
         return estadoU;
     }
 
@@ -70,7 +81,7 @@ public class AF {
         }
         String s = new String(arraycar);
         s = s.replace(" ", "");
-        
+
         return s;
     }
 
@@ -120,5 +131,62 @@ public class AF {
         for (int i = 0; i < vec.length; i++) {
             System.out.print(vec[i] + ",");
         }
+    }
+
+    public static AFD unionAutomatas(AFD afd1, AFD afd2) {
+        AFND afnd = new AFND();
+        int i = 0;
+        for (int j = 0; j < afd1.getSizeEstados(); j++) {
+            Estado est = afd1.getEstado(j);
+            est.setPosEstado(i);
+            afnd.agregarEstado(i, est);
+            i++;
+            if (est.isEstadoInicial()) {
+                afnd.addEstadoInicial(i);
+            }
+        }
+
+        for (int j = 0; j < afd2.getSizeEstados(); j++) {
+            Estado est = afd2.getEstado(j);
+            est.setPosEstado(i);
+            afnd.agregarEstado(i, est);
+            i++;
+            if (est.isEstadoInicial()) {
+                afnd.addEstadoInicial(i);
+            }
+        }
+
+        afnd.imprimirEstados(afnd.getEstados());
+        afnd.setSimbolos(afd1.getSimbolos());
+
+        return afnd.convertir(false);
+    }
+
+    public static AFD interseccionAutomatas(AFD afd1, AFD afd2) {
+        AFND afnd = new AFND();
+        int i = 0;
+        for (int j = 0; j < afd1.getSizeEstados(); j++) {
+            Estado est = afd1.getEstado(j);
+            est.setPosEstado(i);
+            afnd.agregarEstado(i, est);
+            i++;
+            if (est.isEstadoInicial()) {
+                afnd.addEstadoInicial(i);
+            }
+        }
+
+        for (int j = 0; j < afd2.getSizeEstados(); j++) {
+            Estado est = afd2.getEstado(j);
+            est.setPosEstado(i);
+            afnd.agregarEstado(i, est);
+            i++;
+            if (est.isEstadoInicial()) {
+                afnd.addEstadoInicial(i);
+            }
+        }
+
+        afnd.imprimirEstados(afnd.getEstados());
+        afnd.setSimbolos(afd1.getSimbolos());
+        return afnd.convertir(true);
     }
 }

@@ -18,22 +18,22 @@ public class Main {
         AFND afnd = new AFND();
         //Construir estados
         int posEstado = 0;
-        Estado A = new Estado();
-        A.setData("A");
-        A.setEstadoAcep(false);
-        A.setEstadoInicial(true);
-        A.setId(posEstado + 1);
-        A.setPosEstado(posEstado);
-        afnd.agregarEstado(posEstado, A);
+        Estado CP = new Estado();
+        CP.setData("CP");
+        CP.setEstadoAcep(true);
+        CP.setEstadoInicial(true);
+        CP.setId(posEstado + 1);
+        CP.setPosEstado(posEstado);
+        afnd.agregarEstado(posEstado, CP);
 
         posEstado = 1;
-        Estado B = new Estado();
-        B.setData("B");
-        B.setEstadoAcep(false);
-        B.setEstadoInicial(false);
-        B.setId(posEstado + 1);
-        B.setPosEstado(posEstado);
-        afnd.agregarEstado(posEstado, B);
+        Estado CI = new Estado();
+        CI.setData("B");
+        CI.setEstadoAcep(false);
+        CI.setEstadoInicial(true);
+        CI.setId(posEstado + 1);
+        CI.setPosEstado(posEstado);
+        afnd.agregarEstado(posEstado, CI);
 
         posEstado = 2;
         Estado C = new Estado();
@@ -48,15 +48,14 @@ public class Main {
         afnd.agregarSimbolo(0, "0");
         afnd.agregarSimbolo(1, "1");
 
-        A.addTransicion(A, 0);
-        A.addTransicion(B, 0);
+        CP.addTransicion(CP, 0);
 
-        B.addTransicion(B, 1);
-        B.addTransicion(C, 1);
+        CI.addTransicion(CI, 1);
 
         C.addTransicion(C, 0);
 
-        AFD afd = afnd.convertir();
+        AFD afd = afnd.convertir(false);
+        
         afd.imprimirTransiciones(afd.getEstados());
 
         
@@ -67,6 +66,7 @@ public class Main {
         afd.agregarEstado(D);
         
         AFD simplicado = afd.simplificar();
+        simplicado.imprimirTransiciones(simplicado.getEstados());
 
     }
 }
