@@ -16,6 +16,10 @@ public class AFD extends AutomataFinito {
     private int estadoInicial;
     private ArrayList<ArrayList<Integer>> particiones;
 
+    public AFD() {
+        this.estadoInicial = -1;
+    }
+
     public int getEstadoInicial() {
         return estadoInicial;
     }
@@ -59,7 +63,7 @@ public class AFD extends AutomataFinito {
                 for (int i = 1; i < particion.size(); i++) {
                     aux = this.getEstado(particion.get(i));
                     estadoFinal = AF.unionEstados(estadoFinal, aux);
-                    
+
                 }
                 estadoFinal.setPosEstado(posEstado);
                 nuevosEstados.add(posEstado, estadoFinal);
@@ -68,8 +72,6 @@ public class AFD extends AutomataFinito {
         this.imprimirEstados(nuevosEstados);
         return nuevosEstados;
     }
-    
-
 
     public void unirTransiciones(ArrayList<Estado> estado) {
 
@@ -230,6 +232,38 @@ public class AFD extends AutomataFinito {
         System.out.println("Particiones");
         for (int i = 0; i < particiones.size(); i++) {
             System.out.print(particiones.get(i) + " ");
+        }
+    }
+
+    @Override
+    public void addEstadoInicial(int posEstado) {
+        this.estadoInicial = posEstado;
+        Estado estado = this.getEstado(posEstado);
+        estado.setEstadoInicial(true);
+    }
+
+    @Override
+    public void addEstadoAceptacion(int posEstado) {
+        Estado estado = this.getEstado(posEstado);
+        estado.setEstadoAcep(true);
+    }
+
+    public void asignarEstadoInicial() {
+
+        for (Estado estado : estados) {
+            if (estado.isEstadoInicial()) {
+                estadoInicial = estado.getPosEstado();
+            }
+        }
+    }
+
+    @Override
+    public int tamEstadosIniciales() {
+        if (estadoInicial != -1) {
+            return 1;
+        } else {
+            return 0;
+
         }
     }
 
