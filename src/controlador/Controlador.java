@@ -93,7 +93,7 @@ public class Controlador {
                 af.addEstadoAceptacion(id);
             }
 
-            if (construirTransiciones(componentesAF.get(2), estados) && estadosIniciales.size() == 1) {
+            if (construirTransiciones(componentesAF.get(2), estados, af) && estadosIniciales.size() == 1) {
                 AFD afd = new AFD();
                 afd.setEstados(af.getEstados());
                 afd.setSimbolos(simbolos);
@@ -308,7 +308,7 @@ public class Controlador {
         return retorno;
     }
 
-    private boolean construirTransiciones(String hilera, ArrayList<Estado> estados) {
+    private boolean construirTransiciones(String hilera, ArrayList<Estado> estados,AutomataFinito af) {
         boolean afDeterministco = false;
         ArrayList<String> transiciones = splitTransiciones(hilera);
         for (int i = 0; i < transiciones.size(); i++) {
@@ -334,6 +334,22 @@ public class Controlador {
 
         return afDeterministco;
 
+    }
+    
+    public Object[][] obtenerMatrizTransiciones(int value)
+    {
+        if(value == 1)
+        {
+            return metodos.obtenerTransiciones(af);
+        }
+        else if(value == 2) 
+        {
+            return metodos.obtenerTransiciones(af2);
+        }
+        else
+        {
+            return null;
+        }
     }
 
     /**
@@ -619,21 +635,28 @@ public class Controlador {
         }
         automata = automata + "][";
 
-        
+        //transiciones
 
         automata = automata + "][";
-        for (int i = 0; i < estadoInicial.size(); i++) {
-            automata = automata + estadoInicial.get(i);
-            if (i < estadoInicial.size() - 1) {
-                automata = automata + ",";
-            }
+        for (int i = 0; i < estados.size(); i++) {
+            Estado estado = estados.get(i);
+            if (estado.isEstadoInicial()) {
+                automata = automata + estados.get(i).getData();
+                if (i < estados.size() - 1) {
+                    automata = automata + ",";
+                }
+            }     
         }
+        
         automata = automata + "][";
-        for (int i = 0; i < estadoAcpetacion.size(); i++) {
-            automata = automata + estadoAcpetacion.get(i);
-            if (i < estadoAcpetacion.size() - 1) {
-                automata = automata + ",";
-            }
+        for (int i = 0; i < estados.size(); i++) {
+            Estado estado = estados.get(i);
+            if (estado.isEstadoAcep()) {
+                automata = automata + estados.get(i).getData();
+                if (i < estados.size() - 1) {
+                    automata = automata + ",";
+                }
+            }     
         }
         automata = automata + "]}";
         if (selector == 2) {
@@ -643,16 +666,44 @@ public class Controlador {
     }
 
     public ArrayList<String> obtenerEstadosAceptacion() {
-        return af.obtenerEstadoAceptacion();
+        ArrayList<Estado> estados = af.getEstados();
+        ArrayList<String> estadosAceptacion = new ArrayList<>();
+        
+        for (int i = 0; i < estados.size(); i++) {
+            Estado estado = estados.get(i);
+            if (estado.isEstadoAcep()) {
+                estadosAceptacion.add(estado.getData());
+            }     
+        }
+        return estadosAceptacion;
     }
 
     public ArrayList<String> obtenerEstadosInicial() {
-        return af.obtenerEstadoInicial();
+        ArrayList<Estado> estados = af.getEstados();
+        ArrayList<String> estadosIniciales = new ArrayList<>();
+        
+        for (int i = 0; i < estados.size(); i++) {
+            Estado estado = estados.get(i);
+            if (estado.isEstadoInicial()) {
+                estadosIniciales.add(estado.getData());
+            }     
+        }
+        return estadosIniciales;
     }
 
     public ArrayList<String> obtenerEstadosAceptacion2() {
         if (af2 != null) {
-            return af2.obtenerEstadoAceptacion();
+            ArrayList<Estado> estados = af2.getEstados();
+            ArrayList<String> estadosAceptacion = new ArrayList<>();
+        
+            for (int i = 0; i < estados.size(); i++) 
+            {
+                Estado estado = estados.get(i);
+                if (estado.isEstadoAcep()) {
+                    estadosAceptacion.add(estado.getData());
+                }     
+            }
+        return estadosAceptacion;
         } else {
             return null;
         }
@@ -660,7 +711,16 @@ public class Controlador {
 
     public ArrayList<String> obtenerEstadosInicial2() {
         if (af2 != null) {
-            return af2.obtenerEstadoInicial();
+            ArrayList<Estado> estados = af2.getEstados();
+            ArrayList<String> estadosIniciales = new ArrayList<>();
+
+            for (int i = 0; i < estados.size(); i++) {
+                Estado estado = estados.get(i);
+                if (estado.isEstadoInicial()) {
+                    estadosIniciales.add(estado.getData());
+                }     
+            }
+            return estadosIniciales;
         } else {
             return null;
         }
@@ -675,16 +735,7 @@ public class Controlador {
     }
 
     public boolean reconocer(String hilera) {
-        AutomataFinito afCopy = af;
-        if (identificar().equals("AFND")) {
-            afCopy = af.convertirAFNDtoAFD();
-        }
-        List<String> listHilera = new ArrayList<>();
-        for (int i = 0; i < hilera.length(); i++) {
-            listHilera.add(String.valueOf(hilera.charAt(i)));
-        }
-        boolean rta = afCopy.reconocer(listHilera);
-        return rta;
+        return true;
     }
 
     public String identificar() {
@@ -695,23 +746,7 @@ public class Controlador {
         }
         String respuesta = "AFD";
         if (af != null) {
-            Object[][] transicion = af.obtenerTransiciones();
-            for (int i = 0; i < transicion.length; i++) {
-                for (int j = 0; j < transicion[i].length; j++) {
-                    if (isString(transicion[i][j])) {
-                        respuesta = "AFD";
-                        return respuesta;
-                    } else {
-                        ArrayList<String> list = (ArrayList) transicion[i][j];
-                        if (list != null) {
-                            if (list.size() > 1) {
-                                respuesta = "AFND";
-                                return respuesta;
-                            }
-                        }
-                    }
-                }
-            }
+            
         } else {
             return "-";
         }
@@ -743,9 +778,11 @@ public class Controlador {
     private void selectorAF(AutomataFinito af) {
         if (this.selector == 1) {
             this.af = af;
-        } else if (this.selector == 2) {
+        } 
+        else if (this.selector == 2) {
             this.af2 = af;
-        } else {
+        } 
+        else {
             this.af = null;
         }
     }
@@ -766,7 +803,9 @@ public class Controlador {
         this.contadorEstados = 0;
         this.contadorSimbolos = 0;
         this.selector = 1;
-        af = new AFNoDeterministico();
+        af = null;
+        posEstadoA = 1;
+        posEstadoB = 2;
     }
 
     public String identificarA() {
@@ -774,30 +813,25 @@ public class Controlador {
     }
 
     public String identificarB() {
-        String respuesta = "AFD";
+        
         if (af2 != null) {
-            Object[][] transicion = af2.obtenerTransiciones();
-            for (int i = 0; i < transicion.length; i++) {
-                for (int j = 0; j < transicion[i].length; j++) {
-                    if (isString(transicion[i][j])) {
-                        respuesta = "AFD";
-                        return respuesta;
-                    } else {
-                        ArrayList<String> list = (ArrayList) transicion[i][j];
-                        if (list != null) {
-                            if (list.size() > 1) {
-                                respuesta = "AFND";
-                                return respuesta;
-                            }
-                        }
-                    }
-                }
+            if(af2 instanceof AFD)
+            {
+                return "AFD";
             }
-
-        } else {
+            else if(af2 instanceof AFND)
+            {
+                return "AFND";
+            }
+            else
+            {
+                return "-";
+            }
+        } 
+        else {
             return "-";
         }
-        return respuesta;
+    
     }
 
 }
