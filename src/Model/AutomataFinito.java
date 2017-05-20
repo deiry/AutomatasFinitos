@@ -36,6 +36,10 @@ public abstract class AutomataFinito {
     public void agregarSimbolo(int pos, String simbolo) {
         simbolos.add(pos, simbolo);
     }
+    
+    public void agregarSimbolo(String simbolo){
+        simbolos.add(simbolo);
+    }
 
     public ArrayList<Estado> getEstados() {
         return estados;
