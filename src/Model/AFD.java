@@ -61,7 +61,6 @@ public class AFD extends AutomataFinito {
                 }
             }
         }
-       
 
         nuevosEstados = unirEstadosParticiones();
 
@@ -188,7 +187,7 @@ public class AFD extends AutomataFinito {
                     tranPart[posTran] = super.getEstado(pos).getParticionToSimbolo(simbolo);
                     posTran++;
                 }
-            } else if(!particion.isEmpty()){
+            } else if (!particion.isEmpty()) {
                 int pos = particion.get(0);
                 tranPart[posTran] = super.getEstado(pos).getParticionToSimbolo(simbolo);
 
@@ -291,5 +290,7 @@ public class AFD extends AutomataFinito {
 
         }
     }
+
+
 
 }

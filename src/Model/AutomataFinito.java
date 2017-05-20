@@ -25,11 +25,10 @@ public abstract class AutomataFinito {
     public void agregarEstado(int pos, Estado estado) {
         estados.add(pos, estado);
     }
-   
 
     public void agregarEstado(Estado estado) {
         estado.setPosEstado(estados.size());
-        estado.setId(estados.size()+1);
+        estado.setId(estados.size() + 1);
         estados.add(estados.size(), estado);
 
     }
@@ -65,18 +64,18 @@ public abstract class AutomataFinito {
     public Estado getEstado(int i) {
         return estados.get(i);
     }
-    
-    public void imprimirEstados(ArrayList<Estado> estados){
-        for(Estado est: estados){
-            System.out.print(est.getData()+", ");
-        
+
+    public void imprimirEstados(ArrayList<Estado> estados) {
+        for (Estado est : estados) {
+            System.out.print(est.getData() + ", ");
+
         }
-        
+
     }
-    
-    public void imprimirTransiciones(ArrayList<Estado> estados){
+
+    public void imprimirTransiciones(ArrayList<Estado> estados) {
         System.out.println("");
-     Iterator<Estado> it = estados.iterator();
+        Iterator<Estado> it = estados.iterator();
         while (it.hasNext()) {
             Estado next = it.next();
             String data = next.getData();
@@ -91,14 +90,45 @@ public abstract class AutomataFinito {
                     + " " + next.isEstadoInicial() + " " + next.getParticion() + " " + next.getId() + " " + next.getTamDatos());
         }
     }
-    
+
+    public String toStringEstados(char sep) {
+        String stringEst = this.getEstado(0).getData();
+        for (int i = 1; i < estados.size(); i++) {
+            stringEst = stringEst + sep + estados.get(i).getData();
+        }
+        return stringEst;
+    }
+
+    public String toStringSimbolos(char sep) {
+        String sim = simbolos.get(0);
+        for (int s = 1; s < simbolos.size(); s++) {
+            sim = sim + sep + simbolos.get(s);
+        }
+        return sim;
+    }
+
+    public String toStringTransiciones(char sepInicial, char sepFinal) {
+        String transicionString = "";
+        char sep = ',';
+
+        for (Estado est : estados) {
+            for (int i = 0; i < simbolos.size(); i++) {
+                if (est.getTransicion(i) != null) {
+                    transicionString = sepInicial + est.toStringTransicion(i, ',', simbolos.get(i)) + sepFinal + transicionString;
+
+                }
+            }
+        }
+
+        return transicionString;
+    }
+
+    ;
 
     public abstract void addEstadoInicial(int posEstado);
-    
-    public abstract void addEstadoAceptacion(int posEstado);
-    
-    public abstract int tamEstadosIniciales();
 
-    
+    public abstract void addEstadoAceptacion(int posEstado);
+
+    public abstract int tamEstadosIniciales();
 
 }

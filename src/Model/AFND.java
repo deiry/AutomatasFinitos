@@ -128,7 +128,7 @@ public class AFND extends AutomataFinito {
 
     @Override
     public void addEstadoAceptacion(int posEstado) {
-         Estado estado = this.getEstado(posEstado);
+        Estado estado = this.getEstado(posEstado);
         estado.setEstadoAcep(true);
     }
 
@@ -136,5 +136,6 @@ public class AFND extends AutomataFinito {
     public int tamEstadosIniciales() {
         return estadosInciales.size();
     }
+
 
 }

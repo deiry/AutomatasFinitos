@@ -5,7 +5,6 @@
  */
 package Model;
 
-
 import java.util.Iterator;
 
 /**
@@ -53,18 +52,20 @@ public class Main {
         CI.addTransicion(CI, 1);
 
         C.addTransicion(C, 0);
-
         AFD afd = afnd.convertir(false);
-        
-        afd.imprimirTransiciones(afd.getEstados());
 
-        
+        afd.imprimirTransiciones(afd.getEstados());
+        System.out.println(afd.toStringTransiciones('(',')'));
+        System.out.println(afd.toStringSimbolos(','));
+        System.out.println(afd.toStringEstados(','));
+              
+
         Estado D = new Estado();
         D.setData("D");
         D.setEstadoAcep(true);
-        D.setEstadoInicial(false);          
+        D.setEstadoInicial(false);
         afd.agregarEstado(D);
-        
+
         AFD simplicado = afd.simplificar();
         simplicado.imprimirTransiciones(simplicado.getEstados());
 

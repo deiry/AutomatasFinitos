@@ -32,13 +32,13 @@ public class Estado {
         data = "";
         id = 0;
     }
-    
-    public void setSimbolo(int i){
+
+    public void setSimbolo(int i) {
         this.transiciones = new Estado[i];
     }
 
     public String getData() {
-       
+
         return AF.validarRepetidosData(data);
     }
 
@@ -131,6 +131,9 @@ public class Estado {
     }
 
     public Estado getTransicion(int simbolo) {
+        if (transiciones[simbolo] == null) {
+            return null;
+        }
 
         return transiciones[simbolo];
 
@@ -178,7 +181,7 @@ public class Estado {
     }
 
     public void addListData(Estado dato) {
-      
+
         if (dato.getTamDatos() == 1 && !perteneceListDatos(dato.getId())) {
             listDatos.add(dato);
         } else {
@@ -247,12 +250,22 @@ public class Estado {
         }
         return todo;
     }
-    
-    public int getParticionToSimbolo(int i){
-        if (this.getTransicion(i)== null) {
-            
+
+    public int getParticionToSimbolo(int i) {
+        if (this.getTransicion(i) == null) {
+
         }
         return getTransicion(i).getParticion();
+    }
+
+    public String toStringTransicion(int simbolo, char sep, String simb) {
+        String tran = this.data;
+        if (getTransicion(simbolo) == null) {
+            return "";
+        }
+        tran = tran + sep + simbolo + sep + getTransicion(simbolo).getData();
+        return tran;
+
     }
 
 }
