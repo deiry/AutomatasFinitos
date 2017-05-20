@@ -124,6 +124,15 @@ public abstract class AutomataFinito {
     }
 
     ;
+    
+    public ArrayList<String> obtenerEstadosString() {
+
+        ArrayList<String> estadosString = new ArrayList<>();
+        for (Estado estado : estados) {
+            estadosString.add(estado.getData());
+        }
+        return estadosString;
+    }
 
     public abstract void addEstadoInicial(int posEstado);
 

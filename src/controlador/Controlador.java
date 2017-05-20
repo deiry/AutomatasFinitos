@@ -428,6 +428,10 @@ public class Controlador {
     public ArrayList<Estado> obtenerEstados() {
         return af.getEstados();
     }
+    
+    public ArrayList<String> obtenerEstadosString(){
+        return af.obtenerEstadosString();
+    }
 
 //    public HashMap<String, Integer> obtenerEstados() {
 //        return af.obtenerEstados();

@@ -39,7 +39,7 @@ public class Estado {
 
     public String getData() {
 
-        return AF.validarRepetidosData(data);
+        return data;
     }
 
     public void setData(String data) {

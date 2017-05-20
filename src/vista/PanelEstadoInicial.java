@@ -5,11 +5,13 @@
  */
 package vista;
 
+import Model.Estado;
 import controlador.Controlador;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JButton;
@@ -106,7 +108,7 @@ public class PanelEstadoInicial extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void actualizarEstados() {
-        HashMap<String,Integer> estados = controlador.obtenerEstados();
+        ArrayList<String> estados = controlador.obtenerEstadosString();
         jp_estados.removeAll();
         jp_estados.revalidate();
         
@@ -114,9 +116,9 @@ public class PanelEstadoInicial extends javax.swing.JPanel {
         {
             
             jp_estados.setLayout(new GridLayout(1, estados.size()));
-            for (Map.Entry<String, Integer> entry : estados.entrySet()) {
-                String key = entry.getKey();
-                Integer value = entry.getValue();
+            for (String entry : estados) {
+                String key = entry;
+                
                 JButton btn = new JButton(key);
                 ActionListener l = new ActionListener() {
                     @Override

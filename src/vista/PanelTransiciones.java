@@ -13,6 +13,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JButton;
@@ -187,16 +188,15 @@ public class PanelTransiciones extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
      private void actualizarEstadosActuales() {
-        HashMap<String,Integer> estados = controlador.obtenerEstados();
+        ArrayList<String> estados = controlador.obtenerEstadosString();
         jp_estado_actual.removeAll();
         jp_estado_actual.revalidate();
         
         if(estados != null)
         {
             jp_estado_actual.setLayout(new GridLayout(estados.size(),1));
-            for (Map.Entry<String, Integer> entry : estados.entrySet()) {
-                String key = entry.getKey();
-                Integer value = entry.getValue();
+            for (String entry: estados) {
+                String key = entry;
                 JButton btn = new JButton(key);
                 ActionListener l = new ActionListener() {
                     @Override
@@ -219,16 +219,15 @@ public class PanelTransiciones extends javax.swing.JPanel {
         }   
     }
      private void actualizarEstadosSiguiente() {
-        HashMap<String,Integer> estados = controlador.obtenerEstados();
+        ArrayList<String> estados = controlador.obtenerEstadosString();
         jp_estado_siguiente.removeAll();
         jp_estado_siguiente.revalidate();
         
         if(estados != null)
         {
             jp_estado_siguiente.setLayout(new GridLayout(estados.size(),1));
-            for (Map.Entry<String, Integer> entry : estados.entrySet()) {
-                String key = entry.getKey();
-                Integer value = entry.getValue();
+            for (String entry: estados) {
+                String key = entry;
                 JButton btn = new JButton(key);
                 ActionListener l = new ActionListener() {
                     @Override
@@ -251,16 +250,15 @@ public class PanelTransiciones extends javax.swing.JPanel {
         }   
     }
      private void actualizarSimbolos() {
-        HashMap<String,Integer> simbolos = controlador.obtenerSimbolos();
+        ArrayList<String> simbolos = controlador.obtenerSimbolos();
         jp_simbolos.removeAll();
         jp_simbolos.revalidate();
         
         if(simbolos != null)
         {
             jp_simbolos.setLayout(new GridLayout(simbolos.size(),1));
-            for (Map.Entry<String, Integer> entry : simbolos.entrySet()) {
-                String key = entry.getKey();
-                Integer value = entry.getValue();
+            for (String entry: simbolos) {
+                String key = entry;
                 JButton btn = new JButton(key);
                 ActionListener l = new ActionListener() {
                     @Override
@@ -288,17 +286,16 @@ public class PanelTransiciones extends javax.swing.JPanel {
         pn_contenedor_tabla_transiciones.removeAll();
         pn_contenedor_tabla_transiciones.revalidate();
         
-        HashMap<String,Integer> estados = controlador.obtenerEstados();
-        HashMap<String,Integer> simbolos = controlador.obtenerSimbolos();
+        ArrayList<String> estados = controlador.obtenerEstadosString();
+        ArrayList<String> simbolos = controlador.obtenerSimbolos();
         Object[] StrSimbolos = new Object[simbolos.size()+1];
         StrSimbolos[0] = "";      
-        for (Map.Entry<String, Integer> entry : simbolos.entrySet()) {
-            String key = entry.getKey();
-            Integer value = entry.getValue();
-            StrSimbolos[value+1] = key;
+        for (int i=0; i<simbolos.size();i++) {
+            String key = simbolos.get(i);
+            StrSimbolos[i+1] = key;
         }
         
-        Object[][] mat = controlador.obtenerTransiciones();
+        Object[][] mat = controlador.obtenerMatrizTransiciones(1);
         if (mat != null)
         {
             JTable table = new JTable(mat, StrSimbolos);
