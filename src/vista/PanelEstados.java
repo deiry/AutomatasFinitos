@@ -182,7 +182,7 @@ public class PanelEstados extends javax.swing.JPanel {
 //            }
             for (int j = 0; j < estados.size(); j++) {
                 Vector row = new Vector();
-                Estado estado = estados.get(i);
+                Estado estado = estados.get(j);
                 String key = estado.getData();
                 Integer value = estado.getId();
                 row.add(key);
