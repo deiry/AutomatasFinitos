@@ -609,59 +609,66 @@ public class Controlador {
 
     public String obtenerAutomata() {
         AutomataFinito afAux = null;
+        String automata = null;
         if (selector == 2) {
             afAux = this.af;
             this.af = af2;
         }
-        String automata = "{";
+        if(af != null)
+        {
+            automata = "{";
 
-        ArrayList<Estado> estados = af.getEstados();
-        ArrayList<String> simbolos = af.getSimbolos();
-        
-        
-        automata = automata + "[";
-        for (int i = 0; i < estados.size(); i++) {
-            automata = automata + estados.get(i).getData();
-            if (i < estados.size() - 1) {
-                automata = automata + ",";
+            ArrayList<Estado> estados = af.getEstados();
+            ArrayList<String> simbolos = af.getSimbolos();
+    //        
+
+            automata = automata + "[";
+            automata = automata + af.toStringEstados(',');
+    //        for (int i = 0; i < estados.size(); i++) {
+    //            automata = automata + estados.get(i).getData();
+    //            if (i < estados.size() - 1) {
+    //                automata = automata + ",";
+    //            }
+    //        }
+            automata = automata + "][";
+    //        for (int i = 0; i < simbolos.size(); i++) {
+    //            automata = automata + simbolos.get(i);
+    //            if (i < simbolos.size() - 1) {
+    //                automata = automata + ",";
+    //            }
+    //        }
+            automata = automata + af.toStringSimbolos(',');
+            automata = automata + "][";
+
+            automata = automata + af.toStringTransiciones('(', ')');
+
+            automata = automata + "][";
+            for (int i = 0; i < estados.size(); i++) {
+                Estado estado = estados.get(i);
+                if (estado.isEstadoInicial()) {
+                    automata = automata + estados.get(i).getData();
+                    if (i < estados.size() - 1) {
+                        automata = automata + ",";
+                    }
+                }     
             }
-        }
-        automata = automata + "][";
-        for (int i = 0; i < simbolos.size(); i++) {
-            automata = automata + simbolos.get(i);
-            if (i < simbolos.size() - 1) {
-                automata = automata + ",";
+
+            automata = automata + "][";
+            for (int i = 0; i < estados.size(); i++) {
+                Estado estado = estados.get(i);
+                if (estado.isEstadoAcep()) {
+                    automata = automata + estados.get(i).getData();
+                    if (i < estados.size() - 1) {
+                        automata = automata + ",";
+                    }
+                }     
             }
-        }
-        automata = automata + "][";
-
-        //transiciones
-
-        automata = automata + "][";
-        for (int i = 0; i < estados.size(); i++) {
-            Estado estado = estados.get(i);
-            if (estado.isEstadoInicial()) {
-                automata = automata + estados.get(i).getData();
-                if (i < estados.size() - 1) {
-                    automata = automata + ",";
-                }
-            }     
+            automata = automata + "]}";
+            if (selector == 2) {
+                this.af = afAux;
+            }    
         }
         
-        automata = automata + "][";
-        for (int i = 0; i < estados.size(); i++) {
-            Estado estado = estados.get(i);
-            if (estado.isEstadoAcep()) {
-                automata = automata + estados.get(i).getData();
-                if (i < estados.size() - 1) {
-                    automata = automata + ",";
-                }
-            }     
-        }
-        automata = automata + "]}";
-        if (selector == 2) {
-            this.af = afAux;
-        }
         return automata;
     }
 
@@ -744,17 +751,37 @@ public class Controlador {
             afAux = af;
             af = af2;
         }
-        String respuesta = "AFD";
         if (af != null) {
-            
-        } else {
+            if(af instanceof AFD)
+            {
+                if (selector == 2) {
+                    af = afAux;
+                }   
+
+                return "AFD";
+            }
+            else if(af instanceof AFND)
+            {
+                if (selector == 2) {
+                    af = afAux;
+                }   
+                return "AFND";
+            }
+            else
+            {
+                if (selector == 2) {
+                    af = afAux;
+                }   
+                return "-";
+            }
+        } 
+        else {
+            if (selector == 2) {
+                    af = afAux;
+                }   
             return "-";
         }
 
-        if (selector == 2) {
-            af = afAux;
-        }
-        return respuesta;
     }
 
     public void seleccionarAfA() {

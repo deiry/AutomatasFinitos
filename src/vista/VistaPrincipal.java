@@ -463,6 +463,15 @@ public class VistaPrincipal extends javax.swing.JFrame {
         controlador.seleccionarAfB();
         jButton6.setFont(new java.awt.Font("Tahoma", 0, 11));
         jButton7.setFont(new java.awt.Font("Tahoma", 1,30));
+        if(controlador.getAutomataFinitoB() == null)
+        {
+            habilitarBotonesOpéraciones(false);
+        }
+        else
+        {
+            habilitarBotonesOpéraciones(true);
+        }
+
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
