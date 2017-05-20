@@ -32,6 +32,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
         btn_vista_automata.setEnabled(false);
         jButton6.setFont(new java.awt.Font("Tahoma", 1, 30));
+        habilitarBotonesOpéraciones(false);
     }
 
     /**
@@ -55,12 +56,12 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btn_vista_estado_acpetacion = new javax.swing.JButton();
         btn_vista_transiciones = new javax.swing.JButton();
         jp_operaciones_automata = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        Convertir = new javax.swing.JButton();
+        btn_abrir = new javax.swing.JButton();
+        btn_guardar = new javax.swing.JButton();
+        btn_identificar = new javax.swing.JButton();
+        btn_reconocer = new javax.swing.JButton();
+        btn_simplificar = new javax.swing.JButton();
+        btn_convertir = new javax.swing.JButton();
         jp_contenedor_principal = new javax.swing.JPanel();
         lb_tipo_automata = new javax.swing.JLabel();
         lb_tipo_automata1 = new javax.swing.JLabel();
@@ -184,85 +185,85 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jp_operaciones_automata.setBackground(new java.awt.Color(58, 171, 169));
         jp_operaciones_automata.setLayout(new java.awt.GridLayout(1, 6));
 
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Abrir");
-        jButton1.setToolTipText("Abrir Automata");
-        jButton1.setBorder(null);
-        jButton1.setBorderPainted(false);
-        jButton1.setContentAreaFilled(false);
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.setFocusPainted(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_abrir.setForeground(new java.awt.Color(255, 255, 255));
+        btn_abrir.setText("Abrir");
+        btn_abrir.setToolTipText("Abrir Automata");
+        btn_abrir.setBorder(null);
+        btn_abrir.setBorderPainted(false);
+        btn_abrir.setContentAreaFilled(false);
+        btn_abrir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_abrir.setFocusPainted(false);
+        btn_abrir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_abrirActionPerformed(evt);
             }
         });
-        jp_operaciones_automata.add(jButton1);
+        jp_operaciones_automata.add(btn_abrir);
 
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Guardar");
-        jButton2.setToolTipText("Guardar Automata");
-        jButton2.setBorder(null);
-        jButton2.setBorderPainted(false);
-        jButton2.setContentAreaFilled(false);
-        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton2.setFocusPainted(false);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btn_guardar.setForeground(new java.awt.Color(255, 255, 255));
+        btn_guardar.setText("Guardar");
+        btn_guardar.setToolTipText("Guardar Automata");
+        btn_guardar.setBorder(null);
+        btn_guardar.setBorderPainted(false);
+        btn_guardar.setContentAreaFilled(false);
+        btn_guardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_guardar.setFocusPainted(false);
+        btn_guardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btn_guardarActionPerformed(evt);
             }
         });
-        jp_operaciones_automata.add(jButton2);
+        jp_operaciones_automata.add(btn_guardar);
 
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Identificar");
-        jButton3.setToolTipText("Identificar que tipo es el AF");
-        jButton3.setBorder(null);
-        jButton3.setContentAreaFilled(false);
-        jButton3.setFocusPainted(false);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btn_identificar.setForeground(new java.awt.Color(255, 255, 255));
+        btn_identificar.setText("Identificar");
+        btn_identificar.setToolTipText("Identificar que tipo es el AF");
+        btn_identificar.setBorder(null);
+        btn_identificar.setContentAreaFilled(false);
+        btn_identificar.setFocusPainted(false);
+        btn_identificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btn_identificarActionPerformed(evt);
             }
         });
-        jp_operaciones_automata.add(jButton3);
+        jp_operaciones_automata.add(btn_identificar);
 
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Reconocer");
-        jButton4.setToolTipText("Reconocer una hilera");
-        jButton4.setBorder(null);
-        jButton4.setContentAreaFilled(false);
-        jButton4.setFocusPainted(false);
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btn_reconocer.setForeground(new java.awt.Color(255, 255, 255));
+        btn_reconocer.setText("Reconocer");
+        btn_reconocer.setToolTipText("Reconocer una hilera");
+        btn_reconocer.setBorder(null);
+        btn_reconocer.setContentAreaFilled(false);
+        btn_reconocer.setFocusPainted(false);
+        btn_reconocer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btn_reconocerActionPerformed(evt);
             }
         });
-        jp_operaciones_automata.add(jButton4);
+        jp_operaciones_automata.add(btn_reconocer);
 
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Simplificar");
-        jButton5.setBorder(null);
-        jButton5.setContentAreaFilled(false);
-        jButton5.setFocusPainted(false);
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btn_simplificar.setForeground(new java.awt.Color(255, 255, 255));
+        btn_simplificar.setText("Simplificar");
+        btn_simplificar.setBorder(null);
+        btn_simplificar.setContentAreaFilled(false);
+        btn_simplificar.setFocusPainted(false);
+        btn_simplificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btn_simplificarActionPerformed(evt);
             }
         });
-        jp_operaciones_automata.add(jButton5);
+        jp_operaciones_automata.add(btn_simplificar);
 
-        Convertir.setForeground(new java.awt.Color(255, 255, 255));
-        Convertir.setText("Convertir");
-        Convertir.setBorder(null);
-        Convertir.setContentAreaFilled(false);
-        Convertir.setFocusPainted(false);
-        Convertir.addActionListener(new java.awt.event.ActionListener() {
+        btn_convertir.setForeground(new java.awt.Color(255, 255, 255));
+        btn_convertir.setText("Convertir");
+        btn_convertir.setBorder(null);
+        btn_convertir.setContentAreaFilled(false);
+        btn_convertir.setFocusPainted(false);
+        btn_convertir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ConvertirActionPerformed(evt);
+                btn_convertirActionPerformed(evt);
             }
         });
-        jp_operaciones_automata.add(Convertir);
+        jp_operaciones_automata.add(btn_convertir);
 
         jp_contenedor_principal.setBackground(new java.awt.Color(255, 255, 255));
         jp_contenedor_principal.setLayout(new java.awt.CardLayout());
@@ -378,60 +379,85 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btn_vista_automata.setEnabled(true);
     }//GEN-LAST:event_btn_vista_transicionesActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_abrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_abrirActionPerformed
         String texto = abrirArchivo();
-        controlador = Controlador.getInstance();
-        controlador.construirAtomata(texto);
-        PanelAutomata panelAutomata = new PanelAutomata();
-        mostrarPanel(jp_contenedor_principal, panelAutomata);
-        btn_vista_automata.setEnabled(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        if (texto != null) {
+            controlador = Controlador.getInstance();
+            controlador.construirAtomata(texto);
+            PanelAutomata panelAutomata = new PanelAutomata();
+            mostrarPanel(jp_contenedor_principal, panelAutomata);
+            btn_vista_automata.setEnabled(true);
+            habilitarBotonesOpéraciones(true);
+            String tipoA = controlador.identificarA();
+            String tipoB = controlador.identificarB();
+            lb_tipo_automata.setText(tipoA);
+            lb_tipo_automata1.setText(tipoB);
+        }
+        
+    }//GEN-LAST:event_btn_abrirActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
         controlador = Controlador.getInstance();
         String automata = controlador.obtenerAutomata();
         guardarArchivo(automata);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btn_guardarActionPerformed
 
     private void btn_vista_automataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_vista_automataActionPerformed
         PanelAutomata panelAutomata = new PanelAutomata();
         mostrarPanel(jp_contenedor_principal, panelAutomata);
     }//GEN-LAST:event_btn_vista_automataActionPerformed
 
-    private void ConvertirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConvertirActionPerformed
+    private void btn_convertirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_convertirActionPerformed
 
         Controlador ctrl = Controlador.getInstance();
         ctrl.convertirAF();
         PanelAutomata panelAutomata = new PanelAutomata();
         mostrarPanel(jp_contenedor_principal, panelAutomata);
-    }//GEN-LAST:event_ConvertirActionPerformed
+    }//GEN-LAST:event_btn_convertirActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btn_reconocerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reconocerActionPerformed
 
         PanelReconocer panelReconocer = new PanelReconocer();
         mostrarPanel(jp_contenedor_principal, panelReconocer);
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btn_reconocerActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btn_identificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_identificarActionPerformed
         PanelIdentificar panelIdentificar = new PanelIdentificar();
         mostrarPanel(jp_contenedor_principal, panelIdentificar);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btn_identificarActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void btn_simplificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simplificarActionPerformed
         // TODO add your handling code here:
         Controlador ctrl = Controlador.getInstance();
         ctrl.simplificar();
         PanelAutomata panelAutomata = new PanelAutomata();
         mostrarPanel(jp_contenedor_principal, panelAutomata);
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_btn_simplificarActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         Controlador controlador = Controlador.getInstance();
         controlador.seleccionarAfA();
+        if(controlador.getAutomataFinitoA() == null)
+        {
+            habilitarBotonesOpéraciones(false);
+        }
+        else
+        {
+            habilitarBotonesOpéraciones(true);
+        }
         jButton7.setFont(new java.awt.Font("Tahoma", 0, 11));
         jButton6.setFont(new java.awt.Font("Tahoma", 1, 30));
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void habilitarBotonesOpéraciones(boolean b)
+    {
+         btn_guardar.setEnabled(b);
+            btn_identificar.setEnabled(b);
+            btn_reconocer.setEnabled(b);
+            btn_simplificar.setEnabled(b);
+            btn_convertir.setEnabled(b);
+    }
+    
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         Controlador controlador = Controlador.getInstance();
         controlador.seleccionarAfB();
@@ -561,18 +587,18 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Convertir;
+    private javax.swing.JButton btn_abrir;
+    private javax.swing.JButton btn_convertir;
+    private javax.swing.JButton btn_guardar;
+    private javax.swing.JButton btn_identificar;
+    private javax.swing.JButton btn_reconocer;
+    private javax.swing.JButton btn_simplificar;
     private javax.swing.JButton btn_vista_automata;
     private javax.swing.JButton btn_vista_estado_acpetacion;
     private javax.swing.JButton btn_vista_estado_incial;
     private javax.swing.JButton btn_vista_estados;
     private javax.swing.JButton btn_vista_simbolos;
     private javax.swing.JButton btn_vista_transiciones;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JMenu jMenu1;

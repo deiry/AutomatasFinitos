@@ -36,7 +36,7 @@ public class Controlador {
         this.contadorEstados = 0;
         this.contadorSimbolos = 0;
         this.selector = 1;
-        af = new AFNoDeterministico();
+        af = null;
         af2 = null;
 
     }
@@ -84,6 +84,7 @@ public class Controlador {
             System.out.println("Automata Contruido");
             contadorEstados = estados.size();
             contadorSimbolos = simbolos.size();
+            selectorAF(af);
             if (identificar().equals("AFD")) {
                 construirAFD();
             }
@@ -557,23 +558,42 @@ public class Controlador {
     }
 
     public String identificar() {
+        AutomataFinito afAux = null;
+        if (selector == 2) {
+            afAux = af;
+            af = af2;
+        }
         String respuesta = "AFD";
-        Object[][] transicion = af.obtenerTransiciones();
-        for (int i = 0; i < transicion.length; i++) {
-            for (int j = 0; j < transicion[i].length; j++) {
-                if (isString(transicion[i][j])) {
-                    respuesta = "AFD";
-                    return respuesta;
-                } else {
-                    ArrayList<String> list = (ArrayList) transicion[i][j];
-                    if (list != null) {
-                        if (list.size() > 1) {
-                            respuesta = "AFND";
-                            return respuesta;
+        if(af != null)
+        {
+            Object[][] transicion = af.obtenerTransiciones();
+            for (int i = 0; i < transicion.length; i++) {
+                for (int j = 0; j < transicion[i].length; j++) {
+                    if (isString(transicion[i][j])) 
+                    {
+                        respuesta = "AFD";
+                        return respuesta;
+                    } 
+                    else 
+                    {
+                        ArrayList<String> list = (ArrayList) transicion[i][j];
+                        if (list != null) {
+                            if (list.size() > 1) {
+                                respuesta = "AFND";
+                                return respuesta;
+                            }
                         }
                     }
                 }
-            }
+            }  
+        }
+        else
+        {
+            return "-";
+        }
+        
+        if (selector == 2) {
+            af = afAux;
         }
         return respuesta;
     }
@@ -616,11 +636,56 @@ public class Controlador {
     {
         return this.selector;
     }
+    
+    public AutomataFinito getAutomataFinitoA()
+    {
+        return af;
+    }
+    
+    public AutomataFinito getAutomataFinitoB()
+    {
+        return af2;
+    }
+     
 
     public void reiniciarVariables() {
        this.contadorEstados = 0;
         this.contadorSimbolos = 0;
         this.selector = 1;
         af = new AFNoDeterministico();
+    }
+
+    public String identificarA() {
+        return identificar();
+    }
+
+    public String identificarB() {
+        String respuesta = "AFD";
+        if(af2 != null)
+        {
+            Object[][] transicion = af2.obtenerTransiciones();
+            for (int i = 0; i < transicion.length; i++) {
+                for (int j = 0; j < transicion[i].length; j++) {
+                    if (isString(transicion[i][j])) {
+                        respuesta = "AFD";
+                        return respuesta;
+                    } else {
+                        ArrayList<String> list = (ArrayList) transicion[i][j];
+                        if (list != null) {
+                            if (list.size() > 1) {
+                                respuesta = "AFND";
+                                return respuesta;
+                            }
+                        }
+                    }
+                }
+            }
+ 
+        }
+        else
+        {
+            return "-";
+        }
+        return respuesta;
     }
 }
