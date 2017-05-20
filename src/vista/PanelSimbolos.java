@@ -6,6 +6,7 @@
 package vista;
 
 import controlador.Controlador;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -163,7 +164,7 @@ public class PanelSimbolos extends javax.swing.JPanel {
     
     private void actualizarListaSimbolos()
     {
-        HashMap<String,Integer> simbolos = controlador.obtenerSimbolos();
+        ArrayList<String> simbolos = controlador.obtenerSimbolos();
         if(simbolos != null)
         {
             DefaultTableModel model = (DefaultTableModel) tbl_simbolos.getModel();
@@ -173,10 +174,10 @@ public class PanelSimbolos extends javax.swing.JPanel {
             }
 
             int i = 0;
-            for (Map.Entry<String, Integer> entry : simbolos.entrySet()) {
+            for (String entry : simbolos) {
                 Vector row = new Vector();
-                String key = entry.getKey();
-                Integer value = entry.getValue();
+                String key = entry;
+               
                 row.add(key);
                 model.addRow(row);
             }
