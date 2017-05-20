@@ -5,6 +5,7 @@
  */
 package vista;
 
+import Model.Estado;
 import controlador.Controlador;
 import java.awt.Color;
 import java.awt.Component;
@@ -79,7 +80,6 @@ public class PanelAutomata extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         pn_estado_inicial = new javax.swing.JPanel();
         pn_contenedor_tabla_transiciones = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
@@ -154,10 +154,6 @@ public class PanelAutomata extends javax.swing.JPanel {
 
         pn_contenedor_tabla_transiciones.setBackground(new java.awt.Color(255, 255, 255));
         pn_contenedor_tabla_transiciones.setLayout(new java.awt.GridLayout(3, 1));
-
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        pn_contenedor_tabla_transiciones.add(jPanel1);
-
         add(pn_contenedor_tabla_transiciones);
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -171,7 +167,7 @@ public class PanelAutomata extends javax.swing.JPanel {
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
         jPanel7.setMinimumSize(new java.awt.Dimension(100, 100));
-        jPanel7.setLayout(new java.awt.GridLayout());
+        jPanel7.setLayout(new java.awt.GridLayout(1, 0));
         jPanel4.add(jPanel7, java.awt.BorderLayout.PAGE_END);
 
         jp_estadoss3.setBackground(new java.awt.Color(255, 255, 255));
@@ -191,7 +187,7 @@ public class PanelAutomata extends javax.swing.JPanel {
         jp_estadoss4.add(jLabel7);
 
         pn_estado_aceptacion1.setBackground(new java.awt.Color(255, 255, 255));
-        pn_estado_aceptacion1.setLayout(new java.awt.GridLayout());
+        pn_estado_aceptacion1.setLayout(new java.awt.GridLayout(1, 0));
         jp_estadoss4.add(pn_estado_aceptacion1);
 
         jp_estadoss3.add(jp_estadoss4);
@@ -207,7 +203,7 @@ public class PanelAutomata extends javax.swing.JPanel {
         jp_estadoss5.add(jLabel8);
 
         pn_estado_inicial1.setBackground(new java.awt.Color(255, 255, 255));
-        pn_estado_inicial1.setLayout(new java.awt.GridLayout());
+        pn_estado_inicial1.setLayout(new java.awt.GridLayout(1, 0));
         jp_estadoss5.add(pn_estado_inicial1);
 
         jp_estadoss3.add(jp_estadoss5);
@@ -309,20 +305,21 @@ public class PanelAutomata extends javax.swing.JPanel {
         pn_contenedor_tabla_transiciones.removeAll();
         pn_contenedor_tabla_transiciones.revalidate();
         
-        HashMap<String,Integer> estados = controlador.obtenerEstados();
-        HashMap<String,Integer> simbolos = controlador.obtenerSimbolos();
-        Object[] StrSimbolos = new Object[simbolos.size()+1];
-        StrSimbolos[0] = "";      
-        for (Map.Entry<String, Integer> entry : simbolos.entrySet()) {
-            String key = entry.getKey();
-            Integer value = entry.getValue();
-            StrSimbolos[value+1] = key;
+        ArrayList<Estado> estados = controlador.obtenerEstados();
+        ArrayList<String> simbolos = controlador.obtenerSimbolos();
+        String[] StrSimbolos = new String[simbolos.size()+1];
+        StrSimbolos[0]="Est|Simb";
+        for (int i = 0; i < simbolos.size(); i++) {
+            StrSimbolos[i+1] = (String)simbolos.get(i);
         }
         
-        Object[][] mat = controlador.obtenerTransiciones();
+        Object[][] mat = controlador.obtenerMatrizTransiciones(1);
+       
+        
         if (mat != null)
         {
             JTable table = new JTable(mat, StrSimbolos);
+//            JTable table = new JTable(data, columnNames);
             pn_contenedor_tabla_transiciones.add(table);
         }
         //DefaultTableModel model = new DefaultTableModel(StrSimbolos,estados.size());
@@ -336,19 +333,17 @@ public class PanelAutomata extends javax.swing.JPanel {
         pn_contenedor_tabla_transiciones1.removeAll();
         pn_contenedor_tabla_transiciones1.revalidate();
         
-        HashMap<String,Integer> estados = controlador.obtenerEstados2();
-        HashMap<String,Integer> simbolos = controlador.obtenerSimbolos2();
+        ArrayList<Estado> estados = controlador.obtenerEstados2();
+        ArrayList<String> simbolos = controlador.obtenerSimbolos2();
         if(estados != null && simbolos != null)
         {
            Object[] StrSimbolos = new Object[simbolos.size()+1];
             StrSimbolos[0] = "";      
-            for (Map.Entry<String, Integer> entry : simbolos.entrySet()) {
-                String key = entry.getKey();
-                Integer value = entry.getValue();
-                StrSimbolos[value+1] = key;
+            for (int i = 0; i < simbolos.size(); i++) {
+                StrSimbolos[i+1] = simbolos.get(i);
             }
 
-            Object[][] mat = controlador.obtenerTransiciones();
+            Object[][] mat = controlador.obtenerMatrizTransiciones(2);
             if (mat != null)
             {
                 JTable table = new JTable(mat, StrSimbolos);
@@ -370,7 +365,6 @@ public class PanelAutomata extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
