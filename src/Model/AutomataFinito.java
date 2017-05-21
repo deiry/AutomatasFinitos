@@ -36,8 +36,8 @@ public abstract class AutomataFinito {
     public void agregarSimbolo(int pos, String simbolo) {
         simbolos.add(pos, simbolo);
     }
-    
-    public void agregarSimbolo(String simbolo){
+
+    public void agregarSimbolo(String simbolo) {
         simbolos.add(simbolo);
     }
 
@@ -138,9 +138,17 @@ public abstract class AutomataFinito {
         return estadosString;
     }
 
+    public void eliminarEstadoAceptacion(int posEstado) {
+
+        Estado aceptacion = this.getEstado(posEstado);
+        aceptacion.setEstadoAcep(false);
+    }
+
     public abstract void addEstadoInicial(int posEstado);
 
     public abstract void addEstadoAceptacion(int posEstado);
+
+    public abstract void eliminarEstadoInicial(int posEstado);
 
     public abstract int tamEstadosIniciales();
 

@@ -198,6 +198,9 @@ public class PanelTransiciones extends javax.swing.JPanel {
             for (String entry: estados) {
                 String key = entry;
                 JButton btn = new JButton(key);
+                btn.setForeground(new  java.awt.Color(255, 255, 255));
+                btn.setBackground(new Color(58,171,169));
+                
                 ActionListener l = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -229,6 +232,9 @@ public class PanelTransiciones extends javax.swing.JPanel {
             for (String entry: estados) {
                 String key = entry;
                 JButton btn = new JButton(key);
+                btn.setForeground(new  java.awt.Color(255, 255, 255));
+                btn.setBackground(new Color(58,171,169));
+                
                 ActionListener l = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -260,6 +266,9 @@ public class PanelTransiciones extends javax.swing.JPanel {
             for (String entry: simbolos) {
                 String key = entry;
                 JButton btn = new JButton(key);
+                btn.setForeground(new  java.awt.Color(255, 255, 255));
+                btn.setBackground(new Color(58,171,169));
+                
                 ActionListener l = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {

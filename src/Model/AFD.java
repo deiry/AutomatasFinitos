@@ -291,6 +291,13 @@ public class AFD extends AutomataFinito {
         }
     }
 
+    @Override
+    public void eliminarEstadoInicial(int posEstado) {
+        if (posEstado == estadoInicial) {
+            estadoInicial = -1;
+        }
+    }
+
 
 
 }

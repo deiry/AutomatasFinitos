@@ -40,6 +40,8 @@ public class Controlador {
     private int posSimboloB = 1;
     private static Controlador instance = null;
     private MetodosControlador metodos;
+    public boolean[] boolEstadosInciales;
+    public boolean[] boolEstadosAceptacion;
 
     protected Controlador() {
         VistaPrincipal vp = new VistaPrincipal();
@@ -437,7 +439,8 @@ public class Controlador {
     public ArrayList<Estado> obtenerEstados() {
         if (selector == 1) {
             return af.getEstados();
-        } else if (selector == 2) {
+        } 
+        else if (selector == 2) {
             return af2.getEstados();
         } else {
             return null;
@@ -522,19 +525,24 @@ public class Controlador {
         //    }
     }
 
-    public void agregarEstadoInicial(String estadoInicial) {
+    public boolean agregarEstadoInicial(String estadoInicial) {
         if (selector == 1) {
             if (af instanceof AFD) {
                 if (af.tamEstadosIniciales() == -1) {
                     int posicion = metodos.buscarEstado(af.getEstados(), estadoInicial);
                     af.addEstadoInicial(posicion);
+                    return true;
                 } else {
                     JOptionPane.showMessageDialog(null, "No puedo agregar más estados iniciales");
+                    return false;
                 }
 
             } else if (af instanceof AFND) {
                 int posicion = metodos.buscarEstado(af.getEstados(), estadoInicial);
                 af.addEstadoInicial(posicion);
+                return true;
+            } else {
+                return false;
             }
 
         } else if (selector == 2) {
@@ -543,14 +551,21 @@ public class Controlador {
                 if (af2.tamEstadosIniciales() == -1) {
                     int posicion = metodos.buscarEstado(af2.getEstados(), estadoInicial);
                     af2.addEstadoInicial(posicion);
+                    return true;
                 } else {
-                    //mensaje
+                    JOptionPane.showMessageDialog(null, "No puedo agregar más estados iniciales");
+                    return false;
                 }
 
             } else if (af2 instanceof AFND) {
                 int posicion = metodos.buscarEstado(af2.getEstados(), estadoInicial);
                 af2.addEstadoInicial(posicion);
+                return true;
+            } else {
+                return true;
             }
+        } else {
+            return false;
         }
 
     }
@@ -577,7 +592,7 @@ public class Controlador {
             Estado nuevoEst = af2.getEstado(metodos.buscarEstado(af2.getEstados(), nuevoEstado));
             int posSimbolo = metodos.buscarSimbolo(af2.getSimbolos(), simbolo);
             estadoAct.addTransicion(nuevoEst, posSimbolo);
-            
+
         }
         // af.agregarTransicion(estadoActual, simbolo, nuevoEstado);
     }
@@ -875,4 +890,41 @@ public class Controlador {
 
     }
 
+    public void eliminarEstadoInicial(String estado) {
+        if (selector == 1) {
+            af.eliminarEstadoInicial((metodos.buscarEstado(af.getEstados(), estado)));
+        } else {
+            af2.eliminarEstadoInicial((metodos.buscarEstado(af2.getEstados(), estado)));
+        }
+    }
+
+    public void eliminarEstadoAceptacion(String estado) {
+        if (selector == 1) {
+            af.eliminarEstadoAceptacion((metodos.buscarEstado(af.getEstados(), estado)));
+        } else {
+            af2.eliminarEstadoAceptacion((metodos.buscarEstado(af2.getEstados(), estado)));
+        }
+    }
+
+    public boolean unirAutomatas() {
+        if(af != null && af2 != null)
+        {
+           return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public boolean intersectar() {
+        if(af != null && af2 != null)
+        {
+           return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

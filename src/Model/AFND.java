@@ -137,5 +137,14 @@ public class AFND extends AutomataFinito {
         return estadosInciales.size();
     }
 
+    @Override
+    public void eliminarEstadoInicial(int posEstado) {
+        estadosInciales.remove(posEstado);
+        Estado estadoIni = this.getEstado(posEstado);
+        estadoIni.setEstadoAcep(false);
+    }
+
+
+
 
 }

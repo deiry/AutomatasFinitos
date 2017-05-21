@@ -5,6 +5,8 @@
  */
 package vista;
 
+import Model.Estado;
+import Model.MetodosControlador;
 import controlador.Controlador;
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -52,7 +54,7 @@ public class PanelEstadoAceptacion extends javax.swing.JPanel {
         jPanel2.setLayout(new java.awt.GridLayout(3, 1));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Seleccionar Estado Acpetación");
+        jLabel1.setText("Seleccionar Estado Aceptación");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel2.add(jLabel1);
 
@@ -80,30 +82,57 @@ public class PanelEstadoAceptacion extends javax.swing.JPanel {
 
     private void actualizarEstados() {
         ArrayList<String> estados = controlador.obtenerEstadosString();
+        ArrayList<Estado> stdEstados = controlador.obtenerEstados();
         jp_estados.removeAll();
         jp_estados.revalidate();
         
         if(estados != null)
         {
-            
+            controlador.boolEstadosAceptacion = new boolean[estados.size()];
             jp_estados.setLayout(new GridLayout(1, estados.size()));
-            for (String entry: estados) {
-                String key = entry;
+            for (int i=0; i<estados.size();i++) {
+                String key = estados.get(i);
+                
+                controlador.boolEstadosAceptacion[i] = true;
                 JButton btn = new JButton(key);
+                btn.setForeground(new  java.awt.Color(255, 255, 255));
+                btn.setBackground(new Color(58,171,169));
+                
+                if (stdEstados.get(i).isEstadoAcep()) {
+                    btn.setBackground(Color.gray);
+                    btn.setForeground(new  java.awt.Color(255, 255, 255));
+                    controlador.boolEstadosAceptacion[i] = false;
+                }
+                
                 ActionListener l = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        Controlador controlador = Controlador.getInstance();
+                        MetodosControlador metodos = new MetodosControlador();
                         String estado = btn.getText();
-                        controlador.agregarEstadoAceptacion(estado);
-                        btn.setEnabled(false);
-                        btn.setBackground(Color.gray);
-                        btn.setForeground(new  java.awt.Color(255, 255, 255));
+                        int pos = metodos.buscarEstado(controlador.obtenerEstados(), estado);
+                        
+                        if (controlador.boolEstadosAceptacion[pos]) {
+                            controlador.agregarEstadoInicial(estado);                            
+                            btn.setBackground(Color.gray);
+                            btn.setForeground(new  java.awt.Color(255, 255, 255));
+                            controlador.boolEstadosInciales[pos] = false;      
+                        }
+                        else
+                        {
+                            controlador.eliminarEstadoAceptacion(estado);
+                            btn.setForeground(new  java.awt.Color(255, 255, 255));
+                            btn.setBackground(new Color(58,171,169));
+                            controlador.boolEstadosInciales[pos] = true;
+
+                        }
+                        
                         //btn.setBackground(new Color(58,171,169));
                     }
                 };
                 btn.addActionListener(l);
                 jp_estados.add(btn);
-            } 
+            }
         }
         
     }
