@@ -6,12 +6,15 @@
 package vista;
 
 
+import Model.MetodosControlador;
 import controlador.Controlador;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -37,6 +40,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btn_vista_estado_incial.setEnabled(false);
         btn_vista_estado_acpetacion.setEnabled(false);
         btn_vista_transiciones.setEnabled(false);
+       
     }
 
     /**
@@ -68,6 +72,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btn_convertir = new javax.swing.JButton();
         btn_union = new javax.swing.JButton();
         btn_interseccion = new javax.swing.JButton();
+        btn_imprimir = new javax.swing.JButton();
         jp_contenedor_principal = new javax.swing.JPanel();
         lb_tipo_automata = new javax.swing.JLabel();
         lb_tipo_automata1 = new javax.swing.JLabel();
@@ -343,6 +348,18 @@ public class VistaPrincipal extends javax.swing.JFrame {
         });
         jp_operaciones_automata.add(btn_interseccion);
 
+        btn_imprimir.setForeground(new java.awt.Color(255, 255, 255));
+        btn_imprimir.setText("ImprimirAF");
+        btn_imprimir.setBorder(null);
+        btn_imprimir.setContentAreaFilled(false);
+        btn_imprimir.setFocusPainted(false);
+        btn_imprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_imprimirActionPerformed(evt);
+            }
+        });
+        jp_operaciones_automata.add(btn_imprimir);
+
         jp_contenedor_principal.setBackground(new java.awt.Color(255, 255, 255));
         jp_contenedor_principal.setLayout(new java.awt.CardLayout());
 
@@ -419,6 +436,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jMenu1.add(jMenuItem1);
 
         jMenuItem3.setText("Guardar");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem3);
 
         jMenuBar1.add(jMenu1);
@@ -543,6 +565,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
             btn_reconocer.setEnabled(b);
             btn_simplificar.setEnabled(b);
             btn_convertir.setEnabled(b);
+            btn_imprimir.setEnabled(b);
     }
     
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -562,7 +585,25 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
+        
+        String texto = abrirArchivo();
+        if (texto != null) {
+            controlador = Controlador.getInstance();
+            controlador.construirAtomata(texto);
+            PanelAutomata panelAutomata = new PanelAutomata();
+            mostrarPanel(jp_contenedor_principal, panelAutomata);
+            btn_vista_automata.setEnabled(true);
+            habilitarBotonesOpéraciones(true);
+            String tipoA = controlador.identificarA();
+            String tipoB = controlador.identificarB();
+            lb_tipo_automata.setText(tipoA);
+            lb_tipo_automata1.setText(tipoB);
+            
+            btn_vista_estado_acpetacion.setEnabled(true);
+            btn_vista_estado_incial.setEnabled(true);
+            btn_vista_simbolos.setEnabled(true);
+            btn_vista_transiciones.setEnabled(true);
+        }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -650,6 +691,21 @@ public class VistaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         btn_vista_transiciones.setFont(new java.awt.Font("Tahoma", 0, 11));
     }//GEN-LAST:event_btn_vista_transicionesMouseReleased
+
+    private void btn_imprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_imprimirActionPerformed
+        Controlador controlador = Controlador.getInstance();
+        try {
+            controlador.generarImagen();
+        } catch (IOException ex) {
+            Logger.getLogger(VistaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_imprimirActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        controlador = Controlador.getInstance();
+        String automata = controlador.obtenerAutomata();
+        guardarArchivo(automata);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * metodo que sobrescribe el contendio de un panel para hacer las vistas
@@ -763,6 +819,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btn_convertir;
     private javax.swing.JButton btn_guardar;
     private javax.swing.JButton btn_identificar;
+    private javax.swing.JButton btn_imprimir;
     private javax.swing.JButton btn_interseccion;
     private javax.swing.JButton btn_reconocer;
     private javax.swing.JButton btn_simplificar;
