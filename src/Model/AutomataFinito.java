@@ -133,11 +133,23 @@ public abstract class AutomataFinito {
         }
         return estadosString;
     }
+    
+    public boolean isAFDeterministco(){
+        for (Estado est : estados) {
+            if (est.getTamDatos()>1) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public abstract void addEstadoInicial(int posEstado);
 
     public abstract void addEstadoAceptacion(int posEstado);
 
     public abstract int tamEstadosIniciales();
+    
+    public abstract AFD simplificar();
+    public abstract AFD convertir(boolean interseccion);
 
 }

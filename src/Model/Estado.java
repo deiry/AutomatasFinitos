@@ -118,18 +118,18 @@ public class Estado {
         transiciones[simbolo] = est;
     }
 
-    public boolean addTransicion(Estado nEst, int simbolo) {
-        boolean cambio = false;
+    public void addTransicion(Estado nEst, int simbolo) {
+       
         Estado tranS = transiciones[simbolo];
         if (tranS != null && nEst != null) {
-            cambio = true;
+            
             transiciones[simbolo] = AF.unionEstados(tranS, nEst);
         } else {
             transiciones[simbolo] = nEst;
         }
-        return cambio;
+      
     }
-
+    
     public Estado getTransicion(int simbolo) {
         if (transiciones[simbolo] == null) {
             return null;
