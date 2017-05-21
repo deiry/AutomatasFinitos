@@ -22,11 +22,7 @@ public class AF {
             Estado node = iter.next();
             auxTran = node.getTransicion(simbolo);
             if (auxTran != null) {
-                if (nuevaTran.getId() == 0 && auxTran.getTamDatos() == 1) {
-                    nuevaTran = auxTran;
-                } else {
-                    nuevaTran.addEstado(auxTran);
-                }
+                nuevaTran.addEstado(auxTran);
             }
         }
         return nuevaTran;
@@ -57,7 +53,8 @@ public class AF {
     }
 
     public static boolean perteneceA(ArrayList<Estado> estadosfinal, Estado nuevoE) {
-        int idList = nuevoE.getId();
+     
+         int idList = nuevoE.getId();
 
         for (int i = 0; i < estadosfinal.size(); i++) {
             Estado est = estadosfinal.get(i);

@@ -311,7 +311,8 @@ public class Controlador {
             estadoAct.addTransicion(estadoSig, pos);
            
         }
-      
+        af.imprimirEstados(estados);
+        af.imprimirTransiciones(estados);
 
     }
 

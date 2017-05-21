@@ -50,13 +50,19 @@ public class Estado {
         Iterator<Estado> it = listDatos.iterator();
         this.data = "";
         this.id = 0;
-        while (it.hasNext()) {
-            Estado next = it.next();
-            this.data += next.getData();
-            this.id += next.getId();
+        if (listDatos.size() > 1) {
+            while (it.hasNext()) {
+                Estado next = it.next();
+                this.data += next.getData();
+                this.id += next.getId();
+            }
+            this.id = this.id * 100;
+            tamDatos = listDatos.size();
+        } else {
+            data = listDatos.getFirst().getData();
+            id = listDatos.getFirst().getId();
+
         }
-        this.id = this.id * 100;
-        tamDatos = listDatos.size();
 
     }
 
@@ -119,17 +125,17 @@ public class Estado {
     }
 
     public void addTransicion(Estado nEst, int simbolo) {
-       
+
         Estado tranS = transiciones[simbolo];
         if (tranS != null && nEst != null) {
-            
+
             transiciones[simbolo] = AF.unionEstados(tranS, nEst);
         } else {
             transiciones[simbolo] = nEst;
         }
-      
+
     }
-    
+
     public Estado getTransicion(int simbolo) {
         if (transiciones[simbolo] == null) {
             return null;
@@ -193,9 +199,21 @@ public class Estado {
 
                 }
             }
+
         }
         this.actualizarDatos();
 
+    }
+
+    public ArrayList<String> stringListDatos() {
+        ArrayList<String> list = new ArrayList<>();
+        Iterator<Estado> iter = listDatos.iterator();
+        while (iter.hasNext()) {
+            Estado next = iter.next();
+            list.add(next.getData());
+
+        }
+        return list;
     }
 
     public boolean perteneceListDatos(int id) {

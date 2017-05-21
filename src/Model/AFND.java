@@ -43,7 +43,6 @@ public class AFND extends AutomataFinito {
         }
     }
 
-    @Override
     public AFD convertir(boolean interseccion) {
         AFD afd = new AFD();
         Estado estadoN;
@@ -86,6 +85,7 @@ public class AFND extends AutomataFinito {
         for (int simbolo = 0; simbolo < simbolos.size(); simbolo++) {
             if (estado.getTamDatos() == 1) {
                 Estado tran = estado.getTransicion(simbolo);
+                
                 if (tran != null) {
                     nuevoE = tran;
                 } else {
