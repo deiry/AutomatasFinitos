@@ -43,6 +43,7 @@ public class AFND extends AutomataFinito {
         }
     }
 
+    @Override
     public AFD convertir(boolean interseccion) {
         AFD afd = new AFD();
         Estado estadoN;
@@ -135,6 +136,11 @@ public class AFND extends AutomataFinito {
     @Override
     public int tamEstadosIniciales() {
         return estadosInciales.size();
+    }
+
+    @Override
+    public AFD simplificar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 
