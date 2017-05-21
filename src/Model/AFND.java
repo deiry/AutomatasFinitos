@@ -139,6 +139,11 @@ public class AFND extends AutomataFinito {
     }
 
     @Override
+    public void eliminarEstadoInicial(int posEstado) {
+        estadosInciales.remove(posEstado);
+        Estado estadoIni = this.getEstado(posEstado);
+        estadoIni.setEstadoAcep(false);
+    }
     public AFD simplificar() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

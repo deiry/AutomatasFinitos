@@ -293,8 +293,13 @@ public class AFD extends AutomataFinito {
     }
 
     @Override
+    public void eliminarEstadoInicial(int posEstado) {
+        if (posEstado == estadoInicial) {
+            estadoInicial = -1;
+        }
+    }
     public AFD convertir(boolean interseccion) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates
     }
 
 

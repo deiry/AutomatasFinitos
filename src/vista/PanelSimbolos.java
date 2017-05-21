@@ -25,6 +25,7 @@ public class PanelSimbolos extends javax.swing.JPanel {
     public PanelSimbolos() {
         initComponents();
          controlador = Controlador.getInstance();
+         controlador.inicializarAF();
         actualizarListaSimbolos();
     }
 

@@ -40,6 +40,8 @@ public class Controlador {
     private int posSimboloB = 1;
     private static Controlador instance = null;
     private MetodosControlador metodos;
+    public boolean[] boolEstadosInciales;
+    public boolean[] boolEstadosAceptacion;
 
     protected Controlador() {
         VistaPrincipal vp = new VistaPrincipal();
@@ -57,6 +59,21 @@ public class Controlador {
             instance = new Controlador();
         }
         return instance;
+    }
+
+    public void inicializarAF() {
+        if (selector == 1) {
+            if (af == null) {
+                af = new AFND();
+            }
+
+        } else if (selector == 2) {
+            if (af2 == null) {
+                af2 = new AFND();
+            }
+
+        }
+
     }
 
     /**
@@ -273,8 +290,8 @@ public class Controlador {
         return retorno;
     }
 
+
     private void construirTransiciones(String hilera, ArrayList<Estado> estados, AutomataFinito af) {
-       
         ArrayList<String> transiciones = splitTransiciones(hilera);
         for (int i = 0; i < transiciones.size(); i++) {
             ArrayList<String> transicionArrayList = subStringComa(transiciones.get(i), 0);
@@ -381,11 +398,26 @@ public class Controlador {
     }
 
     public ArrayList<Estado> obtenerEstados() {
-        return af.getEstados();
+        if (selector == 1) {
+            return af.getEstados();
+        } 
+        else if (selector == 2) {
+            return af2.getEstados();
+        } else {
+            return null;
+        }
+
     }
 
     public ArrayList<String> obtenerEstadosString() {
-        return af.obtenerEstadosString();
+
+        if (selector == 1) {
+            return af.obtenerEstadosString();
+        } else if (selector == 2) {
+            return af2.obtenerEstadosString();
+        } else {
+            return null;
+        }
     }
 
     public ArrayList<Estado> obtenerEstados2() {
@@ -398,10 +430,10 @@ public class Controlador {
 
     public void agregarSimbolo(String simbolo) {
         if (selector == 1) {
-            af.agregarSimbolo(posSimboloA, simbolo);
+            af.agregarSimbolo(simbolo);
             posSimboloA++;
         } else if (selector == 2) {
-            af2.agregarSimbolo(posSimboloB, simbolo);
+            af2.agregarSimbolo(simbolo);
             posSimboloB++;
         }
     }
@@ -423,19 +455,25 @@ public class Controlador {
         }
     }
 
-    public void agregarEstadoInicial(String estadoInicial) {
+    public boolean agregarEstadoInicial(String estadoInicial) {
         if (selector == 1) {
             if (af instanceof AFD) {
                 if (af.tamEstadosIniciales() == -1) {
                     int posicion = metodos.buscarEstado(af.getEstados(), estadoInicial);
                     af.addEstadoInicial(posicion);
+                    return true;
+
                 } else {
                     JOptionPane.showMessageDialog(null, "No puedo agregar más estados iniciales");
+                    return false;
                 }
 
             } else if (af instanceof AFND) {
                 int posicion = metodos.buscarEstado(af.getEstados(), estadoInicial);
                 af.addEstadoInicial(posicion);
+                return true;
+            } else {
+                return false;
             }
 
         } else if (selector == 2) {
@@ -444,14 +482,23 @@ public class Controlador {
                 if (af2.tamEstadosIniciales() == -1) {
                     int posicion = metodos.buscarEstado(af2.getEstados(), estadoInicial);
                     af2.addEstadoInicial(posicion);
+                    return true;
                 } else {
-                    //mensaje
+                    JOptionPane.showMessageDialog(null, "No puedo agregar más estados iniciales");
+                    return false;
                 }
 
             } else if (af2 instanceof AFND) {
                 int posicion = metodos.buscarEstado(af2.getEstados(), estadoInicial);
                 af2.addEstadoInicial(posicion);
+
+                return true;
+            } else {
+                return true;
+
             }
+        } else {
+            return false;
         }
 
     }
@@ -467,6 +514,20 @@ public class Controlador {
     }
 
     public void agregarTransicion(String estadoActual, String simbolo, String nuevoEstado) {
+
+        if (selector == 1) {
+            Estado estadoAct = af.getEstado(metodos.buscarEstado(af.getEstados(), estadoActual));
+            Estado nuevoEst = af.getEstado(metodos.buscarEstado(af.getEstados(), nuevoEstado));
+            int posSimbolo = metodos.buscarSimbolo(af.getSimbolos(), simbolo);
+            estadoAct.addTransicion(nuevoEst, posSimbolo);
+
+        } else if (selector == 2) {
+            Estado estadoAct = af2.getEstado(metodos.buscarEstado(af2.getEstados(), estadoActual));
+            Estado nuevoEst = af2.getEstado(metodos.buscarEstado(af2.getEstados(), nuevoEstado));
+            int posSimbolo = metodos.buscarSimbolo(af2.getSimbolos(), simbolo);
+            estadoAct.addTransicion(nuevoEst, posSimbolo);
+
+        }
         // af.agregarTransicion(estadoActual, simbolo, nuevoEstado);
     }
 
@@ -488,61 +549,70 @@ public class Controlador {
     }
 
     public void simplificar() {
+
         af.simplificar();
     }
 
     public String obtenerAutomata() {
         AutomataFinito afAux = null;
+        String automata = null;
         if (selector == 2) {
             afAux = this.af;
             this.af = af2;
         }
-        String automata = "{";
+        if (af != null) {
+            automata = "{";
 
-        ArrayList<Estado> estados = af.getEstados();
-        ArrayList<String> simbolos = af.getSimbolos();
+            ArrayList<Estado> estados = af.getEstados();
+            ArrayList<String> simbolos = af.getSimbolos();
+            //        
 
-        automata = automata + "[";
-        for (int i = 0; i < estados.size(); i++) {
-            automata = automata + estados.get(i).getData();
-            if (i < estados.size() - 1) {
-                automata = automata + ",";
-            }
-        }
-        automata = automata + "][";
-        for (int i = 0; i < simbolos.size(); i++) {
-            automata = automata + simbolos.get(i);
-            if (i < simbolos.size() - 1) {
-                automata = automata + ",";
-            }
-        }
-        automata = automata + "][";
+            automata = automata + "[";
+            automata = automata + af.toStringEstados(',');
+            //        for (int i = 0; i < estados.size(); i++) {
+            //            automata = automata + estados.get(i).getData();
+            //            if (i < estados.size() - 1) {
+            //                automata = automata + ",";
+            //            }
+            //        }
+            automata = automata + "][";
+            //        for (int i = 0; i < simbolos.size(); i++) {
+            //            automata = automata + simbolos.get(i);
+            //            if (i < simbolos.size() - 1) {
+            //                automata = automata + ",";
+            //            }
+            //        }
+            automata = automata + af.toStringSimbolos(',');
+            automata = automata + "][";
 
-        //transiciones
-        automata = automata + "][";
-        for (int i = 0; i < estados.size(); i++) {
-            Estado estado = estados.get(i);
-            if (estado.isEstadoInicial()) {
-                automata = automata + estados.get(i).getData();
-                if (i < estados.size() - 1) {
-                    automata = automata + ",";
+            automata = automata + af.toStringTransiciones('(', ')');
+
+            automata = automata + "][";
+            for (int i = 0; i < estados.size(); i++) {
+                Estado estado = estados.get(i);
+                if (estado.isEstadoInicial()) {
+                    automata = automata + estados.get(i).getData();
+                    if (i < estados.size() - 1) {
+                        automata = automata + ",";
+                    }
                 }
             }
-        }
 
-        automata = automata + "][";
-        for (int i = 0; i < estados.size(); i++) {
-            Estado estado = estados.get(i);
-            if (estado.isEstadoAcep()) {
-                automata = automata + estados.get(i).getData();
-                if (i < estados.size() - 1) {
-                    automata = automata + ",";
+            automata = automata + "][";
+            for (int i = 0; i < estados.size(); i++) {
+                Estado estado = estados.get(i);
+                if (estado.isEstadoAcep()) {
+                    automata = automata + estados.get(i).getData();
+                    if (i < estados.size() - 1) {
+                        automata = automata + ",";
+                    }
                 }
+
             }
-        }
-        automata = automata + "]}";
-        if (selector == 2) {
-            this.af = afAux;
+            automata = automata + "]}";
+            if (selector == 2) {
+                this.af = afAux;
+            }
         }
         return automata;
     }
@@ -625,17 +695,33 @@ public class Controlador {
             afAux = af;
             af = af2;
         }
-        String respuesta = "AFD";
         if (af != null) {
 
+            if (af instanceof AFD) {
+                if (selector == 2) {
+                    af = afAux;
+                }
+
+                return "AFD";
+            } else if (af instanceof AFND) {
+                if (selector == 2) {
+                    af = afAux;
+                }
+                return "AFND";
+            } else {
+                if (selector == 2) {
+                    af = afAux;
+                }
+                return "-";
+            }
+
         } else {
+            if (selector == 2) {
+                af = afAux;
+            }
             return "-";
         }
 
-        if (selector == 2) {
-            af = afAux;
-        }
-        return respuesta;
     }
 
     public void seleccionarAfA() {
@@ -707,4 +793,41 @@ public class Controlador {
 
     }
 
+    public void eliminarEstadoInicial(String estado) {
+        if (selector == 1) {
+            af.eliminarEstadoInicial((metodos.buscarEstado(af.getEstados(), estado)));
+        } else {
+            af2.eliminarEstadoInicial((metodos.buscarEstado(af2.getEstados(), estado)));
+        }
+    }
+
+    public void eliminarEstadoAceptacion(String estado) {
+        if (selector == 1) {
+            af.eliminarEstadoAceptacion((metodos.buscarEstado(af.getEstados(), estado)));
+        } else {
+            af2.eliminarEstadoAceptacion((metodos.buscarEstado(af2.getEstados(), estado)));
+        }
+    }
+
+    public boolean unirAutomatas() {
+        if(af != null && af2 != null)
+        {
+           return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public boolean intersectar() {
+        if(af != null && af2 != null)
+        {
+           return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
