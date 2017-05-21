@@ -825,4 +825,8 @@ public class Controlador {
     public void generarImagen() throws IOException {
         metodos.generarImagen(obtenerAutomata());    
     }
+
+    public void modificarEstado(String estadoSig, int row, int col) {
+        
+    }
 }
