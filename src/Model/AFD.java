@@ -6,7 +6,7 @@
 package Model;
 
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -29,6 +29,7 @@ public class AFD extends AutomataFinito {
         this.estadoInicial = estadoInicial;
     }
 
+    @Override
     public AFD simplificar() {
         AFD afSimplificado = new AFD();
         ArrayList<Estado> nuevosEstados;
@@ -296,6 +297,9 @@ public class AFD extends AutomataFinito {
         if (posEstado == estadoInicial) {
             estadoInicial = -1;
         }
+    }
+    public AFD convertir(boolean interseccion) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates
     }
 
 
