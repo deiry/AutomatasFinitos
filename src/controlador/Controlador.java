@@ -13,6 +13,7 @@ import Model.AFND;
 import Model.AutomataFinito;
 import Model.Estado;
 import Model.MetodosControlador;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -569,19 +570,9 @@ public class Controlador {
 
             automata = automata + "[";
             automata = automata + af.toStringEstados(',');
-            //        for (int i = 0; i < estados.size(); i++) {
-            //            automata = automata + estados.get(i).getData();
-            //            if (i < estados.size() - 1) {
-            //                automata = automata + ",";
-            //            }
-            //        }
+        
             automata = automata + "][";
-            //        for (int i = 0; i < simbolos.size(); i++) {
-            //            automata = automata + simbolos.get(i);
-            //            if (i < simbolos.size() - 1) {
-            //                automata = automata + ",";
-            //            }
-            //        }
+
             automata = automata + af.toStringSimbolos(',');
             automata = automata + "][";
 
@@ -829,5 +820,9 @@ public class Controlador {
         {
             return false;
         }
+    }
+
+    public void generarImagen() throws IOException {
+        metodos.generarImagen(obtenerAutomata());    
     }
 }

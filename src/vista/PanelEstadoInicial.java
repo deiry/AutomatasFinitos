@@ -147,22 +147,16 @@ public class PanelEstadoInicial extends javax.swing.JPanel {
                                 btn.setBackground(Color.gray);
                                 btn.setForeground(new  java.awt.Color(255, 255, 255));
                                 controlador.boolEstadosInciales[pos] = false;
-                            }
-                            //btn.setEnabled(false);
-                            
+                            }         
                         }
                         else
                         {
                             controlador.eliminarEstadoInicial(estado);
-                            //btn.setEnabled(false);
-                            //btn.setBackground(Color.gray);
                             btn.setForeground(new  java.awt.Color(255, 255, 255));
                             btn.setBackground(new Color(58,171,169));
                             controlador.boolEstadosInciales[pos] = true;
 
                         }
-                        
-                        //btn.setBackground(new Color(58,171,169));
                     }
                 };
                 btn.addActionListener(l);
