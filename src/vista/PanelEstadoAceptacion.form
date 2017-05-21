@@ -39,7 +39,7 @@
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Seleccionar Estado Acpetaci&#xf3;n"/>
+            <Property name="text" type="java.lang.String" value="Seleccionar Estado Aceptaci&#xf3;n"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
           </Properties>
         </Component>

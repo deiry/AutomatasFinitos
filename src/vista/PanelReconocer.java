@@ -5,7 +5,7 @@
  */
 package vista;
 
-import Modelo.AutomataFinito;
+import Model.AutomataFinito;
 import controlador.Controlador;
 import java.awt.Color;
 import java.awt.GridLayout;

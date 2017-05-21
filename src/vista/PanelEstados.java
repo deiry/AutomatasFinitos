@@ -26,6 +26,7 @@ public class PanelEstados extends javax.swing.JPanel {
     public PanelEstados() {
         initComponents();
         controlador = Controlador.getInstance();
+        controlador.inicializarAF();
         actualizarListaEstados();
     }
 
@@ -173,13 +174,6 @@ public class PanelEstados extends javax.swing.JPanel {
             }
 
             int i = 0;
-//            for (Map.Entry<String, Integer> entry : estados.entrySet()) {
-//                Vector row = new Vector();
-//                String key = entry.getKey();
-//                Integer value = entry.getValue();
-//                row.add(key);
-//                model.addRow(row);
-//            }
             for (int j = 0; j < estados.size(); j++) {
                 Vector row = new Vector();
                 Estado estado = estados.get(j);

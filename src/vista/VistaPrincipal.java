@@ -6,12 +6,15 @@
 package vista;
 
 
+import Model.MetodosControlador;
 import controlador.Controlador;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -33,6 +36,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btn_vista_automata.setEnabled(false);
         jButton6.setFont(new java.awt.Font("Tahoma", 1, 30));
         habilitarBotonesOpéraciones(false);
+        btn_vista_simbolos.setEnabled(false);
+        btn_vista_estado_incial.setEnabled(false);
+        btn_vista_estado_acpetacion.setEnabled(false);
+        btn_vista_transiciones.setEnabled(false);
+       
     }
 
     /**
@@ -62,6 +70,9 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btn_reconocer = new javax.swing.JButton();
         btn_simplificar = new javax.swing.JButton();
         btn_convertir = new javax.swing.JButton();
+        btn_union = new javax.swing.JButton();
+        btn_interseccion = new javax.swing.JButton();
+        btn_imprimir = new javax.swing.JButton();
         jp_contenedor_principal = new javax.swing.JPanel();
         lb_tipo_automata = new javax.swing.JLabel();
         lb_tipo_automata1 = new javax.swing.JLabel();
@@ -115,6 +126,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btn_vista_automata.setBorder(null);
         btn_vista_automata.setContentAreaFilled(false);
         btn_vista_automata.setFocusPainted(false);
+        btn_vista_automata.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_vista_automataMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btn_vista_automataMouseReleased(evt);
+            }
+        });
         btn_vista_automata.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_vista_automataActionPerformed(evt);
@@ -127,6 +146,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btn_vista_estados.setBorder(null);
         btn_vista_estados.setContentAreaFilled(false);
         btn_vista_estados.setFocusPainted(false);
+        btn_vista_estados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_vista_estadosMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btn_vista_estadosMouseReleased(evt);
+            }
+        });
         btn_vista_estados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_vista_estadosActionPerformed(evt);
@@ -139,6 +166,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btn_vista_simbolos.setBorder(null);
         btn_vista_simbolos.setContentAreaFilled(false);
         btn_vista_simbolos.setFocusPainted(false);
+        btn_vista_simbolos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_vista_simbolosMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btn_vista_simbolosMouseReleased(evt);
+            }
+        });
         btn_vista_simbolos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_vista_simbolosActionPerformed(evt);
@@ -151,6 +186,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btn_vista_estado_incial.setBorder(null);
         btn_vista_estado_incial.setContentAreaFilled(false);
         btn_vista_estado_incial.setFocusPainted(false);
+        btn_vista_estado_incial.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_vista_estado_incialMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btn_vista_estado_incialMouseReleased(evt);
+            }
+        });
         btn_vista_estado_incial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_vista_estado_incialActionPerformed(evt);
@@ -163,6 +206,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btn_vista_estado_acpetacion.setBorder(null);
         btn_vista_estado_acpetacion.setContentAreaFilled(false);
         btn_vista_estado_acpetacion.setFocusPainted(false);
+        btn_vista_estado_acpetacion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_vista_estado_acpetacionMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btn_vista_estado_acpetacionMouseReleased(evt);
+            }
+        });
         btn_vista_estado_acpetacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_vista_estado_acpetacionActionPerformed(evt);
@@ -175,6 +226,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
         btn_vista_transiciones.setBorder(null);
         btn_vista_transiciones.setContentAreaFilled(false);
         btn_vista_transiciones.setFocusPainted(false);
+        btn_vista_transiciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_vista_transicionesMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btn_vista_transicionesMouseReleased(evt);
+            }
+        });
         btn_vista_transiciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_vista_transicionesActionPerformed(evt);
@@ -265,6 +324,42 @@ public class VistaPrincipal extends javax.swing.JFrame {
         });
         jp_operaciones_automata.add(btn_convertir);
 
+        btn_union.setForeground(new java.awt.Color(255, 255, 255));
+        btn_union.setText("Union");
+        btn_union.setBorder(null);
+        btn_union.setContentAreaFilled(false);
+        btn_union.setFocusPainted(false);
+        btn_union.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_unionActionPerformed(evt);
+            }
+        });
+        jp_operaciones_automata.add(btn_union);
+
+        btn_interseccion.setForeground(new java.awt.Color(255, 255, 255));
+        btn_interseccion.setText("Intersección");
+        btn_interseccion.setBorder(null);
+        btn_interseccion.setContentAreaFilled(false);
+        btn_interseccion.setFocusPainted(false);
+        btn_interseccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_interseccionActionPerformed(evt);
+            }
+        });
+        jp_operaciones_automata.add(btn_interseccion);
+
+        btn_imprimir.setForeground(new java.awt.Color(255, 255, 255));
+        btn_imprimir.setText("ImprimirAF");
+        btn_imprimir.setBorder(null);
+        btn_imprimir.setContentAreaFilled(false);
+        btn_imprimir.setFocusPainted(false);
+        btn_imprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_imprimirActionPerformed(evt);
+            }
+        });
+        jp_operaciones_automata.add(btn_imprimir);
+
         jp_contenedor_principal.setBackground(new java.awt.Color(255, 255, 255));
         jp_contenedor_principal.setLayout(new java.awt.CardLayout());
 
@@ -272,13 +367,13 @@ public class VistaPrincipal extends javax.swing.JFrame {
         lb_tipo_automata.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lb_tipo_automata.setForeground(new java.awt.Color(255, 255, 255));
         lb_tipo_automata.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lb_tipo_automata.setText("AFND");
+        lb_tipo_automata.setText("-");
 
         lb_tipo_automata1.setBackground(new java.awt.Color(255, 255, 255));
         lb_tipo_automata1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lb_tipo_automata1.setForeground(new java.awt.Color(255, 255, 255));
         lb_tipo_automata1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lb_tipo_automata1.setText("AFND");
+        lb_tipo_automata1.setText("-");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -299,7 +394,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jp_contenedor_principal, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 95, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jp_operaciones_automata, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(11, Short.MAX_VALUE))
         );
@@ -341,6 +436,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jMenu1.add(jMenuItem1);
 
         jMenuItem3.setText("Guardar");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem3);
 
         jMenuBar1.add(jMenu1);
@@ -356,21 +456,25 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private void btn_vista_estadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_vista_estadosActionPerformed
         PanelEstados panelEstados = new PanelEstados();
         mostrarPanel(jp_contenedor_principal, panelEstados);
+        btn_vista_simbolos.setEnabled(true);
     }//GEN-LAST:event_btn_vista_estadosActionPerformed
 
     private void btn_vista_simbolosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_vista_simbolosActionPerformed
         PanelSimbolos panelSimbolos = new PanelSimbolos();
         mostrarPanel(jp_contenedor_principal, panelSimbolos);
+       btn_vista_estado_incial.setEnabled(true);
     }//GEN-LAST:event_btn_vista_simbolosActionPerformed
 
     private void btn_vista_estado_incialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_vista_estado_incialActionPerformed
         PanelEstadoInicial panelEstadoInicial = new PanelEstadoInicial();
         mostrarPanel(jp_contenedor_principal, panelEstadoInicial);
+        btn_vista_estado_acpetacion.setEnabled(true);
     }//GEN-LAST:event_btn_vista_estado_incialActionPerformed
 
     private void btn_vista_estado_acpetacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_vista_estado_acpetacionActionPerformed
         PanelEstadoAceptacion panelEstadoAceptacion = new PanelEstadoAceptacion();
         mostrarPanel(jp_contenedor_principal, panelEstadoAceptacion);
+        btn_vista_transiciones.setEnabled(true);
     }//GEN-LAST:event_btn_vista_estado_acpetacionActionPerformed
 
     private void btn_vista_transicionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_vista_transicionesActionPerformed
@@ -392,6 +496,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
             String tipoB = controlador.identificarB();
             lb_tipo_automata.setText(tipoA);
             lb_tipo_automata1.setText(tipoB);
+            
+            btn_vista_estado_acpetacion.setEnabled(true);
+            btn_vista_estado_incial.setEnabled(true);
+            btn_vista_simbolos.setEnabled(true);
+            btn_vista_transiciones.setEnabled(true);
         }
         
     }//GEN-LAST:event_btn_abrirActionPerformed
@@ -456,6 +565,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
             btn_reconocer.setEnabled(b);
             btn_simplificar.setEnabled(b);
             btn_convertir.setEnabled(b);
+            btn_imprimir.setEnabled(b);
     }
     
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -463,10 +573,37 @@ public class VistaPrincipal extends javax.swing.JFrame {
         controlador.seleccionarAfB();
         jButton6.setFont(new java.awt.Font("Tahoma", 0, 11));
         jButton7.setFont(new java.awt.Font("Tahoma", 1,30));
+        if(controlador.getAutomataFinitoB() == null)
+        {
+            habilitarBotonesOpéraciones(false);
+        }
+        else
+        {
+            habilitarBotonesOpéraciones(true);
+        }
+
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
+        
+        String texto = abrirArchivo();
+        if (texto != null) {
+            controlador = Controlador.getInstance();
+            controlador.construirAtomata(texto);
+            PanelAutomata panelAutomata = new PanelAutomata();
+            mostrarPanel(jp_contenedor_principal, panelAutomata);
+            btn_vista_automata.setEnabled(true);
+            habilitarBotonesOpéraciones(true);
+            String tipoA = controlador.identificarA();
+            String tipoB = controlador.identificarB();
+            lb_tipo_automata.setText(tipoA);
+            lb_tipo_automata1.setText(tipoB);
+            
+            btn_vista_estado_acpetacion.setEnabled(true);
+            btn_vista_estado_incial.setEnabled(true);
+            btn_vista_simbolos.setEnabled(true);
+            btn_vista_transiciones.setEnabled(true);
+        }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -478,6 +615,97 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jButton6.setFont(new java.awt.Font("Tahoma", 1, 30));
         jButton7.setFont(new java.awt.Font("Tahoma", 0, 11));
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void btn_unionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_unionActionPerformed
+        Controlador controlador = Controlador.getInstance();
+        if(controlador.unirAutomatas())
+        {
+             JOptionPane.showMessageDialog(rootPane, "El Automata A fue reemplazado por el automata Unido");
+        }
+        else{
+            JOptionPane.showMessageDialog(rootPane, "No se pudo unir los automatas "
+                    + "revisar que esten construidos correctamente");
+        }
+    }//GEN-LAST:event_btn_unionActionPerformed
+
+    private void btn_interseccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_interseccionActionPerformed
+        Controlador controlador = Controlador.getInstance();
+        if(controlador.intersectar())
+        {
+             JOptionPane.showMessageDialog(rootPane, "El Automata A fue reemplazado por la interseccion del automata");
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(rootPane, "No se pudo realizar la intersección de los automatas "
+                    + "revisar que esten construidos correctamente");
+        }
+    }//GEN-LAST:event_btn_interseccionActionPerformed
+
+    private void btn_vista_estadosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_vista_estadosMousePressed
+        btn_vista_estados.setFont(new java.awt.Font("Tahoma", 1, 18));
+    }//GEN-LAST:event_btn_vista_estadosMousePressed
+
+    private void btn_vista_estadosMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_vista_estadosMouseReleased
+        btn_vista_estados.setFont(new java.awt.Font("Tahoma", 0, 11));
+    }//GEN-LAST:event_btn_vista_estadosMouseReleased
+
+    private void btn_vista_automataMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_vista_automataMousePressed
+        btn_vista_automata.setFont(new java.awt.Font("Tahoma", 1, 18));
+    }//GEN-LAST:event_btn_vista_automataMousePressed
+
+    private void btn_vista_automataMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_vista_automataMouseReleased
+        btn_vista_automata.setFont(new java.awt.Font("Tahoma", 0, 11));
+    }//GEN-LAST:event_btn_vista_automataMouseReleased
+
+    private void btn_vista_simbolosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_vista_simbolosMousePressed
+        btn_vista_simbolos.setFont(new java.awt.Font("Tahoma", 1, 18));
+    }//GEN-LAST:event_btn_vista_simbolosMousePressed
+
+    private void btn_vista_simbolosMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_vista_simbolosMouseReleased
+        btn_vista_simbolos.setFont(new java.awt.Font("Tahoma", 0, 11));
+    }//GEN-LAST:event_btn_vista_simbolosMouseReleased
+
+    private void btn_vista_estado_incialMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_vista_estado_incialMousePressed
+        btn_vista_estado_incial.setFont(new java.awt.Font("Tahoma", 1, 18));
+    }//GEN-LAST:event_btn_vista_estado_incialMousePressed
+
+    private void btn_vista_estado_incialMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_vista_estado_incialMouseReleased
+        // TODO add your handling code here:
+        btn_vista_estado_incial.setFont(new java.awt.Font("Tahoma", 0, 11));
+    }//GEN-LAST:event_btn_vista_estado_incialMouseReleased
+
+    private void btn_vista_estado_acpetacionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_vista_estado_acpetacionMousePressed
+        btn_vista_estado_acpetacion.setFont(new java.awt.Font("Tahoma", 1, 18));
+    }//GEN-LAST:event_btn_vista_estado_acpetacionMousePressed
+
+    private void btn_vista_estado_acpetacionMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_vista_estado_acpetacionMouseReleased
+        // TODO add your handling code here:
+        btn_vista_estado_acpetacion.setFont(new java.awt.Font("Tahoma", 0, 11));
+    }//GEN-LAST:event_btn_vista_estado_acpetacionMouseReleased
+
+    private void btn_vista_transicionesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_vista_transicionesMousePressed
+        btn_vista_transiciones.setFont(new java.awt.Font("Tahoma", 1, 18));
+    }//GEN-LAST:event_btn_vista_transicionesMousePressed
+
+    private void btn_vista_transicionesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_vista_transicionesMouseReleased
+        // TODO add your handling code here:
+        btn_vista_transiciones.setFont(new java.awt.Font("Tahoma", 0, 11));
+    }//GEN-LAST:event_btn_vista_transicionesMouseReleased
+
+    private void btn_imprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_imprimirActionPerformed
+        Controlador controlador = Controlador.getInstance();
+        try {
+            controlador.generarImagen();
+        } catch (IOException ex) {
+            Logger.getLogger(VistaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_imprimirActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        controlador = Controlador.getInstance();
+        String automata = controlador.obtenerAutomata();
+        guardarArchivo(automata);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * metodo que sobrescribe el contendio de un panel para hacer las vistas
@@ -591,8 +819,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btn_convertir;
     private javax.swing.JButton btn_guardar;
     private javax.swing.JButton btn_identificar;
+    private javax.swing.JButton btn_imprimir;
+    private javax.swing.JButton btn_interseccion;
     private javax.swing.JButton btn_reconocer;
     private javax.swing.JButton btn_simplificar;
+    private javax.swing.JButton btn_union;
     private javax.swing.JButton btn_vista_automata;
     private javax.swing.JButton btn_vista_estado_acpetacion;
     private javax.swing.JButton btn_vista_estado_incial;

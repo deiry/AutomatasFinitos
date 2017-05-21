@@ -5,20 +5,26 @@
  */
 package vista;
 
+import Model.Estado;
 import controlador.Controlador;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.LayoutManager;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JViewport;
@@ -198,6 +204,9 @@ public class PanelTransiciones extends javax.swing.JPanel {
             for (String entry: estados) {
                 String key = entry;
                 JButton btn = new JButton(key);
+                btn.setForeground(new  java.awt.Color(255, 255, 255));
+                btn.setBackground(new Color(58,171,169));
+                
                 ActionListener l = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -229,6 +238,9 @@ public class PanelTransiciones extends javax.swing.JPanel {
             for (String entry: estados) {
                 String key = entry;
                 JButton btn = new JButton(key);
+                btn.setForeground(new  java.awt.Color(255, 255, 255));
+                btn.setBackground(new Color(58,171,169));
+                
                 ActionListener l = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -260,6 +272,9 @@ public class PanelTransiciones extends javax.swing.JPanel {
             for (String entry: simbolos) {
                 String key = entry;
                 JButton btn = new JButton(key);
+                btn.setForeground(new  java.awt.Color(255, 255, 255));
+                btn.setBackground(new Color(58,171,169));
+                
                 ActionListener l = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -299,6 +314,50 @@ public class PanelTransiciones extends javax.swing.JPanel {
         if (mat != null)
         {
             JTable table = new JTable(mat, StrSimbolos);
+            table.addMouseListener(new MouseAdapter() {
+                public void mousePressed(MouseEvent me) {
+                    JTable table =(JTable) me.getSource();
+                    Point p = me.getPoint();
+                    int row = table.rowAtPoint(p);
+                    int col = table.columnAtPoint(p);
+                    if (me.getClickCount() == 2) {
+                        Controlador controlador = Controlador.getInstance();
+                        ArrayList<Estado> estados = controlador.obtenerEstados();
+                        JFrame frame = new JFrame("Estados Sguientes");
+                        frame.setSize(300, 200);
+                        javax.swing.JPanel pn = new JPanel(new GridLayout(1, estados.size()));
+                        for (int i = 0; i < estados.size(); i++) {
+                            JButton btn = new JButton(estados.get(i).getData());
+                            btn.setForeground(new  java.awt.Color(255, 255, 255));
+                            btn.setBackground(new Color(58,171,169));
+                            
+                            ActionListener l = new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    if (simbolo != null) {
+                                       simbolo.setEnabled(true);
+                                    }
+                                    if (colorFondoBotones != null && simbolo != null) {
+                                        simbolo.setBackground(colorFondoBotones);
+                                    }
+                                    colorFondoBotones = btn.getBackground();
+                                    btn.setEnabled(false);
+                                    btn.setBackground(Color.gray);
+                                    simbolo = btn;
+                                }
+                            };
+                btn.addActionListener(l);
+
+                            
+                            pn.add(btn);
+                        }
+                        frame.add(pn);
+                        frame.setVisible(true);
+                        String estadoSig = "";
+                        controlador.modificarEstado(estadoSig,row,col);
+                    }
+                }
+});
             pn_contenedor_tabla_transiciones.add(table);
         }
         //DefaultTableModel model = new DefaultTableModel(StrSimbolos,estados.size());
