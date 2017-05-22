@@ -8,6 +8,7 @@ package controlador;
 //import Modelo.AFDeterministico;
 //import Modelo.AFNoDeterministico;
 //import Modelo.AutomataFinito;
+import Model.AF;
 import Model.AFD;
 import Model.AFND;
 import Model.AutomataFinito;
@@ -804,6 +805,7 @@ public class Controlador {
     public boolean unirAutomatas() {
         if(af != null && af2 != null)
         {
+           af =  AF.unionAutomatas(af, af2);
            return true;
         }
         else
@@ -815,6 +817,7 @@ public class Controlador {
     public boolean intersectar() {
         if(af != null && af2 != null)
         {
+            af =  AF.interseccionAutomatas(af, af2);
            return true;
         }
         else

@@ -620,6 +620,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
         Controlador controlador = Controlador.getInstance();
         if(controlador.unirAutomatas())
         {
+            PanelAutomata panelAutomata = new PanelAutomata();
+            mostrarPanel(jp_contenedor_principal, panelAutomata);
              JOptionPane.showMessageDialog(rootPane, "El Automata A fue reemplazado por el automata Unido");
         }
         else{
@@ -632,6 +634,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
         Controlador controlador = Controlador.getInstance();
         if(controlador.intersectar())
         {
+            PanelAutomata panelAutomata = new PanelAutomata();
+            mostrarPanel(jp_contenedor_principal, panelAutomata);
              JOptionPane.showMessageDialog(rootPane, "El Automata A fue reemplazado por la interseccion del automata");
         }
         else

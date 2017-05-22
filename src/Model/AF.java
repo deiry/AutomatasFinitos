@@ -130,7 +130,7 @@ public class AF {
         }
     }
 
-    public static AFD unionAutomatas(AFD afd1, AFD afd2) {
+    public static AFND unionAutomatas(AutomataFinito afd1, AutomataFinito afd2) {
         AFND afnd = new AFND();
         int i = 0;
         for (int j = 0; j < afd1.getSizeEstados(); j++) {
@@ -139,7 +139,7 @@ public class AF {
             afnd.agregarEstado(i, est);
             i++;
             if (est.isEstadoInicial()) {
-                afnd.addEstadoInicial(i);
+                afnd.addEstadoInicial(j);
             }
         }
 
@@ -149,17 +149,17 @@ public class AF {
             afnd.agregarEstado(i, est);
             i++;
             if (est.isEstadoInicial()) {
-                afnd.addEstadoInicial(i);
+                afnd.addEstadoInicial(j);
             }
         }
 
         afnd.imprimirEstados(afnd.getEstados());
         afnd.setSimbolos(afd1.getSimbolos());
 
-        return afnd.convertir(false);
+        return afnd;
     }
 
-    public static AFD interseccionAutomatas(AFD afd1, AFD afd2) {
+    public static AFND interseccionAutomatas(AutomataFinito afd1, AutomataFinito afd2) {
         AFND afnd = new AFND();
         int i = 0;
         for (int j = 0; j < afd1.getSizeEstados(); j++) {
@@ -168,7 +168,7 @@ public class AF {
             afnd.agregarEstado(i, est);
             i++;
             if (est.isEstadoInicial()) {
-                afnd.addEstadoInicial(i);
+                afnd.addEstadoInicial(j);
             }
         }
 
@@ -178,12 +178,12 @@ public class AF {
             afnd.agregarEstado(i, est);
             i++;
             if (est.isEstadoInicial()) {
-                afnd.addEstadoInicial(i);
+                afnd.addEstadoInicial(j);
             }
         }
 
         afnd.imprimirEstados(afnd.getEstados());
         afnd.setSimbolos(afd1.getSimbolos());
-        return afnd.convertir(true);
+        return afnd;
     }
 }

@@ -97,8 +97,8 @@ public class MetodosControlador {
         g2d.drawString(text, 0, fm.getAscent());
         g2d.dispose();
         try {
-            ImageIO.write(img, "png", new File("C:\\temp\\Text.png"));
-            Desktop.getDesktop().open(new File("C:\\temp\\Text.png"));
+            ImageIO.write(img, "png", new File("Text.png"));
+            Desktop.getDesktop().open(new File("Text.png"));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
